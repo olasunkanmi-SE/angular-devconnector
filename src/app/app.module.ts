@@ -13,6 +13,12 @@ import { RecipeItemComponent } from "./recipes/recipe-list/recipe-item/recipe-it
 import { ShoppingListComponent } from "./shopping-list/shopping-list.component";
 import { ShoppingEditComponent } from "./shopping-list/shopping-edit/shopping-edit.component";
 import { DropdownDirective } from "./shared/dropdown.directive";
+import { HomeComponent } from './home/home.component';
+import { ServersComponent } from './servers/servers.component';
+import { UsersComponent } from './users/users.component';
+import { EditServerComponent } from './servers/edit-server/edit-server.component';
+import { ServerComponent } from './servers/server/server.component';
+import { UserComponent } from './users/user/user.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +30,13 @@ import { DropdownDirective } from "./shared/dropdown.directive";
     RecipeItemComponent,
     ShoppingListComponent,
     ShoppingEditComponent,
-    DropdownDirective
+    DropdownDirective,
+    HomeComponent,
+    ServersComponent,
+    UsersComponent,
+    EditServerComponent,
+    ServerComponent,
+    UserComponent
   ],
   imports: [BrowserModule, AppRoutingModule],
   providers: [ShoppingService, RecipesService],
