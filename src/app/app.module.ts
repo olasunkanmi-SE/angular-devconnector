@@ -1,36 +1,20 @@
-import { RecipesService } from "./shared/recipes.service";
-import { ShoppingService } from "./shared/shopping.service";
-import { HeaderComponent } from "./header/header.component";
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
-import { RecipesComponent } from "./recipes/recipes.component";
-import { RecipeListComponent } from "./recipes/recipe-list/recipe-list.component";
-import { RecipeDetailComponent } from "./recipes/recipe-detail/recipe-detail.component";
-import { RecipeItemComponent } from "./recipes/recipe-list/recipe-item/recipe-item.component";
-import { ShoppingListComponent } from "./shopping-list/shopping-list.component";
-import { ShoppingEditComponent } from "./shopping-list/shopping-edit/shopping-edit.component";
-import { DropdownDirective } from "./shared/dropdown.directive";
-import { HomeComponent } from './home/home.component';
-import { ServersComponent } from './servers/servers.component';
-import { UsersComponent } from './users/users.component';
-import { EditServerComponent } from './servers/edit-server/edit-server.component';
-import { ServerComponent } from './servers/server/server.component';
-import { UserComponent } from './users/user/user.component';
+
+import { HomeComponent } from "./home/home.component";
+import { ServersComponent } from "./servers/servers.component";
+import { UsersComponent } from "./users/users.component";
+import { EditServerComponent } from "./servers/edit-server/edit-server.component";
+import { ServerComponent } from "./servers/server/server.component";
+import { UserComponent } from "./users/user/user.component";
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    RecipesComponent,
-    RecipeListComponent,
-    RecipeDetailComponent,
-    RecipeItemComponent,
-    ShoppingListComponent,
-    ShoppingEditComponent,
-    DropdownDirective,
+
     HomeComponent,
     ServersComponent,
     UsersComponent,
@@ -39,7 +23,7 @@ import { UserComponent } from './users/user/user.component';
     UserComponent
   ],
   imports: [BrowserModule, AppRoutingModule],
-  providers: [ShoppingService, RecipesService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
