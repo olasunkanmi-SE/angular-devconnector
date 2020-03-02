@@ -30,9 +30,10 @@ export class ServerService {
   }
 
   getServer(id: number) {
-    this.servers.find(server => {
+    const server = this.servers.find(server => {
       return server.id === id;
     });
+    return server;
   }
 
   updateServer(id: number, updatedServer: Server) {
