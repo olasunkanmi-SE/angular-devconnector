@@ -9,8 +9,8 @@ import { Subscription, observable } from "rxjs";
 })
 export class UserComponent implements OnInit {
   user: User;
-  userParams: any;
-  paramsSubscription: Subscription;
+  userQueryParams: any;
+  querySubscription: Subscription;
 
   constructor(private route: ActivatedRoute, private router: Router) {}
 
@@ -20,21 +20,21 @@ export class UserComponent implements OnInit {
     //   name: this.route.snapshot.params["name"]
     // };
 
-    //Create "dynamic" URL
+    //Create "dynamic" URL with Query Params
+    // this.router.navigate(["/users"], {
+    //   queryParams: { id: 1, name: "Raymond" }
+    // });
+    //  Subscribe to observable && retrieve Query Params from URL
+    this.querySubscription = this.route.queryParams.subscribe(data => {
+      this.userQueryParams = data;
+    });
 
-    this.router.navigate(["/users"], {
-      queryParams: { id: 1, name: "Raymond" }
-    });
-    //  Subscribe to observable
-    this.paramsSubscription = this.route.queryParams.subscribe(params => {
-      this.userParams = params;
-      console.log(this.userParams);
-      this.user = this.userParams;
-    });
+    //Retrieve User info from the URL
+    const id = this.route.snapshot.params["id"];
   }
 
   // Unsubscribe from Observable
   onDestroy() {
-    this.paramsSubscription.unsubscribe();
+    this.querySubscription.unsubscribe();
   }
 }

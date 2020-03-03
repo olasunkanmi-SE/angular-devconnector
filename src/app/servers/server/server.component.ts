@@ -1,6 +1,8 @@
+import { Subscription } from "rxjs";
 import { ServerService } from "./../../shared/server.service";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Server } from "./../../shared/server";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-server",
@@ -10,7 +12,12 @@ import { Server } from "./../../shared/server";
 export class ServerComponent implements OnInit {
   private server: Server;
   x: number;
-  constructor(private serverService: ServerService) {}
+  userParams: any;
+  paramsSubscription: Subscription;
+  constructor(
+    private serverService: ServerService,
+    private route: ActivatedRoute
+  ) {}
 
   createRandomServers() {
     this.x = Math.floor(Math.random() * 4);
@@ -21,5 +28,12 @@ export class ServerComponent implements OnInit {
   ngOnInit() {
     this.createRandomServers();
     this.server = this.serverService.getServer(this.x);
+    this.paramsSubscription = this.route.queryParams.subscribe(params => {
+      this.userParams = params;
+      // if (this.userParams) console.log(this.userParams);
+    });
+  }
+  OnDestroy() {
+    this.paramsSubscription.unsubscribe();
   }
 }
