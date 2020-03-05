@@ -12,24 +12,8 @@ import { UsersComponent } from "./users/users.component";
 import { EditServerComponent } from "./servers/edit-server/edit-server.component";
 import { ServerComponent } from "./servers/server/server.component";
 import { UserComponent } from "./users/user/user.component";
-
-const appRoute: Routes = [
-  { path: "", component: HomeComponent },
-  {
-    path: "servers",
-    component: ServersComponent,
-    children: [
-      { path: ":id", component: ServerComponent },
-      { path: ":id/edit", component: EditServerComponent }
-    ]
-  },
-
-  {
-    path: "users",
-    component: UsersComponent,
-    children: [{ path: ":id/", component: UserComponent }]
-  }
-];
+import { UserEditComponent } from "./users/user-edit/user-edit.component";
+import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
 
 @NgModule({
   declarations: [
@@ -39,14 +23,11 @@ const appRoute: Routes = [
     UsersComponent,
     EditServerComponent,
     ServerComponent,
-    UserComponent
+    UserComponent,
+    UserEditComponent,
+    PageNotFoundComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    RouterModule.forRoot(appRoute),
-    FormsModule
-  ],
+  imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [],
   bootstrap: [AppComponent]
 })

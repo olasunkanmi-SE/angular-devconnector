@@ -1,7 +1,7 @@
 import { ServerService } from "./../../shared/server.service";
 import { Server } from "./../../shared/server";
 import { Component, OnInit } from "@angular/core";
-import { stringify } from "querystring";
+import { ActivatedRoute, Params } from "@angular/router";
 
 @Component({
   selector: "app-edit-server",
@@ -13,16 +13,27 @@ export class EditServerComponent implements OnInit {
   x: number;
   serverName = "";
   serverStatus = "";
+  allowed;
 
-  constructor(private serverservice: ServerService) {}
-  createRandomServers() {
-    this.x = Math.floor(Math.random() * 4);
-    if (this.x === 0) this.x = 1;
-    return this.x;
-  }
+  constructor(
+    private serverservice: ServerService,
+    private route: ActivatedRoute
+  ) {}
+  // createRandomServers() {
+  //   this.x = Math.floor(Math.random() * 4);
+  //   if (this.x === 0) this.x = 1;
+  //   return this.x;
+  // }
 
   ngOnInit() {
-    this.createRandomServers();
+    // this.createRandomServers();
+    this.route.params.subscribe((params: Params) => {
+      this.x = +params["id"];
+    });
+
+    this.route.queryParams.subscribe(queryparams => {
+      this.allowed = queryparams["allowed"];
+    });
     this.server = this.serverservice.getServer(this.x);
     this.serverName = this.server.name;
     this.serverStatus = this.server.status;

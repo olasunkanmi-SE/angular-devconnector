@@ -3,7 +3,7 @@
     <div class="list-group">
       <a
         [routerLink]="['/servers', server.id]"
-        [queryParams]="{ allowed: 1 }"
+        [queryParams]="{ allowed: server.id }"
         fragment="loading"
         class="list-group-item"
         *ngFor="let server of servers"
