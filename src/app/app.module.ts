@@ -1,4 +1,4 @@
-import { Routes, RouterModule } from "@angular/router";
+import { AuthService } from "./shared/auth.service";
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
@@ -14,6 +14,7 @@ import { ServerComponent } from "./servers/server/server.component";
 import { UserComponent } from "./users/user/user.component";
 import { UserEditComponent } from "./users/user-edit/user-edit.component";
 import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
+import { AuthGuard } from "./shared/auth.guard";
 
 @NgModule({
   declarations: [
@@ -28,7 +29,7 @@ import { PageNotFoundComponent } from "./page-not-found/page-not-found.component
     PageNotFoundComponent
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
-  providers: [],
+  providers: [AuthGuard, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
