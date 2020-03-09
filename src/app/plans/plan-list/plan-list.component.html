@@ -25,7 +25,7 @@
       <div style="margin-top:-20px;" class="d-flex bd-highlight mb-3">
         <div class="p-2 bd-highlight" style="font-size:18px;">
           <span class="signs">
-            <a href="#" class="card-link">+</a>
+            <a (click)="handleLinesDecrement()" href="#" class="card-link">-</a>
           </span>
         </div>
         <div class="p-2 bd-highlight">
@@ -40,7 +40,7 @@
         </div>
         <div class="p-2 bd-highlight" style="font-size:18px;">
           <span class="signs">
-            <a href="#" class="card-link">-</a>
+            <a (click)="handleLinesIncrement()" href="#" class="card-link">+</a>
           </span>
         </div>
       </div>
