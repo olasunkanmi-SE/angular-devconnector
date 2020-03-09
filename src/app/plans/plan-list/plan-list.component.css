@@ -1,0 +1,66 @@
+.space-y {
+  margin-top: -20px;
+}
+
+.right-divider {
+  box-shadow: 2px 0 0px 0px #888;
+}
+
+.price {
+  font-size: 67px;
+  font-weight: 400;
+  line-height: 69px;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.dol {
+  font-size: 25px;
+  line-height: 30px;
+}
+
+.pricing {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.signs {
+  display: flex;
+  position: relative;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  width: 30px;
+  /* height: 30px; */
+  border: 2px solid #009fdb;
+  border-radius: 80%;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.signs_no {
+  display: flex;
+  position: relative;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  width: 30px;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.card {
+  border: none;
+}

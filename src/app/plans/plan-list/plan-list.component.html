@@ -1,0 +1,50 @@
+<div class="col-md-4 mb-3" style="box-shadow: 0 2px 4px rgba(57, 63, 72, 0.3);">
+  <div class="card" style="width: 21rem;">
+    <div class="card-body">
+      <h5 class="card-title">{{ plan.plan_name }}</h5>
+
+      <div class="d-flex bd-highlight mb-3">
+        <div class="p-2 bd-highlight">
+          <span class="pricing card-title " style="display: flex;">
+            <span class="dol">$</span>
+            <span class="price">{{ plan.charge_per_line }}</span>
+            <span
+              style="display:block !important; font-size:20px; margin-top:7px;"
+            >
+              per line</span
+            >
+          </span>
+        </div>
+        <div class="p-2 bd-highlight">
+          <fa-icon [icon]="faMobile" size="7x"></fa-icon>
+          <p style="color:cornflowerblue">
+            ${{ plan.monthly_charge_per_line }}/month for four lines
+          </p>
+        </div>
+      </div>
+      <div style="margin-top:-20px;" class="d-flex bd-highlight mb-3">
+        <div class="p-2 bd-highlight" style="font-size:18px;">
+          <span class="signs">
+            <a href="#" class="card-link">+</a>
+          </span>
+        </div>
+        <div class="p-2 bd-highlight">
+          <span class="signs_no">
+            <a
+              style="cursor: default; font-size:20px;"
+              href="#"
+              class="card-link"
+              >{{ plan.number_of_lines }}</a
+            >
+          </span>
+        </div>
+        <div class="p-2 bd-highlight" style="font-size:18px;">
+          <span class="signs">
+            <a href="#" class="card-link">-</a>
+          </span>
+        </div>
+      </div>
+      <app-plan-detail></app-plan-detail>
+    </div>
+  </div>
+</div>

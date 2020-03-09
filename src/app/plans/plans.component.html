@@ -1,0 +1,29 @@
+<section>
+  <div class="container text-center">
+    <div class="row spacing">
+      <div class="col-md-2 mb-3"></div>
+      <div class="col-md-8 mb-3">
+        <h1 class="h2-fat mb-3">
+          Explore AT&T Wireless Data Plans
+        </h1>
+      </div>
+      <div class="col-md-2"></div>
+    </div>
+    <div class="row space-y">
+      <div class="col-md-1 mb-3"></div>
+      <div class="col-md-10 mb-3">
+        <small
+          >Unlimited talk, text, and data on America’s largest and most reliable
+          network keep you connected with friends, family—and entertainment. The
+          AT&T Unlimited StarterSM or AT&T Unlimited ExtraSM is perfect for
+          casual streamers, but if you want to take your favorite shows on the
+          go, the Unlimited EliteSM plan is where it’s</small
+        >
+      </div>
+      <div class="col-md-1 mb-3"></div>
+    </div>
+    <div class="row spacing">
+      <app-plan-list *ngFor="let plan of plans" [plan]="plan"></app-plan-list>
+    </div>
+  </div>
+</section>
