@@ -45,7 +45,7 @@ export class PlanService {
       }
     }
   ];
-  @Output() linesToggle = new EventEmitter<Plan>();
+  @Output() plan = new EventEmitter<Plan>();
 
   constructor() {}
   allPlans() {
@@ -53,7 +53,7 @@ export class PlanService {
   }
 
   handleLinesToggle(plan: Plan) {
-    this.linesToggle.emit(plan);
+    this.plan.emit(plan);
   }
 
   getPlan(id: number) {

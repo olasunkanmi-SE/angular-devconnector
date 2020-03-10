@@ -9,8 +9,7 @@ import { faMobile } from "@fortawesome/free-solid-svg-icons";
 })
 export class PlanListComponent implements OnInit {
   faMobile = faMobile;
-  x;
-  firstPlan;
+
   @Input() plan: any;
   newPlan_name: string;
   newNumber_of_lines: number;
@@ -20,7 +19,6 @@ export class PlanListComponent implements OnInit {
   newCharge_per_line_other: number[] = [75, 65, 50, 40];
   monthly_chargexExtra: number[] = [75, 130, 150, 160];
   newCharge_per_line_others: number[] = [85, 75, 60, 50];
-  w = this.newCharge_per_line[3];
 
   constructor(private planservice: PlanService) {}
 
