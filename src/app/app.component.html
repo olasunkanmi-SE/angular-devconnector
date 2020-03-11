@@ -1,1 +1,34 @@
-Hello, Hi
+<section>
+  <div class="container ">
+    <div class="row text-center">
+      <div class="col-md-2 mb-3"></div>
+      <div class="col-md-8 mb-3">
+        <form [formGroup]="myForm" class="example-form">
+          <mat-form-field class="example-full-width" style="width:100%">
+            <input
+              type="text"
+              placeholder="Pick one"
+              aria-label="Number"
+              matInput
+              formControlName="search"
+              [matAutocomplete]="auto"
+            />
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let post of posts" [value]="post">
+                {{ post.title }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </form>
+      </div>
+      <div class="col-md-2 mb-3"></div>
+    </div>
+    <!-- <div class="row">
+      <div class="col-md-2 mb-3"></div>
+      <div class="col-md-8 mb-3 text-left">
+        <app-home *ngFor="let post of posts" [post]="post"></app-home>
+      </div>
+      <div class="col-md-2 mb-3"></div>
+    </div> -->
+  </div>
+</section>
