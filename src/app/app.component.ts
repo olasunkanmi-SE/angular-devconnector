@@ -10,9 +10,10 @@ import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 })
 export class AppComponent {
   posts: Post[];
-  @Output() allPosts = new EventEmitter();
   @Input() post: any;
   myForm: FormGroup;
+  autoCompleteList: any[];
+
   constructor(private dataservice: DataService) {}
 
   ngOnInit() {
@@ -23,6 +24,34 @@ export class AppComponent {
     this.myForm = new FormGroup({
       search: new FormControl("")
     });
+
+    this.getUserInput();
+  }
+
+  getUserInput() {
+    this.myForm.valueChanges.subscribe(userInput => {
+      let x = this.autoCompletePostList(userInput);
+      console.log(typeof x);
+    });
+  }
+
+  private autoCompletePostList(input) {
+    let filteredPost = this.filterPosts(input);
+    this.autoCompleteList = filteredPost;
+  }
+
+  filterPosts(searchParams) {
+    if (typeof searchParams != "string") {
+      return [];
+    }
+    if (searchParams === null || "") {
+      return [];
+    }
+    return searchParams
+      ? this.posts.filter(p =>
+          p.title.toLocaleLowerCase().indexOf(searchParams.toLocaleLowerCase())
+        )
+      : this.posts;
   }
 
   onSelectOption() {

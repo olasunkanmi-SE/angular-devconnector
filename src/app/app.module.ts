@@ -20,9 +20,10 @@ import { MatMenuModule } from "@angular/material/menu";
 import { HttpClientModule } from "@angular/common/http";
 import { MatOptionModule } from "@angular/material/core";
 import { ReactiveFormsModule } from "@angular/forms";
+import { TestComponent } from './components/test/test.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, SearchComponent],
+  declarations: [AppComponent, HomeComponent, SearchComponent, TestComponent],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
