@@ -2,13 +2,13 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const http = require('http');
-const myapp = require('./server/routes/app');
+const user = require('./server/routes/api/user');
 const mongoose = require('mongoose');
 const app = express();
 
 
 //Connect mongoose to database
-mongoose.connect('mongodb://localhost/test')
+mongoose.connect('mongodb://localhost/social')
     .then(() => console.log('connected to database successfully'))
     .catch(err => console.err());
 
@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'dist')));
 
 //API location
-app.use('/api/apps', myapp);
+app.use('/api/users', user);
 
 //Send all other requests to the angular App
 
