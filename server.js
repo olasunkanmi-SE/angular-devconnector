@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const http = require('http');
 const user = require('./server/routes/api/user');
+const auth = require('./server/routes/api/auth');
 const mongoose = require('mongoose');
 const app = express();
 
@@ -24,6 +25,7 @@ app.use(express.static(path.join(__dirname, 'dist')));
 
 //API location
 app.use('/api/users', user);
+app.use('/api/auth', auth);
 
 //Send all other requests to the angular App
 
