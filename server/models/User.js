@@ -24,6 +24,13 @@ const userSchema = new Schema({
         type: Date,
         default: Date.now
 
+    },
+    premium: {
+        plan: {
+            type: String,
+
+
+        }
     }
 });
 

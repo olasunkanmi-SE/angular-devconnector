@@ -5,7 +5,9 @@ const http = require('http');
 const user = require('./server/routes/api/user');
 const auth = require('./server/routes/api/auth');
 const mongoose = require('mongoose');
+const passport = require('passport');
 const app = express();
+
 
 
 //Connect mongoose to database
@@ -22,6 +24,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 //Angular DIST output folder
 app.use(express.static(path.join(__dirname, 'dist')));
+
+//Passport middleware
+app.use(passport.initialize());
+
+//passport Config
+require('./config/passport')(passport);
 
 //API location
 app.use('/api/users', user);

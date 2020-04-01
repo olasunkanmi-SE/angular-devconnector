@@ -5,6 +5,7 @@ const bcrypt = require('bcryptjs');
 const Joi = require('@hapi/joi')
 const jwt = require('jsonwebtoken');
 const keys = require('../../../config/default');
+const passport = require('passport');
 // import { enviroment } from '../../../src/environments/environment';
 
 
@@ -26,6 +27,10 @@ router.post('/', async (req, res) => {
     }
 
 
+})
+
+router.get('/current', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    res.json({ msg: 'Success' });
 })
 
 function validateUser(user) {
