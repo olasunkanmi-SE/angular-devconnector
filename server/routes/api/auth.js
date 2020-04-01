@@ -1,11 +1,11 @@
 const { User } = require('../../models/User');
 const express = require('express');
 const router = express.Router();
-const gravatar = require('gravatar');
-const _ = require('lodash');
 const bcrypt = require('bcryptjs');
 const Joi = require('@hapi/joi')
-
+const jwt = require('jsonwebtoken');
+const keys = require('../../../config/default');
+// import { enviroment } from '../../../src/environments/environment';
 
 
 
@@ -18,7 +18,9 @@ router.post('/', async (req, res) => {
         if (!user) return res.status(400).json({ validationErr: 'Invalid username or password' });
         const validPassword = await bcrypt.compare(req.body.password, user.password);
         if (!validPassword) return res.status(400).json({ validationErr: 'Invalid username or password' });
-        res.json({ login: 'true' });
+        const payload = { _id: user._id, email: user.email }
+        const token = await jwt.sign(payload, keys.jwtPrivateKey, { expiresIn: 3600 });
+        res.json({ success: true, token: `Bearer ${token}` });
     } catch (error) {
         console.log(error);
     }
