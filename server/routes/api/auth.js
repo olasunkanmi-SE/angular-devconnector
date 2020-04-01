@@ -6,6 +6,7 @@ const Joi = require('@hapi/joi')
 const jwt = require('jsonwebtoken');
 const keys = require('../../../config/default');
 const passport = require('passport');
+const _ = require('lodash');
 // import { enviroment } from '../../../src/environments/environment';
 
 
@@ -30,7 +31,7 @@ router.post('/', async (req, res) => {
 })
 
 router.get('/current', passport.authenticate('jwt', { session: false }), async (req, res) => {
-    res.json({ msg: 'Success' });
+    res.json({ user: _.pick(req.user, ['_id', 'name', 'email']) });
 })
 
 function validateUser(user) {
