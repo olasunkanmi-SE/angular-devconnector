@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-const Joi = require('@hapi/joi');
+
 
 
 const profileSchema = new Schema({
@@ -12,9 +12,13 @@ const profileSchema = new Schema({
     handle: {
         type: String,
         required: true,
+        min: 2,
         max: 40
     },
     company: {
+        type: String
+    },
+    status: {
         type: String
     },
     website: {

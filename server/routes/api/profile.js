@@ -1,17 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
 const passport = require('passport');
 const { Profile } = require('../../models/Profile');
-const { User } = require('../../models/User');
-const error = require('../../../server/error');
+const err = require('../../../server/error');
+const validate = require('../../validation/profile');
 
 
-router.get('/', passport.authenticate('jwt', { session: false }), async (req, res) => {
+router.get('/current/user', passport.authenticate('jwt', { session: false }), async (req, res) => {
 
     try {
-        const profile = await Profile.findOne({ user: req.user._id });
-        if (!profile) return res.status(404).json(error.profileError.noprofile);
+        const profile = (await Profile.findOne({ user: req.user._id }));
+        await profile.populate('user', ['name', 'avatar']).execPopulate();
+        if (!profile) return res.status(404).json(err.profileError.noprofile);
         res.send(profile);
     } catch (error) {
         console.log(error);
@@ -22,7 +22,8 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (req, re
 
 router.post('/', passport.authenticate('jwt', { session: false }), async (req, res) => {
     try {
-
+        const { errors, isValid } = validate(req.body);
+        if (!isValid) return res.status(400).json(errors);
         const profileFields = {};
         profileFields.user = req.user.id;
         if (req.body.handle) profileFields.handle = req.body.handle;
@@ -38,15 +39,15 @@ router.post('/', passport.authenticate('jwt', { session: false }), async (req, r
         }
         // Socials
         profileFields.socials = {};
-        if (req.body.youtube) profileFields.social.youtube = req.body.youtube;
-        if (req.body.twitter) profileFields.social.twitter = req.body.twitter;
-        if (req.body.facebook) profileFields.social.facebook = req.body.facebook;
-        if (req.body.linkedin) profileFields.social.linkedin = req.body.linkedin;
-        if (req.body.instagram) profileFields.social.instagram = req.body.instagram;
+        if (req.body.youtube) profileFields.socials.youtube = req.body.youtube;
+        if (req.body.twitter) profileFields.socials.twitter = req.body.twitter;
+        if (req.body.facebook) profileFields.socials.facebook = req.body.facebook;
+        if (req.body.linkedin) profileFields.socials.linkedin = req.body.linkedin;
+        if (req.body.instagram) profileFields.socials.instagram = req.body.instagram;
 
         let profile = await Profile.findOne({ user: req.user.id });
         if (profile) {
-            await Profile.findByIdAndUpdate(
+            profile = await Profile.findByIdAndUpdate(
                 { _id: profile._id },
                 { $set: profileFields },
                 { new: true }
@@ -54,7 +55,7 @@ router.post('/', passport.authenticate('jwt', { session: false }), async (req, r
             return res.json(profile);
         } else {
             let profile = await Profile.findOne({ handle: profileFields.handle });
-            if (profile) return res.status(400).json(error.profileError.handleExists);
+            if (profile) return res.status(400).json(err.profileError.handleExists);
             profile = new Profile(profileFields);
             await profile.save();
             res.json(profile);
