@@ -4,9 +4,11 @@ const path = require('path');
 const http = require('http');
 const user = require('./server/routes/api/user');
 const auth = require('./server/routes/api/auth');
+const profile = require('./server/routes/api/profile')
 const mongoose = require('mongoose');
 const passport = require('passport');
 const app = express();
+
 
 
 
@@ -14,6 +16,8 @@ const app = express();
 mongoose.connect('mongodb://localhost/social')
     .then(() => console.log('connected to database successfully'))
     .catch(err => console.err());
+
+mongoose.Promise = global.Promise;
 
 //Api files for interacting with mongoDB
 
@@ -34,6 +38,7 @@ require('./config/passport')(passport);
 //API location
 app.use('/api/users', user);
 app.use('/api/auth', auth);
+app.use('/api/profiles', profile);
 
 //Send all other requests to the angular App
 

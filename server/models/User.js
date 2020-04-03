@@ -17,6 +17,10 @@ const userSchema = new Schema({
         unique: true,
         required: true
     },
+    repeat_password: {
+        type: String,
+        required: true
+    },
     avatar: {
         type: String,
     },
@@ -25,23 +29,24 @@ const userSchema = new Schema({
         default: Date.now
 
     },
-    premium: {
-        plan: {
-            type: String,
-
-
-        }
+    gender: {
+        type: String,
+        enum: ['male', 'female'],
+        required: true
     }
 });
 
-const User = mongoose.model('user', userSchema);
+const User = mongoose.model('User', userSchema);
 
 function validateUser(user) {
     const Schema = Joi.object().keys({
         name: Joi.string().min(2).max(50).required(),
         email: Joi.string().required().email(),
         password: Joi.string().required(),
-        avatar: Joi.string()
+        repeat_password: Joi.ref('password'),
+        avatar: Joi.string(),
+        gender: Joi.string().required().valid('male', 'female')
+
 
     });
 

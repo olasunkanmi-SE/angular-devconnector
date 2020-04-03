@@ -7,8 +7,24 @@ const bcrypt = require('bcryptjs');
 
 
 router.get('/', async (req, res) => {
-    const users = await User.find();
-    users.length > 0 ? res.json(users) : res.status(404).send('No users found');
+    const users = await User.find().select('_id name email avatar date');
+    response = {
+        count: users.length,
+        users: users.map(user => {
+            return {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                avatar: user.avatar,
+                date: user.date,
+                request: {
+                    type: 'GET',
+                    url: `http://localhost:3000/api/users/${user._id}`
+                }
+            }
+        })
+    }
+    users.length > 0 ? res.json(response) : res.status(404).send('No users found');
 });
 
 router.post('/register', async (req, res) => {
@@ -22,6 +38,8 @@ router.post('/register', async (req, res) => {
             name: req.body.name,
             email: req.body.email,
             password: req.body.password,
+            repeat_password: req.body.repeat_password,
+            gender: req.body.gender,
             avatar,
         });
 
@@ -29,8 +47,20 @@ router.post('/register', async (req, res) => {
         user.password = await bcrypt.hash(user.password, salt);
 
         await user.save();
-        //this uses the pick feature of lodash to display picked user variables
-        return res.json({ user: _.pick(user, ['_id', 'name', 'email', 'date']) });
+        return res.status(201).json({
+            message: "User created successfully",
+            createdUser: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                avatar: user.avatar,
+                date: user.date,
+                request: {
+                    type: 'GET',
+                    url: `http://localhost:3000/api/users/${user._id}`
+                }
+            }
+        });
     } catch (error) {
         console.log(error);
     }
