@@ -100,11 +100,12 @@ const profileSchema = new Schema({
             fieldofstudy: {
                 type: String
             },
-            startdate: {
+            startyear: {
                 type: Date,
-                required: true
+                // required: true
+                default: Date.now
             },
-            enddate: {
+            endyear: {
                 type: Date,
             },
             grade: {

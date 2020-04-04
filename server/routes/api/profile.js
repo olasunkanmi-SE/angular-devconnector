@@ -5,6 +5,7 @@ const { Profile } = require('../../models/Profile');
 const err = require('../../../server/error');
 const validateProfile = require('../../validation/profile');
 const validateExperience = require('../../validation/experience');
+const validateEducation = require('../../validation/education');
 
 
 //Get Current Profile
@@ -139,6 +140,7 @@ router.post('/experience', passport.authenticate('jwt', { session: false }), asy
         profile.experience.unshift(userExperience);
         await profile.save();
         return res.status(201).json(profile);
+
     } catch (err) {
         return res.status(400).json(err)
 
@@ -147,6 +149,30 @@ router.post('/experience', passport.authenticate('jwt', { session: false }), asy
 })
 
 router.post('/education', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    try {
+        const { errors, isValid } = validateEducation(req.body);
+        if (!isValid) return res.status(400).json(errors);
+        let profile = await Profile.findOne({ user: req.user.id });
+        const userEducation = {
+            school: req.body.school,
+            degree: req.body.degree,
+            fieldofstudy: req.body.fieldofstudy,
+            startyear: req.body.startyear,
+            endyear: req.body.endyear,
+            grade: req.body.grade,
+            description: req.body.description
+
+        }
+
+        profile.education.unshift(userEducation);
+        await profile.save();
+        return res.status(201).json(profile);
+
+
+    } catch (err) {
+        console.log(err);
+
+    }
 
 })
 
