@@ -7,54 +7,44 @@ module.exports = function validateUserProfileInput(data) {
     data.status = !isEmpty(data.status) ? data.status : "";
     data.skills = !isEmpty(data.skills) ? data.skills : "";
 
-    if (!Validator.isLength(data.handle, { min: 2, max: 40 })) {
-        errors.handle = "Handle needs to be between 2 and 40 characters"
+    if (!Validator.isLength(data.handle, { min: 2, max: 40 })) errors.handle = "Handle needs to be between 2 and 40 characters"
 
-    }
+    if (Validator.isEmpty(data.handle)) errors.handle = 'please enter a profile handle'
 
-    if (Validator.isEmpty(data.handle)) {
-        errors.handle = 'Profile handle is required'
-    }
+    if (Validator.isEmpty(data.status)) errors.status = 'User status is required'
 
-    if (Validator.isEmpty(data.status)) {
-        errors.status = 'User status is required'
-    }
-
-    if (Validator.isEmpty(data.skills)) {
-        errors.skills = 'User skills is required'
-    }
-
+    if (Validator.isEmpty(data.skills)) errors.skills = 'User skills is required'
 
     if (!isEmpty(data.twitter)) {
         if (!Validator.isURL(data.twitter)) {
-            errors.twitter = 'not a valid URL'
+            errors.twitter = 'please enter a valid URL'
         }
     }
 
     if (!isEmpty(data.website)) {
         if (!Validator.isURL(data.website)) {
-            errors.website = 'not a valid URL'
+            errors.website = 'please enter a valid URL'
         }
     }
 
 
     if (!isEmpty(data.facebook)) {
         if (!Validator.isURL(data.facebook)) {
-            errors.facebook = 'not a valid URL'
+            errors.facebook = 'please enter a valid URL'
         }
     }
 
 
     if (!isEmpty(data.instagram)) {
         if (!Validator.isURL(data.instagram)) {
-            errors.instagram = 'not a valid URL'
+            errors.instagram = 'please enter a valid URL'
         }
     }
 
 
     if (!isEmpty(data.linkedin)) {
         if (!Validator.isURL(data.linkedin)) {
-            errors.linkedin = 'not a valid URL'
+            errors.linkedin = 'please enter a valid URL'
         }
     }
 

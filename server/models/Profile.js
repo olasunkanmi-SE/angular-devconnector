@@ -46,6 +46,7 @@ const profileSchema = new Schema({
             },
             employmenttype: {
                 type: String,
+                required: true,
                 enum: ['Full-time', 'Part-time', 'Self-employed', 'Freelance', 'Contract', 'internship', 'Apprenticeship']
             },
             company: {
@@ -57,18 +58,27 @@ const profileSchema = new Schema({
             },
             current: {
                 type: Boolean,
+                default: true
+            },
+            endlastposition: {
+                type: Boolean,
                 default: false
             },
             startdate: {
                 type: Date,
-                required: true
+                default: Date.now,
+                // required: true
             },
             enddate: {
                 type: Date
             },
             updateheadline: {
                 type: Boolean,
-                default: false
+                default: true
+            },
+            headline: {
+                type: String,
+                required: true
             },
             description: {
                 type: String,
