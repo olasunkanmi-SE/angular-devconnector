@@ -6,7 +6,7 @@ const { Post } = require('../../models/Post');
 
 router.post('/', passport.authenticate('jwt', { session: false }), async (req, res) => {
     let post = new Post({
-        body: req.body.body,
+        body: req.body.text,
         name: req.body.name,
         avatar: req.body.avatar,
         user: req.user.id

@@ -8,7 +8,7 @@ const postSchema = new Schema({
         required: true
     },
 
-    body: {
+    text: {
         type: String,
         required: true
     },
@@ -29,7 +29,7 @@ const postSchema = new Schema({
                 required: true
             },
 
-            body: {
+            text: {
                 type: String,
                 required: true
             },
@@ -54,6 +54,6 @@ const postSchema = new Schema({
 
 });
 
-const Post = mongoose.model('post'.postSchema);
+const Post = mongoose.model('post', postSchema);
 
 exports.Post = Post;
