@@ -29,6 +29,17 @@ const postSchema = new Schema({
                 required: true
             },
 
+        }
+    ],
+
+    comments: [
+        {
+            user: {
+                type: Schema.Types.ObjectId,
+                ref: 'User',
+                required: true
+            },
+
             text: {
                 type: String,
                 required: true
