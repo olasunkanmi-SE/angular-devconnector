@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const { Profile } = require('../../models/Profile');
+const { User } = require('../../models/User');
 const err = require('../../../server/error');
 const validateProfile = require('../../validation/profile');
 const validateExperience = require('../../validation/experience');
@@ -18,7 +19,7 @@ router.get('/current/user', passport.authenticate('jwt', { session: false }), as
         if (!profile) return res.status(404).json(err.profileError.noUserProfile);
         return res.status(201).json(profile);
     } catch (error) {
-        return res.status(404).json(error);
+        return res.status(400).json(error);
 
     }
 
@@ -109,13 +110,20 @@ router.get('/:id', async (req, res) => {
 
 
 router.get('/', (req, res) => {
-    Profile.find().populate('user', ['name', 'avatar'])
-        .then(profiles => {
-            if (!profiles) return res.status(404).json(err.profileError.noProfiles)
-            res.status(201).json(profiles);
-        })
+    try {
+        Profile.find().populate('user', ['name', 'avatar'])
+            .then(profiles => {
+                if (!profiles) return res.status(404).json(err.profileError.noProfiles)
+                res.status(201).json(profiles);
+            })
+
+    } catch (error) {
+        res.status(400).json(error)
+    }
 
 })
+
+//Create a new experience
 
 router.post('/experience', passport.authenticate('jwt', { session: false }), async (req, res) => {
     try {
@@ -138,21 +146,23 @@ router.post('/experience', passport.authenticate('jwt', { session: false }), asy
         }
         //Unshift like push is used to add data to an array but to the beginning of the array
         profile.experience.unshift(userExperience);
-        await profile.save();
+        await profile.unshift({ message: 'profile created successfully' }).save();
         return res.status(201).json(profile);
 
-    } catch (err) {
-        return res.status(400).json(err)
+    } catch (error) {
+        res.status(400).json(error)
 
     }
 
 })
 
+//Create new Education
+
 router.post('/education', passport.authenticate('jwt', { session: false }), async (req, res) => {
     try {
         const { errors, isValid } = validateEducation(req.body);
         if (!isValid) return res.status(400).json(errors);
-        let profile = await Profile.findOne({ user: req.user.id });
+
         const userEducation = {
             school: req.body.school,
             degree: req.body.degree,
@@ -164,16 +174,91 @@ router.post('/education', passport.authenticate('jwt', { session: false }), asyn
 
         }
 
+        let profile = await Profile.findOne({ user: req.user.id });
         profile.education.unshift(userEducation);
         await profile.save();
         return res.status(201).json(profile);
 
 
-    } catch (err) {
-        console.log(err);
+    } catch (error) {
+        res.status(400).json(error)
 
     }
 
 })
+
+
+//Delete an experience by ID
+
+router.delete('/experience/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    try {
+        let profile = await Profile.findOne({ user: req.user.id });
+        const removeProfile = profile.experience.map((items) => items.id).indexOf(req.params.id);
+        console.log(removeProfile)
+        profile.experience.splice(removeProfile, 1);
+        profile.save();
+        return res.status(201).json(profile.push());
+
+    } catch (error) {
+        res.status(400).json(error)
+
+    }
+})
+
+// Delete an Education by ID
+
+router.delete('/education/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    try {
+        let profile = await Profile.findOne({ user: req.user.id });
+        const removeEducation = profile.education.map(items => items.id).indexOf(req.params.id);
+        profile.education.splice(removeEducation, 1)
+        return res.status(201).json(profile);
+
+    } catch (error) {
+        res.status(400).json(error)
+    }
+})
+
+//Delete a user and profile
+
+router.delete('/', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    try {
+        await Profile.findOneAndRemove({ user: req.user.id });
+        await User.findOneAndRemove({ _id: req.user.id });
+        return res.status(201).json({ success: true });
+
+    } catch (error) {
+        res.status(400).json(error)
+
+    }
+})
+
+// router.put('/education', passport.authenticate('jwt', { session: false }), async (req, res) => {
+//     try {
+//         let profile = await Profile.findOne({ user: req.user.id });
+//         if (profile) {
+//             const userEducation = {
+//                 school: req.body.school,
+//                 degree: req.body.degree,
+//                 fieldofstudy: req.body.fieldofstudy,
+//                 startyear: req.body.startyear,
+//                 endyear: req.body.endyear,
+//                 grade: req.body.grade,
+//                 description: req.body.description
+
+//             }
+//             profile = await Profile.findByIdAndUpdate(
+//                 { _id: profile._id, education: { $elemMatch: { _id: req.params } } },
+//                 { $push: { education: userEducation } },
+//                 { new: true }
+//             );
+//             return res.status(201).send(profile);
+//         }
+
+//     } catch (error) {
+//         console.log(error);
+
+//     }
+// })
 
 module.exports = router;
