@@ -4,7 +4,8 @@ const path = require('path');
 const http = require('http');
 const user = require('./server/routes/api/user');
 const auth = require('./server/routes/api/auth');
-const profile = require('./server/routes/api/profile')
+const profile = require('./server/routes/api/profile');
+const post = require('./server/routes/api/post');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const app = express();
@@ -39,6 +40,7 @@ require('./config/passport')(passport);
 app.use('/api/users', user);
 app.use('/api/auth', auth);
 app.use('/api/profiles', profile);
+app.use('/api/posts', post);
 
 //Send all other requests to the angular App
 
