@@ -31,7 +31,12 @@ router.post('/', passport.authenticate('jwt', { session: false }), async (req, r
 router.get('/', passport.authenticate('jwt', { session: false }), async (req, res) => {
     try {
         const posts = await Post.find().sort({ date: -1 });
-        posts.length > 0 ? res.status(201).json(posts) : res.status(400).json({ error: 'no posts found' });
+        response = {
+            count: posts.length,
+            posts: posts,
+
+        }
+        posts.length > 0 ? res.status(201).json(response) : res.status(400).json({ error: 'no posts found' });
     } catch (error) {
         res.status(400).json(error);
 
@@ -59,11 +64,53 @@ router.delete('/:id', passport.authenticate('jwt', { session: false }), async (r
             post.remove();
             return res.status(201).json({ success: true })
         } else {
-            return res.send(401).json({ error: 'you cant delete post' })
+            return res.send(401).json({ unauthorized: 'you cant delete post' })
         }
     } catch (error) {
+        res.status(400).json(error);
+    }
+})
+
+// Like and Unlike a Post
+
+router.post('/like/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    try {
+        let post = await Post.findById(req.params.id);
+        let likes = post.likes;
+        if (likes.filter(item => item.user.toString() == req.user.id).length > 0) {
+            const removeLike = likes.map(like => like.user.toString()).indexOf(req.user.id);
+            likes.splice(removeLike, 1);
+            post.save();
+            return res.status(201).json({ unliked: true });
+        }
+
+        if ((likes.filter(item => item.user.toString() == req.user.id).length == 0) || likes.filter(item => item.user.toString() !== req.user.id)) {
+            likes.unshift({ user: req.user.id });
+            post.save()
+            return res.status(201).json(post);
+        }
+
+
+        else {
+            likes.unshift({ user: req.user.id });
+            post.save()
+            return res.status(201).json(post);
+        }
+
+
+
+    } catch (error) {
+        res.status(400).json(error);
 
     }
 })
+
+router.post('/comment/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
+
+})
+
+
+
+
 
 module.exports = router;
