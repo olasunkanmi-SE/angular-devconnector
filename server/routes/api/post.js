@@ -105,8 +105,81 @@ router.post('/like/:id', passport.authenticate('jwt', { session: false }), async
     }
 })
 
-router.post('/comment/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
+//Create a comment
 
+router.post('/comment/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    try {
+        let post = await Post.findById(req.params.id);
+        let comments = post.comments;
+        const newComment = {
+            user: req.user.id,
+            text: req.body.text,
+            name: req.user.name,
+            avatar: req.user.avatar
+        }
+        comments.push(newComment);
+        post.save();
+        return res.status(201).json(post)
+    } catch (error) {
+        console.log(error);
+
+    }
+})
+
+//Reply a comment
+
+router.post('/comment/:id/:commentId', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    try {
+        let post = await Post.findById(req.params.id);
+        let comments = post.comments;
+        if (comments.filter(comment => comment.id == req.params.commentId)) {
+            const reply = {
+                user: req.user.id,
+                text: req.body.text,
+                name: req.user.name,
+                avatar: req.user.avatar
+            }
+            comments.map(comment => {
+                if (comment.id == req.params.commentId) {
+                    comment.replies.unshift(reply);
+                }
+            });
+
+            post.save();
+
+            return res.status(201).json(post);
+
+
+        }
+
+    } catch (error) {
+        console.log(error);
+    }
+})
+
+//Remove a Comment
+
+router.delete('/comment/:id/:commentId', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    try {
+        let post = await Post.findById(req.params.id);
+        let comments = post.comments;
+
+        comments.map(comment => {
+            if (comment.user.toString() == req.user.id && comment.id == req.params.commentId) {
+                comment.remove();
+                post.save();
+                return res.status(201).json(post);
+            } else {
+                return res.status(400).json({ error: 'you cannot delete this comment' });
+
+            }
+        });
+
+
+
+    } catch (error) {
+        console.log(error);
+    }
 })
 
 
