@@ -128,7 +128,7 @@ router.post('/comment/:id', passport.authenticate('jwt', { session: false }), as
 
 //Reply a comment
 
-router.post('/comment/:id/:commentId', passport.authenticate('jwt', { session: false }), async (req, res) => {
+router.post('/comment/reply/:id/:commentId', passport.authenticate('jwt', { session: false }), async (req, res) => {
     try {
         let post = await Post.findById(req.params.id);
         let comments = post.comments;
@@ -181,6 +181,86 @@ router.delete('/comment/:id/:commentId', passport.authenticate('jwt', { session:
         console.log(error);
     }
 })
+
+router.delete('/comment/reply/:id/:replyId', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    try {
+        let post = await Post.findById(req.params.id);
+        let comments = post.comments;
+        if (comments.filter(comment => comment.replies.map(reply => {
+            if (reply.user.toString() == req.user.id) {
+                if (comments.filter(comment => comment.replies.map(reply => {
+                    if (reply.id === req.params.replyId) {
+                        comments.filter(comment => {
+                            let removeReply = comment.replies.map(item => item.id).indexOf(req.params.replyId);
+                            comment.replies.splice(removeReply, 1);
+                        })
+                        post.save();
+                        return res.status(201).json(post);
+                    }
+                }
+                ))) { }
+
+            }
+            //  else if (comments.filter(comment => comment.replies.map(reply => {
+            //     if (reply.user.toString() != req.user.id) {
+            //         return res.status(400).json({ error: 'you are not authorized to delete the reply' });
+
+            //     }
+            // })))
+            {
+
+            }
+
+        }
+
+
+        ))) {
+
+        }
+
+
+
+
+    } catch (error) {
+        console.log(error);
+    }
+})
+
+
+// Remove a reply
+// router.delete('/comment/reply/:id/:replyId', passport.authenticate('jwt', { session: false }), async (req, res) => {
+//     try {
+//         let post = await Post.findById(req.params.id);
+//         let comments = post.comments;
+
+//         comments.filter(comment => {
+//             if (comment.user.toString() == req.user.id) {
+//                 let replies = comments.map(comment => comment.replies.map(reply => reply.id));
+//                 let reply = replies.filter(reply => reply);
+//                 for (let i = 0; i < reply.length; i++) {
+//                     let removeReply = reply[i].indexOf(req.params.replyId);
+//                     reply = reply[i].splice(removeReply, 1);
+//                     post.save();
+//                     return res.status(201).json(post);
+
+//                 }
+
+
+//                 // comments.splice(reply, 1);
+//                 // post.save();
+//                 // return res.status(201).json(post);
+//             } else {
+//                 return res.status(400).json({ error: 'you cannot delete this reply' });
+
+//             }
+//         });
+
+
+
+//     } catch (error) {
+//         console.log(error);
+//     }
+// })
 
 
 
