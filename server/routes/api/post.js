@@ -117,7 +117,7 @@ router.post('/comment/:id', passport.authenticate('jwt', { session: false }), as
             name: req.user.name,
             avatar: req.user.avatar
         }
-        comments.push(newComment);
+        comments.unshift(newComment);
         post.save();
         return res.status(201).json(post)
     } catch (error) {
@@ -181,7 +181,7 @@ router.delete('/comment/:id/:commentId', passport.authenticate('jwt', { session:
         console.log(error);
     }
 })
-
+//delete reply
 router.delete('/comment/reply/:id/:replyId', passport.authenticate('jwt', { session: false }), async (req, res) => {
     try {
         let post = await Post.findById(req.params.id);
