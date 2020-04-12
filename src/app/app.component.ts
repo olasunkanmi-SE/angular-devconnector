@@ -1,5 +1,3 @@
-import { Recipe } from "./recipes/recipe.model";
-import { RecipesService } from "./shared/recipes.service";
 import { Component, OnInit } from "@angular/core";
 
 @Component({
@@ -8,12 +6,7 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./app.component.css"]
 })
 export class AppComponent {
-  loadedPage: string = "recipes";
-  onNavigate(feature: string) {
-    this.loadedPage = feature;
-  }
-
-  constructor(private recipesservice: RecipesService) {}
+  constructor() {}
 
   ngOnInit() {}
 }
