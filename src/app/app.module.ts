@@ -26,10 +26,10 @@ import { AuthGuard } from "./shared/auth.guard";
     ServerComponent,
     UserComponent,
     UserEditComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [AuthGuard, AuthService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

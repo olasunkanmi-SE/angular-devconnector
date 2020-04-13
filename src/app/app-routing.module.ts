@@ -19,8 +19,8 @@ const appRoute: Routes = [
     component: UsersComponent,
     children: [
       { path: ":id", component: UserComponent },
-      { path: ":id/edit", component: UserEditComponent }
-    ]
+      { path: ":id/edit", component: UserEditComponent },
+    ],
   },
   {
     path: "servers",
@@ -31,22 +31,32 @@ const appRoute: Routes = [
       {
         path: ":id/edit",
         component: EditServerComponent,
-        canDeactivate: [CanDeactivateGuard]
-      }
-    ]
+        canDeactivate: [CanDeactivateGuard],
+      },
+    ],
+  },
+  // {
+  //   path: "page-not-found",
+  //   component: PageNotFoundComponent,
+  // },
+  // {
+  //   path: "**",
+  //   redirectTo: "/page-not-found",
+  // },
+  {
+    path: "customers",
+    loadChildren: () =>
+      import("./customers/customers.module").then((m) => m.CustomersModule),
   },
   {
-    path: "page-not-found",
-    component: PageNotFoundComponent
+    path: "",
+    redirectTo: "",
+    pathMatch: "full",
   },
-  {
-    path: "**",
-    redirectTo: "/page-not-found"
-  }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(appRoute)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}
