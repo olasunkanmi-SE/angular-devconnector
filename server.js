@@ -1,3 +1,4 @@
+const error = require('./server/middleware/error');
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -41,6 +42,9 @@ app.use('/api/users', user);
 app.use('/api/auth', auth);
 app.use('/api/profiles', profile);
 app.use('/api/posts', post);
+
+//Log Error
+app.use(error)
 
 //Send all other requests to the angular App
 

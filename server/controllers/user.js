@@ -24,8 +24,8 @@ exports.getUsers = async (req, res, next) => {
             })
         }
         users.length > 0 ? res.json(response) : res.status(404).send('No users found');
-    } catch (error) {
-        return res.status(400).send(error);
+    } catch (ex) {
+        next(ex);
 
     }
 
