@@ -11,23 +11,21 @@ const validateEducation = require('../../validation/education');
 
 //Get Current Profile
 
-router.get('/current/user', passport.authenticate('jwt', { session: false }), async (req, res) => {
+router.get('/current/user', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
 
     try {
         const profile = (await Profile.findOne({ user: req.user._id }));
         await profile.populate('user', ['name', 'avatar']).execPopulate();
         if (!profile) return res.status(404).json(err.profileError.noUserProfile);
         return res.status(201).json(profile);
-    } catch (error) {
-        return res.status(400).json(error);
-
+    } catch (ex) {
+        next(ex);
     }
-
 });
 
 //Create and Update Profile
 
-router.post('/', passport.authenticate('jwt', { session: false }), async (req, res) => {
+router.post('/', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
     try {
         const { errors, isValid } = validateProfile(req.body);
         if (!isValid) return res.status(400).json(errors);
@@ -70,46 +68,43 @@ router.post('/', passport.authenticate('jwt', { session: false }), async (req, r
 
         }
 
-    } catch (error) {
-        return res.status(400).json(error)
-
+    } catch (ex) {
+        next(ex);
     }
 
 })
 
 //Get Profile by Handle
 
-router.get('/handle/:handle', async (req, res) => {
+router.get('/handle/:handle', async (req, res, next) => {
     try {
         let profile = await Profile.findOne({ handle: req.params.handle });
         await profile.populate('user', ['name', 'avatar']).execPopulate();
         if (!profile) return res.status.json(err.profileError.noProfile);
         res.json(profile);
-    } catch (error) {
-        return res.status(400).json(error)
-
+    } catch (ex) {
+        next(ex);
     }
 
 })
 
 //Get Profile by Id
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', async (req, res, next) => {
     try {
         let profile = await Profile.findById({ _id: req.params.id });
         await profile.populate('user', ['name', 'avatar']).execPopulate();
         if (!profile) return res.status.json(err.profileError.noProfile);
         res.json(profile);
-    } catch (error) {
-        return res.status(400).json(error)
-
+    } catch (ex) {
+        next(ex);
     }
 })
 
 //Get all profiles
 
 
-router.get('/', (req, res) => {
+router.get('/', (req, res, next) => {
     try {
         Profile.find().populate('user', ['name', 'avatar'])
             .then(profiles => {
@@ -117,15 +112,14 @@ router.get('/', (req, res) => {
                 res.status(201).json(profiles);
             })
 
-    } catch (error) {
-        res.status(400).json(error)
+    } catch (ex) {
+        next(ex);
     }
-
 })
 
 //Create a new experience
 
-router.post('/experience', passport.authenticate('jwt', { session: false }), async (req, res) => {
+router.post('/experience', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
     try {
         const { errors, isValid } = validateExperience(req.body);
         if (!isValid) return res.status(400).json(errors);
@@ -149,16 +143,15 @@ router.post('/experience', passport.authenticate('jwt', { session: false }), asy
         await profile.unshift({ message: 'profile created successfully' }).save();
         return res.status(201).json(profile);
 
-    } catch (error) {
-        res.status(400).json(error)
-
+    } catch (ex) {
+        next(ex);
     }
 
 })
 
 //Create new Education
 
-router.post('/education', passport.authenticate('jwt', { session: false }), async (req, res) => {
+router.post('/education', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
     try {
         const { errors, isValid } = validateEducation(req.body);
         if (!isValid) return res.status(400).json(errors);
@@ -179,18 +172,15 @@ router.post('/education', passport.authenticate('jwt', { session: false }), asyn
         await profile.save();
         return res.status(201).json(profile);
 
-
-    } catch (error) {
-        res.status(400).json(error)
-
+    } catch (ex) {
+        next(ex);
     }
-
 })
 
 
 //Delete an experience by ID
 
-router.delete('/experience/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
+router.delete('/experience/:id', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
     try {
         let profile = await Profile.findOne({ user: req.user.id });
         const removeProfile = profile.experience.map((items) => items.id).indexOf(req.params.id);
@@ -199,37 +189,35 @@ router.delete('/experience/:id', passport.authenticate('jwt', { session: false }
         profile.save();
         return res.status(201).json(profile.push());
 
-    } catch (error) {
-        res.status(400).json(error)
-
+    } catch (ex) {
+        next(ex);
     }
 })
 
 // Delete an Education by ID
 
-router.delete('/education/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
+router.delete('/education/:id', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
     try {
         let profile = await Profile.findOne({ user: req.user.id });
         const removeEducation = profile.education.map(items => items.id).indexOf(req.params.id);
         profile.education.splice(removeEducation, 1)
         return res.status(201).json(profile);
 
-    } catch (error) {
-        res.status(400).json(error)
+    } catch (ex) {
+        next(ex);
     }
 })
 
 //Delete a user and profile
 
-router.delete('/', passport.authenticate('jwt', { session: false }), async (req, res) => {
+router.delete('/', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
     try {
         await Profile.findOneAndRemove({ user: req.user.id });
         await User.findOneAndRemove({ _id: req.user.id });
         return res.status(201).json({ success: true });
 
-    } catch (error) {
-        res.status(400).json(error)
-
+    } catch (ex) {
+        next(ex);
     }
 })
 

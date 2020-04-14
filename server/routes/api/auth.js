@@ -12,7 +12,7 @@ const _ = require('lodash');
 
 
 
-router.post('/', async (req, res) => {
+router.post('/', async (req, res, next) => {
     const { error } = validateUser(req.body);
     if (error) return res.status(400).send(error.details[0].message);
     try {
@@ -23,15 +23,19 @@ router.post('/', async (req, res) => {
         const payload = { _id: user._id, email: user.email }
         const token = await jwt.sign(payload, keys.jwtPrivateKey, { expiresIn: 3600 });
         res.json({ success: true, token: `Bearer ${token}` });
-    } catch (error) {
-        console.log(error);
-    }
+    } catch (ex) {
 
+        next(ex);
+    }
 
 })
 
-router.get('/current', passport.authenticate('jwt', { session: false }), async (req, res) => {
-    res.json({ user: _.pick(req.user, ['_id', 'name', 'email']) });
+router.get('/current', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+    try {
+        res.json({ user: _.pick(req.user, ['_id', 'name', 'email']) });
+    } catch (ex) {
+        next(ex);
+    }
 })
 
 function validateUser(user) {

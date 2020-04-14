@@ -11,21 +11,41 @@ const post = require('./server/routes/api/post');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const app = express();
+const fs = require('fs');
 
 
-//Error Logging with Winston to a log file
-// winston.add(winston.transports.File, { filename: 'logfile.log' })
+
+
+const myFormat = winston.format.printf(info => {
+    return `${info.timestamp} ${info.level}: ${info.message}`;
+});
+
+//Error and exception Logging with Winston to a log file
 let logger = winston.createLogger({
-    level: 'error',
-    format: winston.format.json(),
-    defaultMeta: { service: 'user-service' },
+    level: 'debug',
+    format: winston.format.combine(winston.format.timestamp(), myFormat),
     transports: [
-        new winston.transports.File({ filename: 'logs/error.log' })
+        new winston.transports.File({ filename: 'logs/error.log', level: error }),
+        new winston.transports.File({ filename: 'logs/combined.log' }),
+        new winston.transports.Console({ colorize: true, prettyPrint: true })
     ],
     exceptionHandlers: [
-        new winston.transports.File({ filename: 'logs/exceptions.log' })
-    ]
+        new winston.transports.File({ filename: 'logs/exceptions.log' }),
+        new winston.transports.File({ filename: 'logs/combined.log' }),
+
+    ],
+    exitOnError: false
+
 });
+
+process.on('unhandledRejection', (reason, promise) => {
+    logger.debug(reason);
+})
+
+process.on('uncaughtException', (err) => {
+    logger.debug(err);
+})
+
 
 
 //Connect mongoose to database
@@ -73,3 +93,5 @@ app.set('port', port);
 const server = http.createServer(app);
 
 server.listen(port, () => console.log(`Running on localhost:${port}`));
+
+module.exports = logger;

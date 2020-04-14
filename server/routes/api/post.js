@@ -6,7 +6,7 @@ const validatePost = require('../../validation/post');
 
 //Create a new Post
 
-router.post('/', passport.authenticate('jwt', { session: false }), async (req, res) => {
+router.post('/', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
     try {
         const { errors, isValid } = validatePost(req.body);
         if (!isValid) return res.status(400).json(errors);
@@ -20,15 +20,15 @@ router.post('/', passport.authenticate('jwt', { session: false }), async (req, r
         post = await post.save();
         res.json(post);
 
-    } catch (error) {
-        res.status(400).json(error);
-
+    } catch (ex) {
+        next(ex);
     }
+
 });
 
 //Get all posts
 
-router.get('/', passport.authenticate('jwt', { session: false }), async (req, res) => {
+router.get('/', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
     try {
         const posts = await Post.find().sort({ date: -1 });
         response = {
@@ -37,27 +37,27 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (req, re
 
         }
         posts.length > 0 ? res.status(201).json(response) : res.status(400).json({ error: 'no posts found' });
-    } catch (error) {
-        res.status(400).json(error);
-
+    } catch (ex) {
+        next(ex);
     }
+
 })
 
 // Get a Post by Id
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', async (req, res, next) => {
     try {
         const post = await Post.findById({ _id: req.params.id });
         post ? res.status(201).json(post) : res.status(400).json({ error: 'post not found' });
-    } catch (error) {
-        res.status(400).json(error);
+    } catch (ex) {
+        next(ex);
     }
 
 })
 
 //Delete a post
 
-router.delete('/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
+router.delete('/:id', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
     try {
         let post = await Post.findOne({ user: req.user.id });
         if (req.user.id == post.user.toString()) {
@@ -66,14 +66,15 @@ router.delete('/:id', passport.authenticate('jwt', { session: false }), async (r
         } else {
             return res.send(401).json({ unauthorized: 'you cant delete post' })
         }
-    } catch (error) {
-        res.status(400).json(error);
+    } catch (ex) {
+        next(ex);
     }
+
 })
 
 // Like and Unlike a Post
 
-router.post('/like/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
+router.post('/like/:id', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
     try {
         let post = await Post.findById(req.params.id);
         let likes = post.likes;
@@ -99,15 +100,15 @@ router.post('/like/:id', passport.authenticate('jwt', { session: false }), async
 
 
 
-    } catch (error) {
-        res.status(400).json(error);
-
+    } catch (ex) {
+        next(ex);
     }
+
 })
 
 //Create a comment
 
-router.post('/comment/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
+router.post('/comment/:id', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
     try {
         let post = await Post.findById(req.params.id);
         let comments = post.comments;
@@ -120,15 +121,15 @@ router.post('/comment/:id', passport.authenticate('jwt', { session: false }), as
         comments.unshift(newComment);
         post.save();
         return res.status(201).json(post)
-    } catch (error) {
-        console.log(error);
-
+    } catch (ex) {
+        next(ex);
     }
+
 })
 
 //Reply a comment
 
-router.post('/comment/reply/:id/:commentId', passport.authenticate('jwt', { session: false }), async (req, res) => {
+router.post('/comment/reply/:id/:commentId', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
     try {
         let post = await Post.findById(req.params.id);
         let comments = post.comments;
@@ -152,14 +153,15 @@ router.post('/comment/reply/:id/:commentId', passport.authenticate('jwt', { sess
 
         }
 
-    } catch (error) {
-        console.log(error);
+    } catch (ex) {
+        next(ex);
     }
+
 })
 
 //Remove a Comment
 
-router.delete('/comment/:id/:commentId', passport.authenticate('jwt', { session: false }), async (req, res) => {
+router.delete('/comment/:id/:commentId', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
     try {
         let post = await Post.findById(req.params.id);
         let comments = post.comments;
@@ -177,12 +179,12 @@ router.delete('/comment/:id/:commentId', passport.authenticate('jwt', { session:
 
 
 
-    } catch (error) {
-        console.log(error);
+    } catch (ex) {
+        next(ex);
     }
 })
 //delete reply
-router.delete('/comment/reply/:id/:replyId', passport.authenticate('jwt', { session: false }), async (req, res) => {
+router.delete('/comment/reply/:id/:replyId', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
     try {
         let post = await Post.findById(req.params.id);
         let comments = post.comments;
@@ -221,8 +223,8 @@ router.delete('/comment/reply/:id/:replyId', passport.authenticate('jwt', { sess
 
 
 
-    } catch (error) {
-        console.log(error);
+    } catch (ex) {
+        next(ex);
     }
 })
 
