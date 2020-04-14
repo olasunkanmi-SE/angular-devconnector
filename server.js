@@ -1,3 +1,4 @@
+const winston = require('winston');
 const error = require('./server/middleware/error');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -12,6 +13,19 @@ const passport = require('passport');
 const app = express();
 
 
+//Error Logging with Winston to a log file
+// winston.add(winston.transports.File, { filename: 'logfile.log' })
+let logger = winston.createLogger({
+    level: 'error',
+    format: winston.format.json(),
+    defaultMeta: { service: 'user-service' },
+    transports: [
+        new winston.transports.File({ filename: 'logs/error.log' })
+    ],
+    exceptionHandlers: [
+        new winston.transports.File({ filename: 'logs/exceptions.log' })
+    ]
+});
 
 
 //Connect mongoose to database

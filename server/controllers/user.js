@@ -4,8 +4,10 @@ const _ = require('lodash');
 const bcrypt = require('bcryptjs');
 
 
+
 exports.getUsers = async (req, res, next) => {
     try {
+        throw new Error('couldnt fetch users');
         const users = await User.find().select('_id name email avatar date');
         response = {
             count: users.length,
