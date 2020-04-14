@@ -23,3 +23,4 @@ Error: error
     at Function.Module._load (internal/modules/cjs/loader.js:723:14)
     at Function.Module.runMain (internal/modules/cjs/loader.js:1043:10)
     at internal/main/run_main_module.js:17:11
+2020-04-14T14:03:58.686Z debug: validateUser is not defined
