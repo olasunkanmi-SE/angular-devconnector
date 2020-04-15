@@ -11,7 +11,6 @@ const post = require('./server/routes/api/post');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const app = express();
-const fs = require('fs');
 
 
 
