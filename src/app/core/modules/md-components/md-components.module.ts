@@ -1,3 +1,4 @@
+import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule } from "@angular/material/menu";
@@ -12,7 +13,6 @@ import { NgModule } from "@angular/core";
 @NgModule({
   exports: [
     MatMenuModule,
-    MatIconModule,
     MatButtonModule,
     MatToolbarModule,
     MatCardModule,
@@ -20,6 +20,7 @@ import { NgModule } from "@angular/core";
     MatInputModule,
     MatCheckboxModule,
     MatRadioModule,
+    MatSidenavModule,
   ],
 })
 export class MdComponentsModule {}
