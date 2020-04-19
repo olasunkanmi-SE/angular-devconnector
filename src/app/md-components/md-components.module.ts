@@ -1,3 +1,6 @@
+import { MatListModule } from "@angular/material/list";
+import { MatSidenavModule } from "@angular/material/sidenav";
+import { LayoutModule } from "@angular/cdk/layout";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule } from "@angular/material/menu";
@@ -20,6 +23,9 @@ import { NgModule } from "@angular/core";
     MatInputModule,
     MatCheckboxModule,
     MatRadioModule,
+    LayoutModule,
+    MatSidenavModule,
+    MatListModule,
   ],
 })
 export class MdComponentsModule {}
