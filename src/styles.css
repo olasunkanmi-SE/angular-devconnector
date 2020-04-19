@@ -9,4 +9,12 @@ body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: #fafafa;
+  overflow-y: hidden;
+}
+
+@media only screen and (max-width: 650px) {
+  .body {
+    overflow-y: auto;
+  }
 }

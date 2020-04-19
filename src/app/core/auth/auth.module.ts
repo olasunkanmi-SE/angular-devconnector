@@ -6,9 +6,10 @@ import { SignupComponent } from "./signup/signup.component";
 import { MdComponentsModule } from "src/app/shared/md-components/md-components.module";
 import { SharedModule } from "./../../shared/shared.module";
 import { AuthComponent } from "./auth.component";
+import { SignoutComponent } from './signout/signout.component';
 
 @NgModule({
-  declarations: [LoginComponent, SignupComponent, AuthComponent],
+  declarations: [LoginComponent, SignupComponent, AuthComponent, SignoutComponent],
   imports: [CommonModule, AuthRoutingModule, MdComponentsModule, SharedModule],
 })
 export class AuthModule {}
