@@ -12,7 +12,8 @@
       <a mat-list-item href="#">Developers</a>
       <a mat-list-item href="#">Feed</a>
       <a mat-list-item href="#">Notifications</a>
-      <a mat-list-item href="#">Sign In</a>
+      <a mat-list-item [routerLink]="['/auth/signup']">Sign Up</a>
+      <a mat-list-item [routerLink]="['/auth/login']">Login</a>
       <a mat-list-item href="#">Sign Out</a>
     </mat-nav-list>
   </mat-sidenav>
@@ -34,7 +35,8 @@
         <a href="#">Home</a>
         <a href="#"> Developers</a>
         <a href="#">Feed</a>
-        <a href="#">Sign In</a>
+        <a [routerLink]="['/auth/signup']">Sign Up</a>
+        <a [routerLink]="['/auth/login']">Login</a>
         <a href="#">Sign Out</a>
       </span>
     </mat-toolbar>

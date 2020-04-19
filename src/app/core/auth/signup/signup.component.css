@@ -1,0 +1,110 @@
+.card {
+  height: auto !important;
+  margin: 0 auto !important;
+  padding: 30px;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+body {
+  background-color: #f1f1f1;
+}
+
+.dvcard {
+  margin-top: 40px !important;
+}
+
+.form-group {
+  margin-bottom: 0.5rem !important;
+}
+
+.form-control {
+  font-weight: 450 !important;
+  font-size: 0.9rem !important;
+  color: rgba(var(--i1d, 38, 38, 38), 1) !important;
+  background-color: #fafafa !important;
+}
+
+.dvbtn {
+  margin-top: 15px;
+}
+
+.dvterms {
+  color: #8e8e8e;
+  color: rgba(var(--f52, 142, 142, 142), 1);
+  font-size: 14px;
+  line-height: 18px;
+  margin: 10px 60px;
+  text-align: center;
+}
+
+.dvterms a {
+  color: #7d7a7a;
+  text-decoration: none !important;
+  font-weight: 500;
+}
+
+@media only screen and (max-width: 650px) {
+  .dvavatar {
+    display: none;
+  }
+}
+
+.devmenu {
+  display: inline-block;
+  padding-top: 0.3125rem;
+  padding-bottom: 0.3125rem;
+  margin-right: 1rem;
+  font-size: 1rem;
+  line-height: inherit;
+  white-space: nowrap;
+  color: rgb(195, 191, 191);
+  text-decoration: none !important;
+}
+
+.devmenu:hover {
+  color: #fff;
+  transition: cubic-bezier(0.6, -0.28, 0.735, 0.045);
+}
+
+.example-card {
+  max-width: 400px;
+}
+
+.example-header-image {
+  background-image: url("https://material.angular.io/assets/img/examples/shiba1.jpg");
+  background-size: cover;
+}
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.ctitle {
+  text-align: center !important;
+}
+
+mat-card-content p {
+  margin: 0 auto !important;
+}
+
+.example-container .mat-form-field + .mat-form-field {
+  margin-left: 8px;
+}
+
+.example-right-align {
+  text-align: right;
+}
+
+input.example-right-align::-webkit-outer-spin-button,
+input.example-right-align::-webkit-inner-spin-button {
+  display: none;
+}
+
+input.example-right-align {
+  -moz-appearance: textfield;
+}
