@@ -1,3 +1,6 @@
+
+const winston = require('winston');
+const error = require('./server/middleware/error');
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -10,6 +13,39 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const app = express();
 
+
+
+
+
+const myFormat = winston.format.printf(info => {
+    return `${info.timestamp} ${info.level}: ${info.message}`;
+});
+
+//Error and exception Logging with Winston to a log file
+let logger = winston.createLogger({
+    level: 'debug',
+    format: winston.format.combine(winston.format.timestamp(), myFormat),
+    transports: [
+        new winston.transports.File({ filename: 'logs/error.log', level: error }),
+        new winston.transports.File({ filename: 'logs/combined.log' }),
+        new winston.transports.Console({ colorize: true, prettyPrint: true })
+    ],
+    exceptionHandlers: [
+        new winston.transports.File({ filename: 'logs/exceptions.log' }),
+        new winston.transports.File({ filename: 'logs/combined.log' }),
+
+    ],
+    exitOnError: false
+
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+    logger.debug(reason);
+})
+
+process.on('uncaughtException', (err) => {
+    logger.debug(err);
+})
 
 
 
@@ -42,6 +78,11 @@ app.use('/api/auth', auth);
 app.use('/api/profiles', profile);
 app.use('/api/posts', post);
 
+
+//Log Error
+app.use(error)
+
+
 //Send all other requests to the angular App
 
 // app.get('*', (req, res) => {
@@ -55,3 +96,6 @@ app.set('port', port);
 const server = http.createServer(app);
 
 server.listen(port, () => console.log(`Running on localhost:${port}`));
+
+module.exports = logger;
+

@@ -1,0 +1,155 @@
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 mb-3 dvcard dvavatar">
+        <img
+          style="max-width: 100%;"
+          src="assets/img/devconnector.svg"
+          alt=""
+        />
+        <span>
+          <mat-tab-group>
+            <mat-tab label="People">
+              <form class="example-form">
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <input
+                    type="text"
+                    placeholder="First Name"
+                    aria-label="Number"
+                    matInput
+                    [formControl]="menuControl"
+                    [matAutocomplete]="auto"
+                  />
+                  <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of options" [value]="option">
+                      {{ option }}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </form>
+            </mat-tab>
+            <mat-tab label="Skill">
+              <form class="example-form">
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <input
+                    type="text"
+                    placeholder="Search skills, subject, or software "
+                    aria-label="Number"
+                    matInput
+                    [formControl]="menuControl"
+                    [matAutocomplete]="auto"
+                  />
+                  <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of options" [value]="option">
+                      {{ option }}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </form>
+            </mat-tab>
+            <mat-tab label="Location">
+              <form class="example-form">
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <input
+                    type="text"
+                    placeholder="Kuala Lumpur"
+                    aria-label="Number"
+                    matInput
+                    [formControl]="menuControl"
+                    [matAutocomplete]="auto"
+                  />
+                  <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of options" [value]="option">
+                      {{ option }}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </form>
+            </mat-tab>
+          </mat-tab-group>
+        </span>
+      </div>
+      <div class="col-md-6 mb-3 dvcard">
+        <mat-card class="example-card">
+          <mat-card-header>
+            <mat-card-subtitle
+              ><p>Sign in for the full Experience</p>
+            </mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <form class="example-form">
+              <p>
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <mat-label>Email</mat-label>
+                  <input matInput type="email" />
+                </mat-form-field>
+              </p>
+              <p>
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <mat-label>Name</mat-label>
+                  <input matInput type="text" />
+                </mat-form-field>
+              </p>
+
+              <p>
+                <mat-form-field appearance="outline" class="example-full-width">
+                  <mat-label>Enter password</mat-label>
+                  <input matInput [type]="hide ? 'password' : 'text'" />
+                  <button
+                    type="button"
+                    mat-icon-button
+                    matSuffix
+                    (click)="hide = !hide"
+                    [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide"
+                  >
+                    <mat-icon>{{
+                      hide ? "visibility_off" : "visibility"
+                    }}</mat-icon>
+                  </button>
+                </mat-form-field>
+              </p>
+              <p>
+                <mat-form-field appearance="outline" class="example-full-width">
+                  <mat-label>Confirm Password</mat-label>
+                  <input matInput [type]="hide ? 'password' : 'text'" />
+                  <button
+                    type="button"
+                    mat-icon-button
+                    matSuffix
+                    (click)="hide = !hide"
+                    [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide"
+                  >
+                    <mat-icon>{{
+                      hide ? "visibility_off" : "visibility"
+                    }}</mat-icon>
+                  </button>
+                </mat-form-field>
+              </p>
+            </form>
+          </mat-card-content>
+          <p>
+            <button
+              class="example-full-width"
+              mat-raised-button
+              color="primary"
+            >
+              Sign Up
+            </button>
+          </p>
+          <div>
+            <p class="dvterms">
+              By signing up, you agree to our
+              <a target="_blank" href="#">Terms</a> ,
+              <a target="_blank" href="#">Data Policy</a> and
+              <a target="_blank" href="#">Cookies Policy</a> .
+            </p>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>

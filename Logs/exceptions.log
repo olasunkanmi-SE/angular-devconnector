@@ -1,0 +1,19 @@
+{"error":{},"level":"error","message":"uncaughtException: something went wrong\nError: something went wrong\n    at Object.<anonymous> (C:\\Users\\raymond.oyinlola.MYVIEWQWEST\\Documents\\maximillian\\blog\\server.js:30:7)\n    at Module._compile (internal/modules/cjs/loader.js:955:30)\n    at Object.Module._extensions..js (internal/modules/cjs/loader.js:991:10)\n    at Module.load (internal/modules/cjs/loader.js:811:32)\n    at Function.Module._load (internal/modules/cjs/loader.js:723:14)\n    at Function.Module.runMain (internal/modules/cjs/loader.js:1043:10)\n    at internal/main/run_main_module.js:17:11","stack":"Error: something went wrong\n    at Object.<anonymous> (C:\\Users\\raymond.oyinlola.MYVIEWQWEST\\Documents\\maximillian\\blog\\server.js:30:7)\n    at Module._compile (internal/modules/cjs/loader.js:955:30)\n    at Object.Module._extensions..js (internal/modules/cjs/loader.js:991:10)\n    at Module.load (internal/modules/cjs/loader.js:811:32)\n    at Function.Module._load (internal/modules/cjs/loader.js:723:14)\n    at Function.Module.runMain (internal/modules/cjs/loader.js:1043:10)\n    at internal/main/run_main_module.js:17:11","exception":true,"date":"Tue Apr 14 2020 15:27:28 GMT+0800 (Malaysia Time)","process":{"pid":13456,"uid":null,"gid":null,"cwd":"C:\\Users\\raymond.oyinlola.MYVIEWQWEST\\Documents\\maximillian\\blog","execPath":"C:\\Program Files\\nodejs\\node.exe","version":"v12.14.1","argv":["C:\\Program Files\\nodejs\\node.exe","C:\\Users\\raymond.oyinlola.MYVIEWQWEST\\Documents\\maximillian\\blog\\server.js"],"memoryUsage":{"rss":59269120,"heapTotal":37543936,"heapUsed":22704696,"external":19577998}},"os":{"loadavg":[0,0,0],"uptime":25129},"trace":[{"column":7,"file":"C:\\Users\\raymond.oyinlola.MYVIEWQWEST\\Documents\\maximillian\\blog\\server.js","function":null,"line":30,"method":null,"native":false},{"column":30,"file":"internal/modules/cjs/loader.js","function":"Module._compile","line":955,"method":"_compile","native":false},{"column":10,"file":"internal/modules/cjs/loader.js","function":"Module._extensions..js","line":991,"method":".js","native":false},{"column":32,"file":"internal/modules/cjs/loader.js","function":"Module.load","line":811,"method":"load","native":false},{"column":14,"file":"internal/modules/cjs/loader.js","function":"Module._load","line":723,"method":"_load","native":false},{"column":10,"file":"internal/modules/cjs/loader.js","function":"Module.runMain","line":1043,"method":"runMain","native":false},{"column":11,"file":"internal/main/run_main_module.js","function":null,"line":17,"method":null,"native":false}],"service":"user-service"}
+2020-04-14T08:35:18.348Z error: uncaughtException: error
+Error: error
+    at Object.<anonymous> (C:\Users\raymond.oyinlola.MYVIEWQWEST\Documents\maximillian\blog\server.js:48:7)
+    at Module._compile (internal/modules/cjs/loader.js:955:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:991:10)
+    at Module.load (internal/modules/cjs/loader.js:811:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:723:14)
+    at Function.Module.runMain (internal/modules/cjs/loader.js:1043:10)
+    at internal/main/run_main_module.js:17:11
+2020-04-14T08:36:03.609Z error: uncaughtException: error
+Error: error
+    at Object.<anonymous> (C:\Users\raymond.oyinlola.MYVIEWQWEST\Documents\maximillian\blog\server.js:49:7)
+    at Module._compile (internal/modules/cjs/loader.js:955:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:991:10)
+    at Module.load (internal/modules/cjs/loader.js:811:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:723:14)
+    at Function.Module.runMain (internal/modules/cjs/loader.js:1043:10)
+    at internal/main/run_main_module.js:17:11
