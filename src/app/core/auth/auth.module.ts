@@ -6,10 +6,25 @@ import { SignupComponent } from "./signup/signup.component";
 import { MdComponentsModule } from "src/app/shared/md-components/md-components.module";
 import { SharedModule } from "./../../shared/shared.module";
 import { AuthComponent } from "./auth.component";
-import { SignoutComponent } from './signout/signout.component';
+import { SignoutComponent } from "./signout/signout.component";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 @NgModule({
-  declarations: [LoginComponent, SignupComponent, AuthComponent, SignoutComponent],
-  imports: [CommonModule, AuthRoutingModule, MdComponentsModule, SharedModule],
+  declarations: [
+    LoginComponent,
+    SignupComponent,
+    AuthComponent,
+    SignoutComponent,
+    ForgotPasswordComponent,
+  ],
+  imports: [
+    CommonModule,
+    AuthRoutingModule,
+    MdComponentsModule,
+    SharedModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
 })
 export class AuthModule {}

@@ -13,8 +13,8 @@
       <a mat-list-item href="#">Feed</a>
       <a mat-list-item href="#">Notifications</a>
       <a mat-list-item [routerLink]="['/auth/signup']">Sign Up</a>
-      <a mat-list-item [routerLink]="['/auth/login']">Login</a>
-      <a mat-list-item href="#">Sign Out</a>
+      <a mat-list-item [routerLink]="['/auth/login']">Sign In</a>
+      <a mat-list-item [routerLink]="['/']">Sign Out</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -30,14 +30,15 @@
       </button>
 
       <span>Devconnect</span>
+
       <span class="spacer"></span>
       <span class="main-menu">
         <a [routerLink]="['/']">Home</a>
         <a href="#"> Developers</a>
         <a href="#">Feed</a>
         <a [routerLink]="['/auth/signup']">Sign Up</a>
-        <a [routerLink]="['/auth/login']">Login</a>
-        <a href="#">Sign Out</a>
+        <a [routerLink]="['/auth/login']">Sign In</a>
+        <a [routerLink]="['/']">Sign Out</a>
       </span>
     </mat-toolbar>
     <ng-content></ng-content>

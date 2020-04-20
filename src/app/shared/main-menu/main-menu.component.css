@@ -38,3 +38,20 @@ mat-toolbar a {
     display: none;
   }
 }
+
+/* .example-form {
+  min-width: 500px;
+  max-width: 500px;
+  width: 100%;
+  color: #fff !important;
+  background-color: #b593f2 !important;
+  position: relative;
+}
+
+.example-full-width {
+  width: 100%;
+} */
+
+/* mat-toolbar span {
+  padding-left: 20px;
+} */

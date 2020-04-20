@@ -13,8 +13,8 @@ body {
   overflow-y: hidden;
 }
 
-@media only screen and (max-width: 650px) {
-  .body {
-    overflow-y: auto;
-  }
+input:-internal-autofill-selected {
+  background-color: none !important;
+  background-image: none !important;
+  color: -internal-light-dark-color(black, white) !important;
 }

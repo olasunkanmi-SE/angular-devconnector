@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { FormControl } from "@angular/forms";
 
 @Component({
   selector: "app-signup",
@@ -7,6 +8,8 @@ import { Component, OnInit } from "@angular/core";
 })
 export class SignupComponent implements OnInit {
   hide: boolean = true;
+  menuControl = new FormControl();
+  options: String[] = ["one", "two", "three"];
 
   constructor() {}
 

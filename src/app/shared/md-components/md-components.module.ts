@@ -10,6 +10,8 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatRadioModule } from "@angular/material/radio";
+import { MatAutocompleteModule } from "@angular/material/autocomplete";
+import { MatTabsModule } from "@angular/material/tabs";
 import { NgModule } from "@angular/core";
 
 @NgModule({
@@ -26,6 +28,8 @@ import { NgModule } from "@angular/core";
     LayoutModule,
     MatSidenavModule,
     MatListModule,
+    MatAutocompleteModule,
+    MatTabsModule,
   ],
 })
 export class MdComponentsModule {}
