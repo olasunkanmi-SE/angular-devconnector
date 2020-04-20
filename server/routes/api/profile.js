@@ -3,18 +3,18 @@ const passport = require('passport');
 const express = require('express');
 const router = express.Router();
 const profileController = require('../../controllers/profile');
+const auth = require('../../middleware/auth');
 
 
 
 
 //Get Current Profile
 
-
-router.get('/current/user', passport.authenticate('jwt', { session: false }), profileController.getCurrentUser);
+router.get('/current/user', auth, profileController.getCurrentUser);
 
 //Create and Update Profile
 
-router.post('/', passport.authenticate('jwt', { session: false }), profileController.createOrUpdateUser);
+router.post('/', auth, profileController.createOrUpdateUser);
 
 //Get Profile by Handle
 
@@ -30,27 +30,26 @@ router.get('/', profileController.getProfiles);
 
 //Create a new professional experience
 
-router.post('/experience', passport.authenticate('jwt', { session: false }), profileController.createUserExperience);
+router.post('/experience', auth, profileController.createUserExperience);
 
 //Create new Education
 
-router.post('/education', passport.authenticate('jwt', { session: false }), profileController.createUserEducation);
+router.post('/education', auth, profileController.createUserEducation);
 
 //Delete an experience by ID
 
-router.delete('/experience/:id', passport.authenticate('jwt', { session: false }), profileController.deleteUserExperienceById);
+router.delete('/experience/:id', auth, profileController.deleteUserExperienceById);
 
 // Delete an Education by ID
 
-router.delete('/education/:id', passport.authenticate('jwt', { session: false }), profileController.deleteUserEducationById)
+router.delete('/education/:id', auth, profileController.deleteUserEducationById)
 
 //Delete a user and profile
 
-router.delete('/', passport.authenticate('jwt', { session: false }), profileController.deleteUserAndProfile)
+router.delete('/', auth, profileController.deleteUserAndProfile)
 
 
-
-// router.put('/education', passport.authenticate('jwt', { session: false }), async (req, res) => {
+// router.put('/education', auth, async (req, res) => {
 //     try {
 //         let profile = await Profile.findOne({ user: req.user.id });
 //         if (profile) {
