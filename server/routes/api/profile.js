@@ -1,3 +1,4 @@
+
 const passport = require('passport');
 const express = require('express');
 const router = express.Router();
@@ -5,7 +6,9 @@ const profileController = require('../../controllers/profile');
 
 
 
+
 //Get Current Profile
+
 
 router.get('/current/user', passport.authenticate('jwt', { session: false }), profileController.getCurrentUser);
 
@@ -44,6 +47,7 @@ router.delete('/education/:id', passport.authenticate('jwt', { session: false })
 //Delete a user and profile
 
 router.delete('/', passport.authenticate('jwt', { session: false }), profileController.deleteUserAndProfile)
+
 
 
 // router.put('/education', passport.authenticate('jwt', { session: false }), async (req, res) => {
