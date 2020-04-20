@@ -5,6 +5,7 @@ const postController = require('../../controllers/posts');
 const auth = require('../../middleware/auth');
 
 
+
 //Create a new Post
 
 router.post('/', auth, postController.createPost);
@@ -40,6 +41,7 @@ router.delete('/comment/:id/:commentId', auth, postController.deleteAComment);
 //delete reply
 
 router.delete('/comment/reply/:id/:replyId', auth, postController.deleteAReply);
+
 
 
 // Remove a reply
