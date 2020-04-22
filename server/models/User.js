@@ -17,7 +17,7 @@ const userSchema = new Schema({
         unique: true,
         required: true
     },
-    repeat_password: {
+    confirmPassword: {
         type: String,
         required: true
     },
@@ -43,7 +43,7 @@ function validateUser(user) {
         name: Joi.string().min(2).max(50).required(),
         email: Joi.string().required().email(),
         password: Joi.string().required(),
-        repeat_password: Joi.ref('password'),
+        confirmPassword: Joi.ref('password'),
         avatar: Joi.string(),
         gender: Joi.string().required().valid('male', 'female')
 

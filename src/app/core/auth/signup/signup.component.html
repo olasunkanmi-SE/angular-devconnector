@@ -102,9 +102,10 @@
                   <mat-label>Name</mat-label>
                   <input matInput type="text" formControlName="name" value="" />
                   <mat-error *ngIf="name.touched && name.invalid">
-                    <mat-error *ngIf="name.errors.required">
-                      Name is required
-                    </mat-error>
+                    <mat-error
+                      *ngIf="signUpForm.controls['name'].hasError('required')"
+                      >Name is required</mat-error
+                    >
                     <mat-error *ngIf="name.errors.minlength">
                       name shoild be minimum of
                       {{ name.errors.minlength.requiredLength }} characters
@@ -145,7 +146,7 @@
                   <input
                     matInput
                     [type]="hide ? 'password' : 'text'"
-                    formControlName="repeat_password"
+                    formControlName="confirmPassword"
                   />
                   <button
                     type="button"
