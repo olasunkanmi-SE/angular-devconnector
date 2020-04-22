@@ -1,6 +1,5 @@
-
 import { SharedModule } from "./shared/shared.module";
-import { MdComponentsModule } from "./shared/md-components/md-components.module";
+import { MdComponentsModule } from "./shared/components/md-components/md-components.module";
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { AppRoutingModule } from "./app-routing.module";
@@ -18,6 +17,5 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
   ],
   providers: [],
   bootstrap: [AppComponent],
-
 })
 export class AppModule {}

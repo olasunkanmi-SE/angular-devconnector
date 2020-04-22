@@ -120,3 +120,7 @@ input.example-right-align {
 .example-full-width {
   width: 100%;
 }
+
+mat-form-field {
+  margin-bottom: 15px;
+}

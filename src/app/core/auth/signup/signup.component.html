@@ -69,6 +69,7 @@
           </mat-tab-group>
         </span>
       </div>
+
       <div class="col-md-6 mb-3 dvcard">
         <mat-card class="example-card">
           <mat-card-header>
@@ -77,24 +78,53 @@
             </mat-card-subtitle>
           </mat-card-header>
           <mat-card-content>
-            <form class="example-form">
+            <form
+              class="example-form"
+              [formGroup]="signUpForm"
+              (ngSubmit)="onSubmit()"
+            >
               <p>
                 <mat-form-field class="example-full-width" appearance="outline">
                   <mat-label>Email</mat-label>
-                  <input matInput type="email" />
+                  <input matInput type="email" formControlName="email" />
+                  <mat-error *ngIf="email.touched && email.invalid">
+                    <mat-error *ngIf="email.errors.required"
+                      >Email is required
+                    </mat-error>
+                    <mat-error *ngIf="email.errors.email"
+                      >Please enter a valid email address.</mat-error
+                    >
+                  </mat-error>
                 </mat-form-field>
               </p>
               <p>
                 <mat-form-field class="example-full-width" appearance="outline">
                   <mat-label>Name</mat-label>
-                  <input matInput type="text" />
+                  <input matInput type="text" formControlName="name" value="" />
+                  <mat-error *ngIf="name.touched && name.invalid">
+                    <mat-error *ngIf="name.errors.required">
+                      Name is required
+                    </mat-error>
+                    <mat-error *ngIf="name.errors.minlength">
+                      name shoild be minimum of
+                      {{ name.errors.minlength.requiredLength }} characters
+                    </mat-error>
+                    <mat-error *ngIf="name.errors.maxlength">
+                      Name should be maximum of
+                      {{ name.errors.maxlength.requiredLength }} characters
+                    </mat-error>
+                  </mat-error>
                 </mat-form-field>
               </p>
 
               <p>
                 <mat-form-field appearance="outline" class="example-full-width">
                   <mat-label>Enter password</mat-label>
-                  <input matInput [type]="hide ? 'password' : 'text'" />
+                  <input
+                    matInput
+                    [type]="hide ? 'password' : 'text'"
+                    formControlName="password"
+                  />
                   <button
                     type="button"
                     mat-icon-button
@@ -112,7 +142,11 @@
               <p>
                 <mat-form-field appearance="outline" class="example-full-width">
                   <mat-label>Confirm Password</mat-label>
-                  <input matInput [type]="hide ? 'password' : 'text'" />
+                  <input
+                    matInput
+                    [type]="hide ? 'password' : 'text'"
+                    formControlName="repeat_password"
+                  />
                   <button
                     type="button"
                     mat-icon-button
@@ -127,17 +161,19 @@
                   </button>
                 </mat-form-field>
               </p>
+              <p>
+                <button
+                  class="example-full-width"
+                  mat-raised-button
+                  color="primary"
+                  type="submit"
+                >
+                  Sign Up
+                </button>
+              </p>
             </form>
           </mat-card-content>
-          <p>
-            <button
-              class="example-full-width"
-              mat-raised-button
-              color="primary"
-            >
-              Sign Up
-            </button>
-          </p>
+
           <div>
             <p class="dvterms">
               By signing up, you agree to our
