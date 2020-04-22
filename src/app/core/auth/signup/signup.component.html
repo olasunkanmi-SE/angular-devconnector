@@ -138,6 +138,24 @@
                       hide ? "visibility_off" : "visibility"
                     }}</mat-icon>
                   </button>
+                  <mat-error *ngIf="password.touched && password.invalid">
+                    <mat-error
+                      *ngIf="
+                        signUpForm.controls['password'].hasError('required')
+                      "
+                      >password is required</mat-error
+                    >
+                    <mat-error
+                      *ngIf="
+                        signUpForm.controls['password'].hasError(
+                          'hasSpecialCharacter'
+                        )
+                      "
+                    >
+                      at least 8 characters, a special character, capital case
+                      and a number
+                    </mat-error>
+                  </mat-error>
                 </mat-form-field>
               </p>
               <p>
@@ -160,6 +178,19 @@
                       hide ? "visibility_off" : "visibility"
                     }}</mat-icon>
                   </button>
+                  <mat-error
+                    *ngIf="confirmPassword.touched && confirmPassword.invalid"
+                  >
+                    <mat-error
+                      *ngIf="
+                        signUpForm.controls['confirmPassword'].hasError(
+                          'noPasswordMatch'
+                        )
+                      "
+                    >
+                      Password does not match
+                    </mat-error>
+                  </mat-error>
                 </mat-form-field>
               </p>
               <p>
@@ -168,6 +199,7 @@
                   mat-raised-button
                   color="primary"
                   type="submit"
+                  [disabled]="signUpForm.invalid"
                 >
                   Sign Up
                 </button>

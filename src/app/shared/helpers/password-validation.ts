@@ -1,6 +1,6 @@
 import { AbstractControl, ValidatorFn, ValidationErrors } from "@angular/forms";
 
-export class customValidators {
+export class PatternValidation {
   static patternValidator(regex: RegExp, error: ValidationErrors): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } => {
       if (!control.value) return null;

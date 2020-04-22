@@ -1,3 +1,4 @@
+import { PatternValidation } from "./../../../shared/helpers/password-validation";
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormBuilder, Validators } from "@angular/forms";
 
@@ -11,24 +12,42 @@ export class SignupComponent implements OnInit {
   menuControl = new FormControl();
   options: String[] = ["one", "two", "three"];
   signUpForm;
-  matcher;
-
   constructor(private formbuilder: FormBuilder) {}
 
   ngOnInit() {
-    this.signUpForm = this.formbuilder.group({
-      name: [
-        "",
-        [
-          Validators.required,
-          Validators.minLength(2),
-          Validators.maxLength(50),
+    this.signUpForm = this.formbuilder.group(
+      {
+        name: [
+          "",
+          [
+            Validators.required,
+            Validators.minLength(2),
+            Validators.maxLength(50),
+          ],
         ],
-      ],
-      email: ["", [Validators.required, Validators.email]],
-      password: ["", [Validators.required, Validators.minLength(7)]],
-      confirmPassword: ["", Validators.required],
-    });
+        email: ["", [Validators.required, Validators.email]],
+        password: [
+          "",
+          [
+            Validators.required,
+            PatternValidation.patternValidator(/\d/, { hasNumber: true }),
+            PatternValidation.patternValidator(/[A-Z]/, {
+              hasCapitalCase: true,
+            }),
+            PatternValidation.patternValidator(/[a-z]/, { hasSmallCase: true }),
+            PatternValidation.patternValidator(
+              /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
+              { hasSpecialCharacter: true }
+            ),
+          ],
+        ],
+        confirmPassword: ["", Validators.required],
+      },
+      {
+        validator: PatternValidation.passwordMatchValidator,
+      }
+    );
+    this.onChanges();
   }
 
   get email() {
@@ -39,9 +58,17 @@ export class SignupComponent implements OnInit {
     return this.signUpForm.get("name");
   }
 
-  onSubmit() {
-    const x = this.signUpForm.get("email").value;
-    console.log(`User Data: ${x}`);
-    this.signUpForm.reset();
+  get password() {
+    return this.signUpForm.get("password");
+  }
+
+  get confirmPassword() {
+    return this.signUpForm.get("confirmPassword");
+  }
+
+  onChanges(): void {
+    this.signUpForm.valueChanges.subscribe((data) => {
+      console.log(data);
+    });
   }
 }
