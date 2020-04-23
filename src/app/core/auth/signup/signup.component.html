@@ -74,7 +74,7 @@
         <mat-card class="example-card">
           <mat-card-header>
             <mat-card-subtitle
-              ><p>Sign in for the full Experience</p>
+              ><p>Sign up for the full Experience</p>
             </mat-card-subtitle>
           </mat-card-header>
           <mat-card-content>
@@ -91,7 +91,8 @@
                     <mat-error *ngIf="email.errors.required"
                       >Email is required
                     </mat-error>
-                    <mat-error *ngIf="email.errors.email"
+                    <mat-error
+                      *ngIf="signUpForm.controls['email'].hasError('hasEmail')"
                       >Please enter a valid email address.</mat-error
                     >
                   </mat-error>

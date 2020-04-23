@@ -108,3 +108,7 @@ input.example-right-align::-webkit-inner-spin-button {
 input.example-right-align {
   -moz-appearance: textfield;
 }
+
+mat-form-field {
+  margin-bottom: 15px;
+}

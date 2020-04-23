@@ -1,4 +1,4 @@
-import { PatternValidation } from "./../../../shared/helpers/password-validation";
+import { PatternValidation } from "../../../shared/helpers/custom-validation";
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormBuilder, Validators } from "@angular/forms";
 
@@ -25,7 +25,16 @@ export class SignupComponent implements OnInit {
             Validators.maxLength(50),
           ],
         ],
-        email: ["", [Validators.required, Validators.email]],
+        email: [
+          "",
+          [
+            Validators.required,
+            PatternValidation.patternValidator(
+              /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+              { hasEmail: true }
+            ),
+          ],
+        ],
         password: [
           "",
           [
