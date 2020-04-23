@@ -45,7 +45,7 @@ module.exports.createUser = async (req, res, next) => {
             name: req.body.name,
             email: req.body.email,
             password: req.body.password,
-            repeat_password: req.body.repeat_password,
+            confirmPassword: req.body.confirmPassword,
             gender: req.body.gender,
             avatar,
         });

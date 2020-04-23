@@ -16,18 +16,32 @@
             </mat-card-subtitle>
           </mat-card-header>
           <mat-card-content>
-            <form class="example-form">
+            <form class="example-form" [formGroup]="signInForm">
               <p>
                 <mat-form-field class="example-full-width" appearance="outline">
                   <mat-label>Email</mat-label>
-                  <input matInput type="email" />
+                  <input formControlName="email" matInput type="email" />
+                  <mat-error *ngIf="email.touched && email.invalid">
+                    <mat-error
+                      *ngIf="signInForm.controls['email'].hasError('hasEmail')"
+                    >
+                      Please enter a valid email address
+                    </mat-error>
+                    <mat-error *ngIf="email.errors.required">
+                      Email is required
+                    </mat-error>
+                  </mat-error>
                 </mat-form-field>
               </p>
 
               <p>
                 <mat-form-field appearance="outline" class="example-full-width">
                   <mat-label>Enter password</mat-label>
-                  <input matInput [type]="hide ? 'password' : 'text'" />
+                  <input
+                    formControlName="password"
+                    matInput
+                    [type]="hide ? 'password' : 'text'"
+                  />
                   <button
                     type="button"
                     mat-icon-button
@@ -40,19 +54,27 @@
                       hide ? "visibility_off" : "visibility"
                     }}</mat-icon>
                   </button>
+                  <mat-error *ngIf="password.invalid && password.touched">
+                    <mat-error *ngIf="password.errors.required">
+                      Password is required
+                    </mat-error>
+                  </mat-error>
                 </mat-form-field>
+              </p>
+              <p>
+                <button
+                  class="example-full-width"
+                  mat-raised-button
+                  color="primary"
+                  type="submit"
+                  [disabled]="signInForm.invalid"
+                >
+                  Sign In
+                </button>
               </p>
             </form>
           </mat-card-content>
-          <p>
-            <button
-              class="example-full-width"
-              mat-raised-button
-              color="primary"
-            >
-              Sign In
-            </button>
-          </p>
+
           <div>
             <p class="dvterms">
               Forgot password ?

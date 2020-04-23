@@ -31,7 +31,6 @@ module.exports.getPosts = async (req, res, next) => {
         response = {
             count: posts.length,
             posts: posts,
-
         }
         posts.length > 0 ? res.status(200).json(response) : res.status(404).json({ error: 'no posts found' });
     } catch (ex) {
