@@ -8,6 +8,7 @@ import { SharedModule } from "./../../shared/shared.module";
 import { AuthComponent } from "./auth.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ForgotPasswordComponent } from "./forgot-password/forgot-password.component";
+import { HttpClientModule } from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { ForgotPasswordComponent } from "./forgot-password/forgot-password.compo
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
   ],
 })
 export class AuthModule {}
