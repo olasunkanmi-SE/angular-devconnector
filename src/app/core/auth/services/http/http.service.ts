@@ -12,7 +12,7 @@ import { error } from "protractor";
 })
 export class HttpService {
   methods: ApiMethod;
-  constructor(private http: HttpClient, private errorservice: ErrorService) {}
+  constructor(private http: HttpClient, private errorservice: ErrorService) { }
   /**
    * make API calls with this function *
    * @param method
@@ -20,45 +20,32 @@ export class HttpService {
    * @param payLoad
    */
 
-  requestCall(api: AuthEndPoints, method: ApiMethod, payLoad?: any) {
+  requestCall(api: AuthEndPoints, method: ApiMethod, subject: any, payLoad?: any) {
     let response;
-    let subject;
+    response = this.fetchData(method, response, api, subject, payLoad);
+    return response;
+  }
+
+  private fetchData(method: ApiMethod, response: any, api: AuthEndPoints, subject: any, payLoad: any) {
     switch (method) {
       case ApiMethod.GET:
-        response = this.http.get(`${environment.backendAPI}${api}`).pipe(
-          takeUntil(subject),
-          retry(2),
-          catchError((err) => this.handleError(err))
-        );
+        response = this.http.get(`${environment.backendAPI}${api}`).pipe(takeUntil(subject), retry(2), catchError((err) => this.handleError(err)));
         break;
       case ApiMethod.POST:
         response = this.http
           .post(`${environment.backendAPI}${api}`, payLoad)
-          .pipe(
-            takeUntil(subject),
-            retry(2),
-            catchError((err) => this.handleError(err))
-          );
+          .pipe(takeUntil(subject), retry(2), catchError((err) => this.handleError(err)));
         break;
       case ApiMethod.PUT:
         response = this.http
           .put(`${environment.backendAPI}${api}`, payLoad)
-          .pipe(
-            takeUntil(subject),
-            retry(2),
-            catchError((err) => this.handleError(err))
-          );
+          .pipe(takeUntil(subject), retry(2), catchError((err) => this.handleError(err)));
         break;
       case ApiMethod.DELETE:
-        response = this.http.delete(`${environment.backendAPI}${api}`).pipe(
-          takeUntil(subject),
-          retry(2),
-          catchError((err) => this.handleError(err))
-        );
+        response = this.http.delete(`${environment.backendAPI}${api}`).pipe(takeUntil(subject), retry(2), catchError((err) => this.handleError(err)));
       default:
         break;
     }
-    return response;
   }
 
   private handleError(err: HttpErrorResponse) {

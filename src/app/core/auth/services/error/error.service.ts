@@ -41,7 +41,7 @@ export enum ClientError {
   providedIn: "root",
 })
 export class ErrorService {
-  constructor() {}
+  constructor() { }
 
   whichError(errorCode: number, error: string) {
     switch (errorCode) {
