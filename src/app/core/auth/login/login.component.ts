@@ -1,3 +1,4 @@
+import { AuthService } from './../services/auth/auth.service';
 import { PatternValidation } from "./../../../shared/helpers/custom-validation";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
@@ -10,7 +11,7 @@ import { FormBuilder, Validators } from "@angular/forms";
 export class LoginComponent implements OnInit {
   signInForm;
   hide: boolean = true;
-  constructor(private formbuilder: FormBuilder) { }
+  constructor(private formbuilder: FormBuilder, private auth: AuthService) { }
 
   ngOnInit() {
     this.signInForm = this.formbuilder.group({
@@ -39,5 +40,10 @@ export class LoginComponent implements OnInit {
 
   onChanges() {
     this.signInForm.valueChanges.subscribe((data) => console.log(data));
+  }
+
+  onSubmit() {
+    this.auth.register(this.signInForm.value)
+
   }
 }

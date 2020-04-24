@@ -16,7 +16,11 @@
             </mat-card-subtitle>
           </mat-card-header>
           <mat-card-content>
-            <form class="example-form" [formGroup]="signInForm">
+            <form
+              class="example-form"
+              [formGroup]="signInForm"
+              (ngSubmit)="onSubmit()"
+            >
               <p>
                 <mat-form-field class="example-full-width" appearance="outline">
                   <mat-label>Email</mat-label>
