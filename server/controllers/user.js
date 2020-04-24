@@ -61,6 +61,7 @@ module.exports.createUser = async (req, res, next) => {
                 name: user.name,
                 email: user.email,
                 avatar: user.avatar,
+                gender: user.gender,
                 date: user.date,
                 request: {
                     type: 'GET',

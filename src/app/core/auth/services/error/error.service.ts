@@ -42,4 +42,42 @@ export enum ClientError {
 })
 export class ErrorService {
   constructor() {}
+
+  whichError(errorCode: number) {
+    switch (errorCode) {
+      case CustomErrorCode.UN_KNOWN:
+        console.log("Server is Down");
+        break;
+      case ClientError.HTTP_400_BAD_REQUEST:
+        console.log("incorrect credentials");
+        break;
+      case ClientError.HTTP_404_NOT_FOUND:
+        console.log("Resource not found");
+        break;
+      case ClientError.HTTP_401_UNAUTHORIZED:
+        console.log("You do not have adequate permission for this action");
+        break;
+      case ClientError.HTTP_408_REQUEST_TIMEOUT:
+        console.log("request taking longer time to execute");
+        break;
+      default:
+        console.log("unknown Error Code");
+        break;
+    }
+  }
+
+  userNotification(notificationCode: number, notification: string) {
+    switch (notificationCode) {
+      case SuccessCode.HTTP_200_OK:
+        console.log(notification);
+        break;
+      case SuccessCode.HTTP_201_CREATED:
+        console.log(notification);
+        break;
+      case SuccessCode.HTTP_202_ACCEPTED:
+        console.log(notification);
+      default:
+        break;
+    }
+  }
 }

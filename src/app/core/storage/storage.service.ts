@@ -5,7 +5,6 @@ import { Key } from "protractor";
   providedIn: "root",
 })
 export class StorageService {
-  govParams: {};
   constructor() {}
 
   saveToken(token: string): void {

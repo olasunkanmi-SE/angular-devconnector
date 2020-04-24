@@ -7,23 +7,7 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./app.component.css"],
 })
 export class AppComponent {
-  govParams: {};
-  x: {};
-  y: any;
-  constructor(private storage: StorageService) {
-    this.govParams = {
-      params: {
-        statusCode: 0,
-        paid: false,
-      },
-    };
-    const mystate = 5;
-
-    this.storage.setLocalObject("govparams", this.govParams);
-    this.x = this.storage.getLocalObject("govparams");
-    this.y = this.storage.saveItem("state", mystate);
-    console.log(this.x);
-  }
+  constructor(private storage: StorageService) {}
 
   ngOnInit() {}
 }
