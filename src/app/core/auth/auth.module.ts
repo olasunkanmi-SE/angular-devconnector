@@ -6,16 +6,16 @@ import { SignupComponent } from "./signup/signup.component";
 import { MdComponentsModule } from "src/app/shared/components/md-components/md-components.module";
 import { SharedModule } from "./../../shared/shared.module";
 import { AuthComponent } from "./auth.component";
-import { SignoutComponent } from "./signout/signout.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ForgotPasswordComponent } from "./forgot-password/forgot-password.component";
+import { HttpClientModule } from "@angular/common/http";
+
 
 @NgModule({
   declarations: [
     LoginComponent,
     SignupComponent,
     AuthComponent,
-    SignoutComponent,
     ForgotPasswordComponent,
   ],
   imports: [
@@ -25,6 +25,7 @@ import { ForgotPasswordComponent } from "./forgot-password/forgot-password.compo
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
   ],
 })
 export class AuthModule {}

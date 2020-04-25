@@ -3,7 +3,18 @@ const gravatar = require('gravatar');
 const _ = require('lodash');
 const bcrypt = require('bcryptjs');
 
+//Get User by ID
+module.exports.getUserById = async (req, res, next) => {
+    try {
+        const user = await User.findById({ _id: req.params.id });
+        if (!user) return res.status(404).json({ error: 'user does not exist' });
+        return res.status(200).json({ user: user })
+    } catch (ex) {
+        next(ex);
+    }
+}
 
+//Get all Users
 
 module.exports.getUsers = async (req, res, next) => {
     try {
@@ -33,6 +44,8 @@ module.exports.getUsers = async (req, res, next) => {
 
 }
 
+//Create User
+
 module.exports.createUser = async (req, res, next) => {
 
     try {
@@ -52,6 +65,7 @@ module.exports.createUser = async (req, res, next) => {
 
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(user.password, salt);
+        user.confirmPassword = await bcrypt.hash(user.confirmPassword, salt);
 
         await user.save();
         return res.status(201).json({
@@ -61,6 +75,7 @@ module.exports.createUser = async (req, res, next) => {
                 name: user.name,
                 email: user.email,
                 avatar: user.avatar,
+                gender: user.gender,
                 date: user.date,
                 request: {
                     type: 'GET',
@@ -72,6 +87,7 @@ module.exports.createUser = async (req, res, next) => {
         next(ex);
 
     }
+
 
 }
 

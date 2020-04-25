@@ -32,7 +32,6 @@ const userSchema = new Schema({
     gender: {
         type: String,
         enum: ['male', 'female'],
-        required: true
     }
 });
 
@@ -45,7 +44,7 @@ function validateUser(user) {
         password: Joi.string().required(),
         confirmPassword: Joi.ref('password'),
         avatar: Joi.string(),
-        gender: Joi.string().required().valid('male', 'female')
+        gender: Joi.string().valid('male', 'female')
 
 
     });

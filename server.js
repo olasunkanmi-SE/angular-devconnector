@@ -11,9 +11,11 @@ const profile = require('./server/routes/api/profile');
 const post = require('./server/routes/api/post');
 const mongoose = require('mongoose');
 const passport = require('passport');
+const cors = require('cors');
 const app = express();
 
-
+//CORS
+app.use(cors());
 
 
 
@@ -63,6 +65,9 @@ mongoose.Promise = global.Promise;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+
+
+
 //Angular DIST output folder
 app.use(express.static(path.join(__dirname, 'dist')));
 
@@ -71,6 +76,7 @@ app.use(passport.initialize());
 
 //passport Config
 require('./config/passport')(passport);
+
 
 //API location
 app.use('/api/users', user);
