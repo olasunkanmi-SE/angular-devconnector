@@ -12,13 +12,17 @@ import { catchError, takeUntil, retry } from "rxjs/operators";
 })
 export class AuthService {
   destroy$: Subject<boolean> = new Subject<boolean>();
-  token: string;
+  private token: string;
 
   constructor(
     private http: HttpService,
     private err: ErrorService,
     private storage: StorageService
   ) {}
+
+  getToken() {
+    return this.token;
+  }
 
   register(registerPayload: AuthPayload) {
     this.http
@@ -28,10 +32,13 @@ export class AuthService {
         retry(1),
         catchError((err) => this.http.handleError(err))
       )
-      .subscribe((res: any) => {
-        console.log(res);
-        this.err.userNotification(201, "registration successful");
-      });
+      .subscribe(
+        (res: any) => {
+          console.log(res);
+          this.err.userNotification(201, "registration successful");
+        },
+        (error) => console.log(error)
+      );
   }
 
   login(loginPayload: AuthPayload) {
@@ -42,9 +49,13 @@ export class AuthService {
         retry(1),
         catchError((err) => this.http.handleError(err))
       )
-      .subscribe((res) => {
-        this.token = res;
-        this.err.userNotification(200, "successfully logged in");
-      });
+      .subscribe(
+        (res: any) => {
+          this.token = res.token;
+          console.log(this.token);
+          this.err.userNotification(200, "successfully logged in");
+        },
+        (error) => console.log(error)
+      );
   }
 }
