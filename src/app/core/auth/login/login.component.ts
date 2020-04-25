@@ -11,6 +11,7 @@ import { FormBuilder, Validators } from "@angular/forms";
 export class LoginComponent implements OnInit {
   signInForm;
   hide: boolean = true;
+  ValidationErrors: any;
   constructor(private formbuilder: FormBuilder, private auth: AuthService) {}
 
   ngOnInit() {
@@ -44,5 +45,9 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     this.auth.login(this.signInForm.value);
+  }
+
+  onClick() {
+    this.auth.currentUser();
   }
 }

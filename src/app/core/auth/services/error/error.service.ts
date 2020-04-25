@@ -41,30 +41,30 @@ export enum ClientError {
   providedIn: "root",
 })
 export class ErrorService {
+  userFeedback: any;
   constructor() {}
 
   whichError(errorCode: number, error: string) {
-    let userFeedback;
     switch (errorCode) {
       case CustomErrorCode.UN_KNOWN:
         console.log("Server is Down");
         console.error(error);
         break;
       case ClientError.HTTP_400_BAD_REQUEST:
-        userFeedback = error;
-        console.error(userFeedback);
+        this.userFeedback = error;
+        alert(this.userFeedback);
         break;
       case ClientError.HTTP_404_NOT_FOUND:
-        userFeedback = error;
-        console.error(userFeedback);
+        this.userFeedback = error;
+        alert(this.userFeedback);
         break;
       case ClientError.HTTP_401_UNAUTHORIZED:
-        userFeedback = error;
-        console.error(userFeedback);
+        this.userFeedback = error;
+        alert(this.userFeedback);
         break;
       case ClientError.HTTP_408_REQUEST_TIMEOUT:
-        userFeedback = error;
-        console.error(userFeedback);
+        this.userFeedback = error;
+        alert(this.userFeedback);
         break;
       default:
         console.log("unknown Error Code");

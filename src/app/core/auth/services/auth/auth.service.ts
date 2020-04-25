@@ -5,7 +5,7 @@ import { ErrorService } from "./../error/error.service";
 import { HttpService } from "./../http/http.service";
 import { Injectable } from "@angular/core";
 import { observable, Subject } from "rxjs";
-import { catchError, takeUntil, retry } from "rxjs/operators";
+import { catchError, takeUntil, retry, take } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root",
@@ -57,5 +57,18 @@ export class AuthService {
         },
         (error) => console.log(error)
       );
+  }
+
+  currentUser() {
+    this.http
+      .requestCall(AuthEndPoints.CURRENT_USER, ApiMethod.GET)
+      .pipe(
+        takeUntil(this.destroy$),
+        retry(1),
+        catchError((err) => this.http.handleError(err))
+      )
+      .subscribe((res) => {
+        console.log(res);
+      });
   }
 }
