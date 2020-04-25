@@ -6,8 +6,8 @@ export enum ApiMethod {
 }
 
 export enum AuthEndPoints {
-  LOGIN = "/users/",
-  CURRENT_USER = "/users/current/",
+  AUTH = "/auth/",
+  CURRENT_USER = "/auth/current/",
   ALL_USERS = "/users/",
   REGISTER = "/users/register",
 }

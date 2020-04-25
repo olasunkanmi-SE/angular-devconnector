@@ -1,4 +1,4 @@
-import { AuthService } from './../services/auth/auth.service';
+import { AuthService } from "./../services/auth/auth.service";
 import { PatternValidation } from "../../../shared/helpers/custom-validation";
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormBuilder, Validators } from "@angular/forms";
@@ -13,7 +13,7 @@ export class SignupComponent implements OnInit {
   menuControl = new FormControl();
   options: String[] = ["one", "two", "three"];
   signUpForm;
-  constructor(private formbuilder: FormBuilder, private auth: AuthService) { }
+  constructor(private formbuilder: FormBuilder, private auth: AuthService) {}
 
   ngOnInit() {
     this.signUpForm = this.formbuilder.group(
@@ -77,8 +77,8 @@ export class SignupComponent implements OnInit {
   }
 
   // onChanges(): void {
-  //   this.signUpForm.valueChanges.subscribe((data) => {
-  //     console.log(data);
+  //   this.signUpForm.get("email").valueChanges.subscribe((data) => {
+  //     this.auth.register(this.signUpForm.value);
   //   });
   // }
 
