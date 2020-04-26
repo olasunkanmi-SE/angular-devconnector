@@ -1,3 +1,5 @@
+import { LoggingInterceptor } from "./core/auth/interceptors/logging-interceptor";
+import { ErrorInterceptor } from "./core/auth/interceptors/error-interceptor";
 import { AuthInterceptor } from "./core/auth/interceptors/auth-interceptor";
 import { SharedModule } from "./shared/shared.module";
 import { MdComponentsModule } from "./shared/components/md-components/md-components.module";
@@ -20,6 +22,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LoggingInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })

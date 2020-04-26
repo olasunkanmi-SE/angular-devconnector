@@ -23,11 +23,7 @@ export class AuthService {
   register(registerPayload: AuthPayload) {
     this.http
       .requestCall(AuthEndPoints.REGISTER, ApiMethod.POST, registerPayload)
-      .pipe(
-        takeUntil(this.destroy$),
-        retry(1),
-        catchError((err) => this.http.handleError(err))
-      )
+      .pipe(takeUntil(this.destroy$), retry(1))
       .subscribe(
         (res: any) => {
           console.log(res);
@@ -40,11 +36,7 @@ export class AuthService {
   login(loginPayload: AuthPayload) {
     this.http
       .requestCall(AuthEndPoints.AUTH, ApiMethod.POST, loginPayload)
-      .pipe(
-        takeUntil(this.destroy$),
-        retry(1),
-        catchError((err) => this.http.handleError(err))
-      )
+      .pipe(takeUntil(this.destroy$), retry(1))
       .subscribe(
         (res: any) => {
           this.token = res.token;
@@ -59,11 +51,7 @@ export class AuthService {
   currentUser() {
     this.http
       .requestCall(AuthEndPoints.CURRENT_USER, ApiMethod.GET)
-      .pipe(
-        takeUntil(this.destroy$),
-        retry(1),
-        catchError((err) => this.http.handleError(err))
-      )
+      .pipe(takeUntil(this.destroy$), retry(1))
       .subscribe((res) => {
         console.log(res);
       });

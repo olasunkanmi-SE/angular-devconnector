@@ -1,3 +1,4 @@
+import { LogService } from "./../services/log/log.service";
 import { Observable } from "rxjs";
 import { Injectable } from "@angular/core";
 import {
@@ -11,7 +12,7 @@ import { tap, finalize } from "rxjs/operators";
 
 @Injectable()
 export class LoggingInterceptor implements HttpInterceptor {
-  constructor() {}
+  constructor(private logservice: LogService) {}
 
   intercept(
     req: HttpRequest<any>,
@@ -26,9 +27,13 @@ export class LoggingInterceptor implements HttpInterceptor {
       ),
       finalize(() => {
         const elapsed = Date.now() - started;
-        const msg = `${req.method} "${req.urlWithParams}"
-          ${ok} in ${elapsed} ms.`;
-        console.log(msg);
+        const msg = {
+          method: `${req.method},
+          url:"${req.urlWithParams}",
+          timeElapsed:${ok} in ${elapsed} ms.`,
+        };
+
+        this.logservice.LogHTTPRequests(msg);
       })
     );
   }
