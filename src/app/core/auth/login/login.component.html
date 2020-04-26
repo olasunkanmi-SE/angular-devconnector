@@ -13,7 +13,7 @@
             mat-raised-button
             color="primary"
             type="submit"
-            (click)="this.onClick()"
+            (click)="onClick()"
           >
             Current User
           </button>
@@ -30,7 +30,7 @@
             <form
               class="example-form"
               [formGroup]="signInForm"
-              (ngSubmit)="onSubmit()"
+              (ngSubmit)="onLogin()"
             >
               <p>
                 <mat-form-field class="example-full-width" appearance="outline">

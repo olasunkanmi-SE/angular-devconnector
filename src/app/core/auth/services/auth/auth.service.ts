@@ -20,10 +20,6 @@ export class AuthService {
     private storage: StorageService
   ) {}
 
-  getToken() {
-    return this.token;
-  }
-
   register(registerPayload: AuthPayload) {
     this.http
       .requestCall(AuthEndPoints.REGISTER, ApiMethod.POST, registerPayload)
@@ -52,6 +48,7 @@ export class AuthService {
       .subscribe(
         (res: any) => {
           this.token = res.token;
+          localStorage.setItem("token", this.token);
           console.log(this.token);
           this.err.userNotification(200, "successfully logged in");
         },

@@ -2,6 +2,7 @@ import { AuthService } from "./../services/auth/auth.service";
 import { PatternValidation } from "./../../../shared/helpers/custom-validation";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-login",
@@ -12,7 +13,11 @@ export class LoginComponent implements OnInit {
   signInForm;
   hide: boolean = true;
   ValidationErrors: any;
-  constructor(private formbuilder: FormBuilder, private auth: AuthService) {}
+  constructor(
+    private formbuilder: FormBuilder,
+    private auth: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.signInForm = this.formbuilder.group({
@@ -43,7 +48,7 @@ export class LoginComponent implements OnInit {
   //   this.signInForm.valueChanges.subscribe((data) => console.log(data));
   // }
 
-  onSubmit() {
+  onLogin() {
     this.auth.login(this.signInForm.value);
   }
 
