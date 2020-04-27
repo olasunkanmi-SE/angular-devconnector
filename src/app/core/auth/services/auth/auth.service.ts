@@ -11,7 +11,7 @@ import { catchError, takeUntil, retry, take } from "rxjs/operators";
   providedIn: "root",
 })
 export class AuthService implements OnDestroy {
-  destroy$: Subject<boolean> = new Subject<boolean>();
+  private destroy$: Subject<boolean> = new Subject<boolean>();
   private token: string;
 
   constructor(
@@ -40,7 +40,7 @@ export class AuthService implements OnDestroy {
       .subscribe(
         (res: any) => {
           this.token = res.token;
-          localStorage.setItem("token", this.token);
+          this.storage.saveItem("token", this.token);
           console.log(this.token);
           this.err.userNotification(200, "successfully logged in");
         },
