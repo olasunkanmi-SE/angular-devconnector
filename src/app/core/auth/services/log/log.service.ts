@@ -10,6 +10,6 @@ export class LogService {
 
   LogHTTPRequests(log: any) {
     this.logs.push(log);
-    console.table(this.logs);
+    console.log(this.logs);
   }
 }

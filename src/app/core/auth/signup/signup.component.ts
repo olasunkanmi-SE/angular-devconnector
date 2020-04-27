@@ -13,7 +13,7 @@ export class SignupComponent implements OnInit {
   menuControl = new FormControl();
   options: String[] = ["one", "two", "three"];
   signUpForm;
-  
+
   constructor(private formbuilder: FormBuilder, private auth: AuthService) {}
 
   ngOnInit() {
@@ -86,6 +86,5 @@ export class SignupComponent implements OnInit {
   onSubmit() {
     this.auth.register(this.signUpForm.value);
     this.signUpForm.reset();
-
   }
 }

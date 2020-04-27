@@ -3,14 +3,14 @@ import { StorageService } from "./../../../storage/storage.service";
 import { AuthPayload, registerPayload } from "./../../interfaces/auth";
 import { ErrorService } from "./../error/error.service";
 import { HttpService } from "./../http/http.service";
-import { Injectable } from "@angular/core";
+import { Injectable, OnDestroy } from "@angular/core";
 import { observable, Subject } from "rxjs";
 import { catchError, takeUntil, retry, take } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root",
 })
-export class AuthService {
+export class AuthService implements OnDestroy {
   destroy$: Subject<boolean> = new Subject<boolean>();
   private token: string;
 
@@ -23,7 +23,7 @@ export class AuthService {
   register(registerPayload: AuthPayload) {
     this.http
       .requestCall(AuthEndPoints.REGISTER, ApiMethod.POST, registerPayload)
-      .pipe(takeUntil(this.destroy$), retry(1))
+      .pipe(takeUntil(this.destroy$))
       .subscribe(
         (res: any) => {
           console.log(res);
@@ -36,7 +36,7 @@ export class AuthService {
   login(loginPayload: AuthPayload) {
     this.http
       .requestCall(AuthEndPoints.AUTH, ApiMethod.POST, loginPayload)
-      .pipe(takeUntil(this.destroy$), retry(1))
+      .pipe(takeUntil(this.destroy$))
       .subscribe(
         (res: any) => {
           this.token = res.token;
@@ -51,9 +51,14 @@ export class AuthService {
   currentUser() {
     this.http
       .requestCall(AuthEndPoints.CURRENT_USER, ApiMethod.GET)
-      .pipe(takeUntil(this.destroy$), retry(1))
+      .pipe(takeUntil(this.destroy$))
       .subscribe((res) => {
         console.log(res);
       });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
   }
 }
