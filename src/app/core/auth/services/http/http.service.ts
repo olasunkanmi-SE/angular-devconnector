@@ -48,7 +48,6 @@ export class HttpService {
     } else {
       this.errorservice.whichError(err.status, err.error);
     }
-
     displayerror = {
       feedback: `${err.error}`,
       error: "An error occured",

@@ -13,7 +13,7 @@ export class SignupComponent implements OnInit {
   menuControl = new FormControl();
   options: String[] = ["one", "two", "three"];
   signUpForm;
-
+  
   constructor(private formbuilder: FormBuilder, private auth: AuthService) {}
 
   ngOnInit() {
