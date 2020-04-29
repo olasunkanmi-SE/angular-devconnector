@@ -32,7 +32,7 @@ module.exports.getPosts = async (req, res, next) => {
             count: posts.length,
             posts: posts,
         }
-        posts.length > 0 ? res.status(200).json(response) : res.status(404).json({ error: 'no posts found' });
+        posts.length > 0 ? res.status(200).json(response) : res.status(404).json('no posts found');
     } catch (ex) {
         next(ex);
     }
@@ -44,7 +44,7 @@ module.exports.getPosts = async (req, res, next) => {
 module.exports.getPostById = async (req, res, next) => {
     try {
         const post = await Post.findById({ _id: req.params.id });
-        post ? res.status(200).json(post) : res.status(404).json({ error: 'post not found' });
+        post ? res.status(200).json(post) : res.status(404).json('post not found');
     } catch (ex) {
         next(ex);
     }
@@ -60,7 +60,7 @@ module.exports.deletePost = async (req, res, next) => {
             post.remove();
             return res.status(200).json({ success: true })
         } else {
-            return res.send(401).json({ unauthorized: 'you cant delete post' })
+            return res.send(401).json('you cannot delete post')
         }
     } catch (ex) {
         next(ex);
@@ -168,7 +168,7 @@ module.exports.deleteAComment = async (req, res, next) => {
                 post.save();
                 return res.status(200).json(post);
             } else {
-                return res.status(400).json({ error: 'you cannot delete this comment' });
+                return res.status(400).json('you cannot delete this comment');
 
             }
         });

@@ -7,7 +7,7 @@ const bcrypt = require('bcryptjs');
 module.exports.getUserById = async (req, res, next) => {
     try {
         const user = await User.findById({ _id: req.params.id });
-        if (!user) return res.status(404).json({ error: 'user does not exist' });
+        if (!user) return res.status(404).json('user does not exist');
         return res.status(200).json({ user: user })
     } catch (ex) {
         next(ex);
@@ -52,7 +52,7 @@ module.exports.createUser = async (req, res, next) => {
         const { error } = validate(req.body);
         if (error) return res.status(400).send(error.details[0].message);
         let user = await User.findOne({ email: req.body.email });
-        if (user) return res.status(400).json({ email: 'user already exists' });
+        if (user) return res.status(400).json('user already exists');
         const avatar = gravatar.url(req.body.email, { s: 200, r: 'pg', d: 'mm' });
         user = new User({
             name: req.body.name,

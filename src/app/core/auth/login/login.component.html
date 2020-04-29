@@ -7,6 +7,17 @@
           src="assets/img/devconnector.svg"
           alt=""
         />
+        <p>
+          <button
+            class="example-full-width"
+            mat-raised-button
+            color="primary"
+            type="submit"
+            (click)="onClick()"
+          >
+            Current User
+          </button>
+        </p>
       </div>
       <div class="col-md-6 mb-3 dvcard">
         <mat-card class="example-card">
@@ -19,7 +30,7 @@
             <form
               class="example-form"
               [formGroup]="signInForm"
-              (ngSubmit)="onSubmit()"
+              (ngSubmit)="onLogin()"
             >
               <p>
                 <mat-form-field class="example-full-width" appearance="outline">

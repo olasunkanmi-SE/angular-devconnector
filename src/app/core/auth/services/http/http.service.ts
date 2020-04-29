@@ -41,11 +41,20 @@ export class HttpService {
   }
 
   handleError(err: HttpErrorResponse) {
+    let displayerror;
+    let feedback: string | {};
     if (err.error instanceof ErrorEvent) {
       console.error(`An error occured: ${err.error.message}`);
     } else {
       this.errorservice.whichError(err.status, err.error);
     }
-    return throwError({ error: err.message, status: err.status });
+    displayerror = {
+      feedback: `${err.error}`,
+      error: "An error occured",
+      message: `${err.message}`,
+      status: `${err.status}`,
+      type: "HTTPErrorResponse",
+    };
+    return throwError(displayerror);
   }
 }

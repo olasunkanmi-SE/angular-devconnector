@@ -86,6 +86,5 @@ export class SignupComponent implements OnInit {
   onSubmit() {
     this.auth.register(this.signUpForm.value);
     this.signUpForm.reset();
-
   }
 }
