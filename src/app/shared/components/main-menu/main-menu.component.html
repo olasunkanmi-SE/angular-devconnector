@@ -10,7 +10,8 @@
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
       <a mat-list-item href="#">Developers</a>
-      <a mat-list-item href="#">Feed</a>
+      <a mat-list-item [routerLink]="['/pages/posts']">Feed</a>
+      <a [routerLink]="['/pages/profiles']">Profile</a>
       <a mat-list-item href="#">Notifications</a>
       <a mat-list-item [routerLink]="['/auth/signup']">Sign Up</a>
       <a mat-list-item [routerLink]="['/auth/login']">Sign In</a>
@@ -35,7 +36,8 @@
       <span class="main-menu">
         <a [routerLink]="['/']">Home</a>
         <a href="#"> Developers</a>
-        <a href="#">Feed</a>
+        <a [routerLink]="['/pages/posts']">Feed</a>
+        <a [routerLink]="['/pages/profiles']">Profile</a>
         <a [routerLink]="['/auth/signup']">Sign Up</a>
         <a [routerLink]="['/auth/login']">Sign In</a>
         <a [routerLink]="['/']">Sign Out</a>
