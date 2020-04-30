@@ -48,13 +48,6 @@ export class HttpService {
     } else {
       this.errorservice.whichError(err.status, err.error);
     }
-    displayerror = {
-      feedback: `${err.error}`,
-      error: "An error occured",
-      message: `${err.message}`,
-      status: `${err.status}`,
-      type: "HTTPErrorResponse",
-    };
-    return throwError(displayerror);
+    return throwError(err);
   }
 }

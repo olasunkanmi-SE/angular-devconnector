@@ -39,12 +39,13 @@ export class AuthService implements OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         (res: any) => {
+          console.log(res);
           this.token = res.token;
           this.storage.saveItem("token", this.token);
           console.log(this.token);
           this.err.userNotification(200, "successfully logged in");
-        },
-        (error) => console.log(error)
+        }
+        // (error) => console.log(error)
       );
   }
 
