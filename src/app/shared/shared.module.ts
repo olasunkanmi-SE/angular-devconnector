@@ -5,6 +5,7 @@ import { FooterComponent } from "./components/footer/footer.component";
 import { MainMenuComponent } from "./components/main-menu/main-menu.component";
 import { MdComponentsModule } from "./components/md-components/md-components.module";
 import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { ErrorComponent } from "./components/error/error.component";
 
 @NgModule({
   imports: [
@@ -14,7 +15,7 @@ import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
     FormsModule,
     ReactiveFormsModule,
   ],
-  declarations: [MainMenuComponent, FooterComponent],
+  declarations: [MainMenuComponent, FooterComponent, ErrorComponent],
   exports: [MainMenuComponent, FooterComponent, CommonModule],
 })
 export class SharedModule {}
