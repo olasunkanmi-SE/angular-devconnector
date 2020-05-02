@@ -1,15 +1,11 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
-import { PostsRoutingModule } from './posts-routing.module';
-import { PostsComponent } from './posts.component';
-
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
+import { PostsRoutingModule } from "./posts-routing.module";
+import { PostsComponent } from "./posts.component";
 
 @NgModule({
   declarations: [PostsComponent],
-  imports: [
-    CommonModule,
-    PostsRoutingModule
-  ]
+  imports: [CommonModule, PostsRoutingModule, FontAwesomeModule],
 })
-export class PostsModule { }
+export class PostsModule {}

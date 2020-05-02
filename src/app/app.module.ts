@@ -1,3 +1,4 @@
+import { PostsModule } from "./pages/posts/posts.module";
 import { LoggingInterceptor } from "./core/auth/interceptors/logging-interceptor";
 import { ErrorInterceptor } from "./core/auth/interceptors/error-interceptor";
 import { AuthInterceptor } from "./core/auth/interceptors/auth-interceptor";
@@ -19,6 +20,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
     MdComponentsModule,
     SharedModule,
     HttpClientModule,
+    PostsModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

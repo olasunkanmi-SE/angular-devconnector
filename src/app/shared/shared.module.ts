@@ -1,3 +1,4 @@
+import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { RouterModule } from "@angular/router";
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
@@ -14,6 +15,7 @@ import { ErrorComponent } from "./components/error/error.component";
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
+    FontAwesomeModule,
   ],
   declarations: [MainMenuComponent, FooterComponent, ErrorComponent],
   exports: [MainMenuComponent, FooterComponent, CommonModule],

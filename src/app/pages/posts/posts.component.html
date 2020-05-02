@@ -1,21 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-      crossorigin="anonymous"
-    />
-
-    <script
-      src="https://kit.fontawesome.com/c49db44e4a.js"
-      crossorigin="anonymous"
-    ></script>
-  </head>
   <body>
     <section class="dvspace">
       <div class="container">
@@ -24,12 +8,14 @@
             <ul class="list-group">
               <a class="dvprofile" href="profile.html"
                 ><li class="list-group-item text-center">
-                  <i class="far fa-user-circle fa-3x"></i>
+                  <fa-icon [icon]="faUser" size="3x"></fa-icon>
                   <p class="dvhead">Oyinlola Olasunkanmi Raymond</p>
-                </li></a
-              >
+                  <small style="font-weight: 350;"
+                    >Software Engineer at ViewQwest</small
+                  >
+                </li>
+              </a>
 
-              <small>Software Engineer at ViewQwest</small>
               <li class="list-group-item text-center">
                 <span class="dvstatus">Employed</span>
               </li>
@@ -41,16 +27,11 @@
                 <form action="">
                   <ul class="list-group">
                     <li class="list-group-item dvlist">
-                      <i class="fas fa-feather"></i> Start a post
+                      <fa-icon [icon]="faFeather"></fa-icon> Start a post
                     </li>
                   </ul>
                   <div class="form-group">
-                    <textarea
-                      type="text"
-                      class="form-control"
-                      name="postfeed"
-                      rows="4"
-                    >
+                    <textarea type="text" class="form-control" name="postfeed">
                     </textarea>
                   </div>
                   <a href="#"
@@ -68,7 +49,7 @@
               <li class="list-group-item">
                 <div class="d-flex bd-highlight">
                   <div class="p-2 flex-fill bd-highlight">
-                    <i class="far fa-user-circle fa-2x"></i>
+                    <fa-icon [icon]="faUser" size="2x"></fa-icon>
                   </div>
                   <div class="p-2 flex-fill bd-highlight">
                     <small>Oyinlola Olasunkanmi</small>
@@ -80,7 +61,7 @@
               <li class="list-group-item">
                 <div class="d-flex bd-highlight">
                   <div class="p-2 flex-fill bd-highlight">
-                    <i class="far fa-user-circle fa-2x"></i>
+                    <fa-icon [icon]="faUser" size="2x"></fa-icon>
                   </div>
                   <div class="p-2 flex-fill bd-highlight">
                     <small>Oyinlola Olasunkanmi</small>
@@ -99,28 +80,21 @@
               <div class="card-body">
                 <div class="d-flex bd-highlight">
                   <div class="p-2 bd-highlight">
-                    <i class="far fa-user-circle fa-2x"></i>
+                    <fa-icon [icon]="faUser" size="2x"></fa-icon>
                   </div>
                   <div class="p-2 flex-fill">
-                    <small> Oyinlola Olasunkanmi Raymond</small>
+                    <div><small> Oyinlola Olasunkanmi Raymond</small></div>
+                    <div>
+                      <small class="dvSmall">
+                        Software Engineer at ViewQwest</small
+                      >
+                    </div>
+                    <div><small class="dvSmall"> 20h</small></div>
                   </div>
                 </div>
                 <div class="d-flex bd-highlight" style="margin-top: -30px;">
                   <div class="p-2 bd-highlight">
                     <i style="opacity: 0;" class="far fa-user-circle fa-2x"></i>
-                  </div>
-                  <div class="p-2 flex-fill">
-                    <small class="dvSmall">
-                      Software Engineer at ViewQwest</small
-                    >
-                  </div>
-                </div>
-                <div class="d-flex bd-highlight" style="margin-top: -30px;">
-                  <div class="p-2 bd-highlight">
-                    <i style="opacity: 0;" class="far fa-user-circle fa-2x"></i>
-                  </div>
-                  <div class="p-2 flex-fill">
-                    <small class="dvSmall"> 20h</small>
                   </div>
                 </div>
 
@@ -149,20 +123,22 @@
                         </li>
                       </ul>
                     </li>
-                    <li class="list-group-item" style="margin-left: -15px;">
+                    <li
+                      class="list-group-item"
+                      style="margin-left: -15px; color: rgba(0, 0, 0, 0.6);"
+                    >
                       <ul class="list-inline">
                         <li class="list-inline-item">
-                          <i
-                            style="color: rgb(20, 131, 20);"
-                            class="fas fa-thumbs-up"
-                          ></i>
-                          Like
+                          <fa-icon [icon]="faThumbsUp"></fa-icon>
+                          &nbsp; <small>Like</small>
                         </li>
                         <li class="list-inline-item">
-                          <i class="far fa-thumbs-up"></i> Unlike
+                          <fa-icon [icon]="faThumbsDown"></fa-icon>
+                          &nbsp; <small>Unlike</small>
                         </li>
                         <li class="list-inline-item">
-                          <i class="far fa-comment"></i> Comment
+                          <fa-icon [icon]="faComment" size="1x"></fa-icon>
+                          &nbsp; <small>Comment</small>
                         </li>
                       </ul>
                     </li>
@@ -173,7 +149,7 @@
                   <div>
                     <div class="d-flex bd-highlight">
                       <div class="p-2 flex-fill bd-highlight">
-                        <i class="far fa-user-circle fa-2x"></i>
+                        <fa-icon [icon]="faUser" size="2x"></fa-icon>
                       </div>
                       <div class="p-2 flex-fill bd-highlight">
                         <form class="form-inline">
@@ -188,17 +164,31 @@
                           ></textarea>
 
                           <button type="submit" class="btn btn-success btn-sm">
-                            Comment
+                            comment
                           </button>
                         </form>
                       </div>
                     </div>
                     <div class="d-flex bd-highlight">
                       <div class="p-2 bd-highlight">
-                        <i class="far fa-user-circle fa-2x"></i>
+                        <fa-icon [icon]="faUser" size="2x"></fa-icon>
                       </div>
                       <div class="p-2 flex-fill">
-                        <small> Oyinlola Olasunkanmi Raymond</small>
+                        <div><small> Oyinlola Olasunkanmi Raymond</small></div>
+                        <div>
+                          <small class="dvSmall">
+                            Software Engineer at ViewQwest</small
+                          >
+                        </div>
+                        <div>
+                          <p class="dvp">
+                            My faith has found a resting place, Not in device
+                            nor creed; I trust the Ever-living One, His wounds
+                            for me shall plead. I need no other argument, I need
+                            no other plea; It is enough that Jesus died, And
+                            that He died for me.
+                          </p>
+                        </div>
                       </div>
                     </div>
                     <div class="d-flex bd-highlight" style="margin-top: -30px;">
@@ -207,29 +197,6 @@
                           style="opacity: 0;"
                           class="far fa-user-circle fa-2x"
                         ></i>
-                      </div>
-                      <div class="p-2 flex-fill">
-                        <small class="dvSmall">
-                          Software Engineer at ViewQwest</small
-                        >
-                      </div>
-                    </div>
-
-                    <div class="d-flex bd-highlight" style="margin-top: -20px;">
-                      <div class="p-2 bd-highlight">
-                        <i
-                          style="opacity: 0;"
-                          class="far fa-user-circle fa-2x"
-                        ></i>
-                      </div>
-                      <div class="p-2 flex-fill">
-                        <p class="dvp">
-                          My faith has found a resting place, Not in device nor
-                          creed; I trust the Ever-living One, His wounds for me
-                          shall plead. I need no other argument, I need no other
-                          plea; It is enough that Jesus died, And that He died
-                          for me.
-                        </p>
                       </div>
                     </div>
                   </div>

@@ -1,12 +1,12 @@
 @media only screen and (max-width: 600px) {
   .dvspace {
-    margin-top: 200px;
+    margin-top: 10px;
   }
 }
 
 @media only screen and (max-width: 2000px) {
   .dvspace {
-    margin-top: 45px;
+    margin-top: 10px;
   }
 }
 
@@ -23,10 +23,6 @@
 .card {
   height: auto !important;
   margin: 0 auto !important;
-}
-
-body {
-  background-color: #f1f1f1;
 }
 
 .dvcard {

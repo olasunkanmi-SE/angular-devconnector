@@ -10,7 +10,6 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ForgotPasswordComponent } from "./forgot-password/forgot-password.component";
 import { HttpClientModule } from "@angular/common/http";
 
-
 @NgModule({
   declarations: [
     LoginComponent,

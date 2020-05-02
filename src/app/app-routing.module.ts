@@ -1,3 +1,4 @@
+import { PostsComponent } from "./pages/posts/posts.component";
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 
@@ -7,7 +8,15 @@ const routes: Routes = [
     loadChildren: () =>
       import("./core/auth/auth.module").then((m) => m.AuthModule),
   },
-  { path: 'pages', loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule) },
+  {
+    path: "pages",
+    loadChildren: () =>
+      import("./pages/pages.module").then((m) => m.PagesModule),
+  },
+  {
+    path: "",
+    component: PostsComponent,
+  },
 ];
 
 @NgModule({

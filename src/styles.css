@@ -17,3 +17,11 @@ input:-internal-autofill-selected {
   background-image: none !important;
   color: -internal-light-dark-color(black, white) !important;
 }
+.mat-drawer-inner-container {
+  background-color: #342c42 !important;
+}
+
+.mat-list-base .mat-list-item .mat-list-item-content,
+.mat-list-base .mat-list-option .mat-list-item-content {
+  color: #fff !important;
+}
