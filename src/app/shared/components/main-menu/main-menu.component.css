@@ -21,7 +21,7 @@
   position: sticky;
   top: 0;
   z-index: 1;
-  background-color: #342c42 !important;
+  background-color: #160338 !important;
 }
 
 .spacer {
@@ -40,10 +40,6 @@ mat-toolbar a {
   .main-menu {
     display: none;
   }
-}
-
-.mat-drawer-inner-container {
-  background-color: #342c42 !important;
 }
 
 /* .example-form {
