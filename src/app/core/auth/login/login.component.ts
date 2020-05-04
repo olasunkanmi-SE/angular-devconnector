@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
 
   onLogin() {
     this.auth.login(this.signInForm.value);
-    this.router.navigate([""]);
+    this.router.navigate(["pages/posts"]);
   }
 
   onClick() {
