@@ -14,6 +14,7 @@ export class AuthService implements OnDestroy {
   private destroy$: Subject<boolean> = new Subject<boolean>();
   private token: string;
   private authStatusListener: Subject<boolean> = new Subject<boolean>();
+  private isAuthenticated: boolean = false;
   constructor(
     private http: HttpService,
     private err: ErrorService,
@@ -22,6 +23,10 @@ export class AuthService implements OnDestroy {
 
   getAuthStatusListener() {
     return this.authStatusListener.asObservable();
+  }
+
+  getIsAuthenticated() {
+    return this.isAuthenticated;
   }
 
   register(registerPayload: AuthPayload) {
@@ -44,11 +49,15 @@ export class AuthService implements OnDestroy {
       .subscribe(
         (res: any) => {
           console.log(res);
-          this.token = res.token;
+          const token = res.token;
+          this.token = token;
           this.storage.saveItem("token", this.token);
-          console.log(this.token);
-          this.err.userNotification(200, "successfully logged in");
-          this.authStatusListener.next(true);
+          if (token) {
+            console.log(this.token);
+            this.err.userNotification(200, "successfully logged in");
+            this.isAuthenticated = true;
+            this.authStatusListener.next(true);
+          }
         }
         // (error) => console.log(error)
       );
@@ -63,8 +72,15 @@ export class AuthService implements OnDestroy {
       });
   }
 
+  logout() {
+    this.storage.removeItem("token");
+    this.isAuthenticated = false;
+    this.authStatusListener.next(false);
+  }
+
   ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.unsubscribe();
+    this.authStatusListener.unsubscribe();
   }
 }

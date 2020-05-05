@@ -9,7 +9,11 @@
   >
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-      <a *ngIf="userAuthenticated" mat-list-item [routerLink]="['/']">
+      <a
+        *ngIf="userAuthenticated"
+        mat-list-item
+        [routerLink]="['/pages/posts']"
+      >
         <fa-icon [icon]="faUser" size="1x"></fa-icon> &nbsp;Home</a
       >
       <a
@@ -37,7 +41,12 @@
       <a *ngIf="!userAuthenticated" mat-list-item [routerLink]="['/auth/login']"
         >Sign In</a
       >
-      <button mat-raised-button color="accent" *ngIf="userAuthenticated">
+      <button
+        (click)="onLogout()"
+        mat-raised-button
+        color="accent"
+        *ngIf="userAuthenticated"
+      >
         Logout
       </button>
     </mat-nav-list>
@@ -58,7 +67,7 @@
 
       <span class="spacer"></span>
       <span class="main-menu">
-        <a *ngIf="userAuthenticated" [routerLink]="['/']"
+        <a *ngIf="userAuthenticated" [routerLink]="['/pages/posts']"
           ><fa-icon [icon]="faUser" size="1x"></fa-icon
         ></a>
         <a *ngIf="!userAuthenticated" [routerLink]="['/pages/profiles']"
@@ -78,7 +87,12 @@
           >Sign Up</a
         >
         <a *ngIf="!userAuthenticated" [routerLink]="['/auth/login']">Sign In</a>
-        <button mat-raised-button color="accent" *ngIf="userAuthenticated">
+        <button
+          (click)="onLogout()"
+          mat-raised-button
+          color="accent"
+          *ngIf="userAuthenticated"
+        >
           Logout
         </button>
       </span>

@@ -1,3 +1,4 @@
+import { Router } from "@angular/router";
 import { AuthService } from "./../../../core/auth/services/auth/auth.service";
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
@@ -27,7 +28,8 @@ export class MainMenuComponent implements OnInit, OnDestroy {
 
   constructor(
     private breakpointObserver: BreakpointObserver,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -36,6 +38,11 @@ export class MainMenuComponent implements OnInit, OnDestroy {
       .subscribe((isAuthenticated) => {
         this.userAuthenticated = isAuthenticated;
       });
+  }
+
+  onLogout() {
+    this.authService.logout();
+    this.router.navigate(["/"]);
   }
 
   ngOnDestroy() {
