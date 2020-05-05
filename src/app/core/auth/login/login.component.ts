@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
   signInForm;
   hide: boolean = true;
   ValidationErrors: any;
+  isLoading: boolean = false;
   constructor(
     private formbuilder: FormBuilder,
     private auth: AuthService,
@@ -49,8 +50,27 @@ export class LoginComponent implements OnInit {
   // }
 
   onLogin() {
+    new Promise((resolve, reject) => {
+      resolve(this.CheckToken());
+    }).then(this.logUserIn());
+  }
+
+  CheckToken(): any {
     this.auth.login(this.signInForm.value);
-    this.router.navigate(["pages/posts"]);
+    this.isLoading = true;
+  }
+
+  logUserIn(): any {
+    setTimeout(() => {
+      if (this.auth.getToken()) {
+        new Promise((resolve, reject) => {
+          resolve(this.router.navigate(["pages/posts"]));
+        });
+      } else {
+        this.isLoading = false;
+        return;
+      }
+    }, 100);
   }
 
   onClick() {

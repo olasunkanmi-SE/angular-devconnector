@@ -25,6 +25,10 @@ export class AuthService implements OnDestroy {
     return this.authStatusListener.asObservable();
   }
 
+  getToken() {
+    return this.token;
+  }
+
   getIsAuthenticated() {
     return this.isAuthenticated;
   }
@@ -52,9 +56,9 @@ export class AuthService implements OnDestroy {
           const token = res.token;
           this.token = token;
           this.storage.saveItem("token", this.token);
-          if (token) {
-            console.log(this.token);
-            this.err.userNotification(200, "successfully logged in");
+          console.log(this.token);
+          this.err.userNotification(200, "successfully logged in");
+          if (this.token) {
             this.isAuthenticated = true;
             this.authStatusListener.next(true);
           }

@@ -76,7 +76,8 @@
                   </mat-error>
                 </mat-form-field>
               </p>
-              <p>
+
+              <p *ngIf="!isLoading">
                 <button
                   class="example-full-width"
                   mat-raised-button
@@ -87,6 +88,12 @@
                   Sign In
                 </button>
               </p>
+
+              <div *ngIf="isLoading" class="d-flex justify-content-center">
+                <div class="spinner-border" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+              </div>
             </form>
           </mat-card-content>
 

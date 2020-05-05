@@ -1,5 +1,7 @@
-import { Component, OnInit } from "@angular/core";
+import { AuthService } from "./../../core/auth/services/auth/auth.service";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { faUserCircle, faFeather } from "@fortawesome/free-solid-svg-icons";
+import { Observable, Subscription } from "rxjs";
 
 @Component({
   selector: "app-posts",
@@ -9,8 +11,20 @@ import { faUserCircle, faFeather } from "@fortawesome/free-solid-svg-icons";
 export class PostsComponent implements OnInit {
   faUser = faUserCircle;
   faFeather = faFeather;
+  authListenerSubscription: Subscription;
+  userIsAuthenticated: boolean = false;
 
-  constructor() {}
+  constructor(private authservice: AuthService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.authListenerSubscription = this.authservice
+      .getAuthStatusListener()
+      .subscribe((isAuthenticated) => {
+        this.userIsAuthenticated = isAuthenticated;
+      });
+  }
+
+  // ngOnDestroy() {
+  //   this.authListenerSubscription.unsubscribe();
+  // }
 }
