@@ -13,17 +13,21 @@ import { catchError, takeUntil, retry, take } from "rxjs/operators";
 export class AuthService implements OnDestroy {
   private destroy$: Subject<boolean> = new Subject<boolean>();
   private token: string;
-
+  private authStatusListener: Subject<boolean> = new Subject<boolean>();
   constructor(
     private http: HttpService,
     private err: ErrorService,
     private storage: StorageService
   ) {}
 
+  getAuthStatusListener() {
+    return this.authStatusListener.asObservable();
+  }
+
   register(registerPayload: AuthPayload) {
     this.http
       .requestCall(AuthEndPoints.REGISTER, ApiMethod.POST, registerPayload)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntil(this.destroy$.asObservable()))
       .subscribe(
         (res: any) => {
           console.log(res);
@@ -36,7 +40,7 @@ export class AuthService implements OnDestroy {
   login(loginPayload: AuthPayload) {
     this.http
       .requestCall(AuthEndPoints.AUTH, ApiMethod.POST, loginPayload)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntil(this.destroy$.asObservable()))
       .subscribe(
         (res: any) => {
           console.log(res);
@@ -44,6 +48,7 @@ export class AuthService implements OnDestroy {
           this.storage.saveItem("token", this.token);
           console.log(this.token);
           this.err.userNotification(200, "successfully logged in");
+          this.authStatusListener.next(true);
         }
         // (error) => console.log(error)
       );
@@ -52,7 +57,7 @@ export class AuthService implements OnDestroy {
   currentUser() {
     this.http
       .requestCall(AuthEndPoints.CURRENT_USER, ApiMethod.GET)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntil(this.destroy$.asObservable()))
       .subscribe((res) => {
         console.log(res);
       });

@@ -17,7 +17,7 @@
       <a mat-list-item href="#">Notifications</a>
       <a mat-list-item [routerLink]="['/auth/signup']">Sign Up</a>
       <a mat-list-item [routerLink]="['/auth/login']">Sign In</a>
-      <a mat-list-item [routerLink]="['/']">Sign Out</a>
+      <button mat-raised-button color="accent">Logout</button>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -43,7 +43,7 @@
         <a [routerLink]="['/pages/profile']">Profile</a>
         <a [routerLink]="['/auth/signup']">Sign Up</a>
         <a [routerLink]="['/auth/login']">Sign In</a>
-        <a [routerLink]="['/']">Sign Out</a>
+        <button mat-raised-button color="accent">Logout</button>
       </span>
     </mat-toolbar>
     <ng-content></ng-content>
