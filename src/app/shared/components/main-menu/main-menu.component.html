@@ -16,12 +16,7 @@
       >
         <fa-icon [icon]="faUser" size="1x"></fa-icon> &nbsp;Home</a
       >
-      <a
-        *ngIf="!userAuthenticated"
-        mat-list-item
-        [routerLink]="['/pages/profiles']"
-        >Developers</a
-      >
+      <a mat-list-item [routerLink]="['/pages/profiles']">Developers</a>
       <a *ngIf="userAuthenticated" mat-list-item [routerLink]="['/pages/posts']"
         >feeds</a
       >
@@ -70,9 +65,7 @@
         <a *ngIf="userAuthenticated" [routerLink]="['/pages/posts']"
           ><fa-icon [icon]="faUser" size="1x"></fa-icon
         ></a>
-        <a *ngIf="!userAuthenticated" [routerLink]="['/pages/profiles']"
-          >Developers</a
-        >
+        <a [routerLink]="['/pages/profiles']">Developers</a>
         <a
           *ngIf="userAuthenticated"
           mat-list-item

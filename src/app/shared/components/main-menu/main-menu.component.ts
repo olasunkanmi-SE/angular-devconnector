@@ -33,11 +33,23 @@ export class MainMenuComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.authListenerSubscription = this.authService
-      .getAuthStatusListener()
-      .subscribe((isAuthenticated) => {
-        this.userAuthenticated = isAuthenticated;
-      });
+    new Promise((resolve, reject) => {
+      resolve(
+        (this.authListenerSubscription = this.authService
+          .getAuthStatusListener()
+          .subscribe((isAuthenticated) => {
+            this.userAuthenticated = isAuthenticated;
+          }))
+      );
+    }).then(this.checkStorage());
+  }
+
+  checkStorage(): any {
+    if (localStorage.getItem("token") != null) {
+      return (this.userAuthenticated = true);
+    } else {
+      this.router.navigate(["/auth/signup"]);
+    }
   }
 
   onLogout() {

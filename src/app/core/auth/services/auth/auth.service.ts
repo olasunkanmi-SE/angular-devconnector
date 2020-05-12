@@ -14,7 +14,7 @@ export class AuthService implements OnDestroy {
   private destroy$: Subject<boolean> = new Subject<boolean>();
   private token: string;
   private authStatusListener: Subject<boolean> = new Subject<boolean>();
-  private isAuthenticated: boolean = false;
+  private userAuthenticated: boolean = false;
   constructor(
     private http: HttpService,
     private err: ErrorService,
@@ -25,12 +25,8 @@ export class AuthService implements OnDestroy {
     return this.authStatusListener.asObservable();
   }
 
-  getToken() {
-    return this.token;
-  }
-
   getIsAuthenticated() {
-    return this.isAuthenticated;
+    return this.userAuthenticated;
   }
 
   register(registerPayload: AuthPayload) {
@@ -58,13 +54,17 @@ export class AuthService implements OnDestroy {
           this.storage.saveItem("token", this.token);
           console.log(this.token);
           this.err.userNotification(200, "successfully logged in");
-          if (this.token) {
-            this.isAuthenticated = true;
+          if (token) {
+            this.userAuthenticated = true;
             this.authStatusListener.next(true);
           }
         }
         // (error) => console.log(error)
       );
+  }
+
+  getToken() {
+    return this.token;
   }
 
   currentUser() {
@@ -78,7 +78,7 @@ export class AuthService implements OnDestroy {
 
   logout() {
     this.storage.removeItem("token");
-    this.isAuthenticated = false;
+    this.userAuthenticated = false;
     this.authStatusListener.next(false);
   }
 

@@ -12,19 +12,24 @@ export class PostsComponent implements OnInit {
   faUser = faUserCircle;
   faFeather = faFeather;
   authListenerSubscription: Subscription;
-  userIsAuthenticated: boolean = false;
+  userAuthenticated: boolean = false;
 
   constructor(private authservice: AuthService) {}
 
   ngOnInit() {
+    this.authservice.getIsAuthenticated();
     this.authListenerSubscription = this.authservice
       .getAuthStatusListener()
       .subscribe((isAuthenticated) => {
-        this.userIsAuthenticated = isAuthenticated;
+        this.userAuthenticated = isAuthenticated;
       });
   }
 
-  // ngOnDestroy() {
-  //   this.authListenerSubscription.unsubscribe();
-  // }
+  getUser() {
+    this.authservice.currentUser();
+  }
+
+  ngOnDestroy() {
+    this.authListenerSubscription.unsubscribe();
+  }
 }

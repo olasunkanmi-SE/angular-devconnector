@@ -70,10 +70,10 @@ export class LoginComponent implements OnInit {
         this.isLoading = false;
         return;
       }
-    }, 100);
+    }, 300);
   }
 
-  onClick() {
-    this.auth.currentUser();
-  }
+  // onClick() {
+  //   this.auth.currentUser();
+  // }
 }
