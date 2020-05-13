@@ -1,3 +1,4 @@
+import { Router } from "@angular/router";
 import { ApiMethod, AuthEndPoints } from "./../http/consts";
 import { StorageService } from "./../../../storage/storage.service";
 import { AuthPayload, registerPayload } from "./../../interfaces/auth";
@@ -18,7 +19,8 @@ export class AuthService implements OnDestroy {
   constructor(
     private http: HttpService,
     private err: ErrorService,
-    private storage: StorageService
+    private storage: StorageService,
+    private router: Router
   ) {}
 
   getAuthStatusListener() {
@@ -46,21 +48,17 @@ export class AuthService implements OnDestroy {
     this.http
       .requestCall(AuthEndPoints.AUTH, ApiMethod.POST, loginPayload)
       .pipe(takeUntil(this.destroy$.asObservable()))
-      .subscribe(
-        (res: any) => {
-          console.log(res);
-          const token = res.token;
-          this.token = token;
-          this.storage.saveItem("token", this.token);
-          console.log(this.token);
-          this.err.userNotification(200, "successfully logged in");
-          if (token) {
-            this.userAuthenticated = true;
-            this.authStatusListener.next(true);
-          }
+      .subscribe((res: any) => {
+        const token = res.token;
+        this.token = token;
+        this.storage.saveItem("token", this.token);
+        this.err.userNotification(200, "successfully logged in");
+        if (token) {
+          this.userAuthenticated = true;
+          this.authStatusListener.next(true);
+          this.router.navigate(["pages/posts"]);
         }
-        // (error) => console.log(error)
-      );
+      });
   }
 
   getToken() {

@@ -1,3 +1,4 @@
+import { StorageService } from "./../../../core/storage/storage.service";
 import { Router } from "@angular/router";
 import { AuthService } from "./../../../core/auth/services/auth/auth.service";
 import { Component, OnDestroy, OnInit } from "@angular/core";
@@ -29,7 +30,8 @@ export class MainMenuComponent implements OnInit, OnDestroy {
   constructor(
     private breakpointObserver: BreakpointObserver,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private storage: StorageService
   ) {}
 
   ngOnInit() {
@@ -45,7 +47,7 @@ export class MainMenuComponent implements OnInit, OnDestroy {
   }
 
   checkStorage(): any {
-    if (localStorage.getItem("token") != null) {
+    if (this.storage.getItem("token") != null) {
       return (this.userAuthenticated = true);
     } else {
       this.router.navigate(["/auth/signup"]);

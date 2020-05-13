@@ -49,31 +49,8 @@ export class LoginComponent implements OnInit {
   //   this.signInForm.valueChanges.subscribe((data) => console.log(data));
   // }
 
-  onLogin() {
-    new Promise((resolve, reject) => {
-      resolve(this.CheckToken());
-    }).then(this.logUserIn());
-  }
-
-  CheckToken(): any {
+  onLogin(): any {
     this.auth.login(this.signInForm.value);
     this.isLoading = true;
   }
-
-  logUserIn(): any {
-    setTimeout(() => {
-      if (this.auth.getToken()) {
-        new Promise((resolve, reject) => {
-          resolve(this.router.navigate(["pages/posts"]));
-        });
-      } else {
-        this.isLoading = false;
-        return;
-      }
-    }, 300);
-  }
-
-  // onClick() {
-  //   this.auth.currentUser();
-  // }
 }
