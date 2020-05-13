@@ -15,8 +15,10 @@ export class AuthService implements OnDestroy {
   private destroy$: Subject<boolean> = new Subject<boolean>();
   private token: string;
   private authStatusListener: Subject<boolean> = new Subject<boolean>();
+
   private userAuthenticated: boolean = false;
   private tokenTImer: any;
+
   constructor(
     private http: HttpService,
     private err: ErrorService,
@@ -55,13 +57,12 @@ export class AuthService implements OnDestroy {
         this.err.userNotification(200, "successfully logged in");
         if (token) {
           const expiresIn = res.expiresIn;
-          this.tokenTImer = setTimeout(() => {
-            this.logout();
-          }, expiresIn);
-          const expirationDate = Date.now() + expiresIn;
+          const tokenExpires = expiresIn * 1000;
+          this.setLogOutTimer(tokenExpires);
+          const expirationTime = Date.now() + tokenExpires;
           this.userAuthenticated = true;
           this.authStatusListener.next(true);
-          this.saveAuthData(token, expirationDate.toString());
+          this.saveAuthData(token, expirationTime.toString());
           this.router.navigate(["pages/posts"]);
         }
       });
@@ -87,6 +88,36 @@ export class AuthService implements OnDestroy {
     this.router.navigate(["/"]);
   }
 
+  autoAuthenticateUser(): any {
+    if (localStorage.getItem("token") !== null) {
+      const userAuthInfo = this.getAuthData();
+      const tokenExpiry = +userAuthInfo.expiration - Date.now();
+      if (tokenExpiry < 0) {
+        this.token = userAuthInfo.token;
+        this.userAuthenticated = true;
+        this.authStatusListener.next(true);
+      }
+    }
+  }
+
+  checkTokenStatus() {
+    return this.tokenExpiration();
+  }
+
+  private tokenExpiration(): boolean {
+    if (this.storage.getItem("expiration") !== null) {
+      const userAuthInfo = this.getAuthData();
+      const tokenExpiry = +userAuthInfo.expiration - Date.now();
+      return tokenExpiry < 0 ? true : false;
+    }
+  }
+
+  private setLogOutTimer(duration) {
+    this.tokenTImer = setTimeout(() => {
+      this.logout();
+    }, duration);
+  }
+
   private getAuthData() {
     const token = this.storage.getItem("token");
     const expiration: string = this.storage.getItem("expiration");
@@ -95,16 +126,6 @@ export class AuthService implements OnDestroy {
       token: token,
       expiration: expiration,
     };
-  }
-
-  autoAuthenticateUser() {
-    const userAuthInfo = this.getAuthData();
-    const tokenExpiry = Date.now() - +userAuthInfo.expiration;
-    if (tokenExpiry < 0) {
-      this.token = userAuthInfo.token;
-      this.userAuthenticated = true;
-      this.authStatusListener.next(true);
-    }
   }
 
   private saveAuthData(token: string, expirationDate: string) {

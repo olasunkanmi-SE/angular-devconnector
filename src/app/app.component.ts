@@ -1,3 +1,4 @@
+import { AuthService } from "./core/auth/services/auth/auth.service";
 import { StorageService } from "./core/storage/storage.service";
 import { Component, OnInit } from "@angular/core";
 
@@ -7,7 +8,12 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./app.component.css"],
 })
 export class AppComponent {
-  constructor(private storage: StorageService) {}
+  constructor(
+    private storage: StorageService,
+    private authservice: AuthService
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    // this.authservice.autoAuthenticateUser();
+  }
 }

@@ -1,3 +1,4 @@
+import { StorageService } from "./../../storage/storage.service";
 import { AuthService } from "./../services/auth/auth.service";
 import { Router } from "@angular/router";
 import { Injectable } from "@angular/core";
@@ -13,7 +14,11 @@ import { Observable } from "rxjs";
   providedIn: "root",
 })
 export class AuthGuardGuard implements CanActivate {
-  constructor(private authservice: AuthService, private router: Router) {}
+  constructor(
+    private authservice: AuthService,
+    private router: Router,
+    private storage: StorageService
+  ) {}
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -22,10 +27,12 @@ export class AuthGuardGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    const isAuth = this.authservice.getIsAuthenticated();
-    if (!isAuth) {
+    if (
+      this.storage.getItem("token") &&
+      Date.now() - +this.storage.getItem("expiration") > 0
+    ) {
       return this.router.navigate(["auth/login"]);
     }
-    return isAuth;
+    return true;
   }
 }

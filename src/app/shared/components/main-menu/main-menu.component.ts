@@ -35,7 +35,6 @@ export class MainMenuComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.authService.getIsAuthenticated();
     new Promise((resolve, reject) => {
       resolve(
         (this.authListenerSubscription = this.authService
@@ -48,7 +47,7 @@ export class MainMenuComponent implements OnInit, OnDestroy {
   }
 
   checkStorage(): any {
-    if (this.storage.getItem("token") != null) {
+    if (+this.storage.getItem("expiration") > Date.now()) {
       return (this.userAuthenticated = true);
     }
   }

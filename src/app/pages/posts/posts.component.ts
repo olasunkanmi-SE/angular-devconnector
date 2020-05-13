@@ -23,7 +23,6 @@ export class PostsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.authservice.getIsAuthenticated();
     new Promise((resolve, reject) => {
       resolve(
         (this.authListenerSubscription = this.authservice
@@ -36,13 +35,17 @@ export class PostsComponent implements OnInit {
   }
 
   checkStorage(): any {
-    if (this.storage.getItem("token") != null) {
+    if (+this.storage.getItem("expiration") > Date.now()) {
       return (this.userAuthenticated = true);
     }
   }
 
   getUser() {
     this.authservice.autoAuthenticateUser();
+  }
+
+  onClick() {
+    console.log(+this.storage.getItem("expiration") > Date.now());
   }
 
   ngOnDestroy() {
