@@ -1,3 +1,4 @@
+import { PostListModule } from "./post-list/post-list.module";
 import { MdComponentsModule } from "src/app/shared/components/md-components/md-components.module";
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
@@ -12,6 +13,7 @@ import { PostsComponent } from "./posts.component";
     PostsRoutingModule,
     FontAwesomeModule,
     MdComponentsModule,
+    PostListModule,
   ],
 })
 export class PostsModule {}
