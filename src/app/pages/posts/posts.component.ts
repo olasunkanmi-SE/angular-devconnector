@@ -36,8 +36,6 @@ export class PostsComponent implements OnInit {
   checkStorage(): any {
     if (this.storage.getItem("token") != null) {
       return (this.userAuthenticated = true);
-    } else {
-      this.router.navigate(["auth/signup"]);
     }
   }
 

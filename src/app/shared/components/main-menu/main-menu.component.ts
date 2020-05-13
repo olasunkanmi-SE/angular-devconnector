@@ -49,8 +49,6 @@ export class MainMenuComponent implements OnInit, OnDestroy {
   checkStorage(): any {
     if (this.storage.getItem("token") != null) {
       return (this.userAuthenticated = true);
-    } else {
-      this.router.navigate(["/auth/signup"]);
     }
   }
 

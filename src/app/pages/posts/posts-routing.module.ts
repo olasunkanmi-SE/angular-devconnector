@@ -2,9 +2,10 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 
 import { PostsComponent } from "./posts.component";
+import { AuthGuardGuard } from "src/app/core/auth/guards/auth-guard.guard";
 
 const routes: Routes = [
-  { path: "", component: PostsComponent },
+  { path: "", component: PostsComponent, canActivate: [AuthGuardGuard] },
   {
     path: "post-list",
     loadChildren: () =>
@@ -22,5 +23,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
+  providers: [AuthGuardGuard],
 })
 export class PostsRoutingModule {}
