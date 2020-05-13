@@ -16,6 +16,7 @@ export class AuthService implements OnDestroy {
   private token: string;
   private authStatusListener: Subject<boolean> = new Subject<boolean>();
   private userAuthenticated: boolean = false;
+  private tokenTImer: any;
   constructor(
     private http: HttpService,
     private err: ErrorService,
@@ -54,6 +55,10 @@ export class AuthService implements OnDestroy {
         this.storage.saveItem("token", this.token);
         this.err.userNotification(200, "successfully logged in");
         if (token) {
+          const expiresIn = res.expiresIn;
+          this.tokenTImer = setTimeout(() => {
+            this.logout();
+          }, expiresIn * 1000);
           this.userAuthenticated = true;
           this.authStatusListener.next(true);
           this.router.navigate(["pages/posts"]);
@@ -85,5 +90,6 @@ export class AuthService implements OnDestroy {
     this.destroy$.next(true);
     this.destroy$.unsubscribe();
     this.authStatusListener.unsubscribe();
+    clearTimeout(this.tokenTImer);
   }
 }
