@@ -1,3 +1,4 @@
+import { CreatePostModule } from "./create-post/create-post.module";
 import { PostListModule } from "./post-list/post-list.module";
 import { MdComponentsModule } from "src/app/shared/components/md-components/md-components.module";
 import { NgModule } from "@angular/core";
@@ -14,6 +15,7 @@ import { PostsComponent } from "./posts.component";
     FontAwesomeModule,
     MdComponentsModule,
     PostListModule,
+    CreatePostModule,
   ],
 })
 export class PostsModule {}
