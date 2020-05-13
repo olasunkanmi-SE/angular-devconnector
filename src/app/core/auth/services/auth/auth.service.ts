@@ -57,11 +57,11 @@ export class AuthService implements OnDestroy {
           const expiresIn = res.expiresIn;
           this.tokenTImer = setTimeout(() => {
             this.logout();
-          }, expiresIn * 1000);
-          const expirationDate = Date.now() + expiresIn * 1000;
+          }, expiresIn);
+          const expirationDate = Date.now() + expiresIn;
           this.userAuthenticated = true;
           this.authStatusListener.next(true);
-          this.saveAuthData(token, expirationDate);
+          this.saveAuthData(token, expirationDate.toString());
           this.router.navigate(["pages/posts"]);
         }
       });
@@ -89,7 +89,7 @@ export class AuthService implements OnDestroy {
 
   private getAuthData() {
     const token = this.storage.getItem("token");
-    const expiration = this.storage.getItem("expiration");
+    const expiration: string = this.storage.getItem("expiration");
     if (!token || !expiration) return;
     return {
       token: token,
@@ -97,7 +97,17 @@ export class AuthService implements OnDestroy {
     };
   }
 
-  private saveAuthData(token: string, expirationDate: number) {
+  autoAuthenticateUser() {
+    const userAuthInfo = this.getAuthData();
+    const tokenExpiry = Date.now() - +userAuthInfo.expiration;
+    if (tokenExpiry < 0) {
+      this.token = userAuthInfo.token;
+      this.userAuthenticated = true;
+      this.authStatusListener.next(true);
+    }
+  }
+
+  private saveAuthData(token: string, expirationDate: string) {
     this.storage.saveItem("token", token);
     this.storage.saveItem("expiration", expirationDate);
   }

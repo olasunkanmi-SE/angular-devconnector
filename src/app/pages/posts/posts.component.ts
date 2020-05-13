@@ -42,7 +42,7 @@ export class PostsComponent implements OnInit {
   }
 
   getUser() {
-    this.authservice.currentUser();
+    this.authservice.autoAuthenticateUser();
   }
 
   ngOnDestroy() {
