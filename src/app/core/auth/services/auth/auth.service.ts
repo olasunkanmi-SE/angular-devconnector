@@ -1,12 +1,12 @@
 import { Router } from "@angular/router";
 import { ApiMethod, AuthEndPoints } from "./../http/consts";
 import { StorageService } from "./../../../storage/storage.service";
-import { AuthPayload, registerPayload } from "./../../interfaces/auth";
+import { AuthPayload } from "./../../interfaces/auth";
 import { ErrorService } from "./../error/error.service";
 import { HttpService } from "./../http/http.service";
 import { Injectable, OnDestroy } from "@angular/core";
-import { observable, Subject } from "rxjs";
-import { catchError, takeUntil, retry, take } from "rxjs/operators";
+import { Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root",
@@ -52,15 +52,16 @@ export class AuthService implements OnDestroy {
       .subscribe((res: any) => {
         const token = res.token;
         this.token = token;
-        this.storage.saveItem("token", this.token);
         this.err.userNotification(200, "successfully logged in");
         if (token) {
           const expiresIn = res.expiresIn;
           this.tokenTImer = setTimeout(() => {
             this.logout();
           }, expiresIn * 1000);
+          const expirationDate = Date.now() + expiresIn * 1000;
           this.userAuthenticated = true;
           this.authStatusListener.next(true);
+          this.saveAuthData(token, expirationDate);
           this.router.navigate(["pages/posts"]);
         }
       });
@@ -80,10 +81,30 @@ export class AuthService implements OnDestroy {
   }
 
   logout() {
-    this.storage.removeItem("token");
+    this.clearAuthData();
     this.userAuthenticated = false;
     this.authStatusListener.next(false);
     this.router.navigate(["/"]);
+  }
+
+  private getAuthData() {
+    const token = this.storage.getItem("token");
+    const expiration = this.storage.getItem("expiration");
+    if (!token || !expiration) return;
+    return {
+      token: token,
+      expiration: expiration,
+    };
+  }
+
+  private saveAuthData(token: string, expirationDate: number) {
+    this.storage.saveItem("token", token);
+    this.storage.saveItem("expiration", expirationDate);
+  }
+
+  private clearAuthData() {
+    this.storage.removeItem("token");
+    this.storage.removeItem("expiration");
   }
 
   ngOnDestroy() {

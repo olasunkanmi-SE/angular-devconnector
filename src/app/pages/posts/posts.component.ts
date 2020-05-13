@@ -23,13 +23,15 @@ export class PostsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.authservice.getIsAuthenticated();
     new Promise((resolve, reject) => {
-      this.authservice.getIsAuthenticated();
-      this.authListenerSubscription = this.authservice
-        .getAuthStatusListener()
-        .subscribe((isAuthenticated) => {
-          this.userAuthenticated = isAuthenticated;
-        });
+      resolve(
+        (this.authListenerSubscription = this.authservice
+          .getAuthStatusListener()
+          .subscribe((isAuthenticated) => {
+            this.userAuthenticated = isAuthenticated;
+          }))
+      );
     }).then(this.checkStorage());
   }
 

@@ -35,6 +35,7 @@ export class MainMenuComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.authService.getIsAuthenticated();
     new Promise((resolve, reject) => {
       resolve(
         (this.authListenerSubscription = this.authService
