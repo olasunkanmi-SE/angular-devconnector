@@ -1,3 +1,4 @@
+import { PostService } from "./../shared/post.service";
 import { Component, OnInit } from "@angular/core";
 import {
   faCoffee,
@@ -21,7 +22,9 @@ export class PostListComponent implements OnInit {
   faComment = faComment;
   faFeather = faFeather;
 
-  constructor() {}
+  constructor(private postservice: PostService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.postservice.getPosts();
+  }
 }

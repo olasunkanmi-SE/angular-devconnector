@@ -3,7 +3,7 @@ import { Post } from "./../model/post";
 import { environment } from "./../../../../environments/environment";
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { takeUntil } from "rxjs/operators";
+import { takeUntil, map } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root",
@@ -16,8 +16,26 @@ export class PostService {
 
   getPosts() {
     this.http
-      .get(`${this.backendURL}/posts`)
-      .pipe(takeUntil(this.destroy$))
+      .get<{ count: string; posts: any }>(`${this.backendURL}/posts`)
+      .pipe(
+        map((postData) => {
+          return {
+            posts: postData.posts.map((post) => {
+              return {
+                text: post.text,
+                id: post._id,
+                creator: post.user,
+                avatar: post.avatar,
+                likes: post.likes,
+                comments: post.comments,
+                date: post.date,
+              };
+            }),
+            count: postData.count,
+          };
+        }),
+        takeUntil(this.destroy$)
+      )
       .subscribe((res) => console.log(res));
   }
 }
