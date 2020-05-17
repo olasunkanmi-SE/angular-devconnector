@@ -27,10 +27,8 @@ export class AuthGuardGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (
-      this.storage.getItem("token") &&
-      Date.now() - +this.storage.getItem("expiration") > 0
-    ) {
+    if (+this.storage.getItem("expiration") < Date.now()) {
+      this.authservice.clearStorage();
       return this.router.navigate(["auth/login"]);
     }
     return true;

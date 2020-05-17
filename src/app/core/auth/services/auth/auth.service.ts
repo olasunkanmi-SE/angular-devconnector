@@ -88,6 +88,10 @@ export class AuthService implements OnDestroy {
     this.router.navigate(["/"]);
   }
 
+  clearStorage() {
+    this.clearAuthData();
+  }
+
   autoAuthenticateUser(): any {
     if (localStorage.getItem("token") !== null) {
       const userAuthInfo = this.getAuthData();
