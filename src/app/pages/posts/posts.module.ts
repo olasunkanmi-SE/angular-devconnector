@@ -1,3 +1,4 @@
+import { HttpClientModule } from "@angular/common/http";
 import { CreatePostModule } from "./create-post/create-post.module";
 import { PostListModule } from "./post-list/post-list.module";
 import { MdComponentsModule } from "src/app/shared/components/md-components/md-components.module";
@@ -16,6 +17,7 @@ import { PostsComponent } from "./posts.component";
     MdComponentsModule,
     PostListModule,
     CreatePostModule,
+    HttpClientModule,
   ],
 })
 export class PostsModule {}

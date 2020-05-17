@@ -93,14 +93,11 @@ export class AuthService implements OnDestroy {
   }
 
   autoAuthenticateUser(): any {
-    if (localStorage.getItem("token") !== null) {
+    if (+this.storage.getItem("expiration") > Date.now()) {
       const userAuthInfo = this.getAuthData();
-      const tokenExpiry = +userAuthInfo.expiration - Date.now();
-      if (tokenExpiry < 0) {
-        this.token = userAuthInfo.token;
-        this.userAuthenticated = true;
-        this.authStatusListener.next(true);
-      }
+      this.token = userAuthInfo.token;
+      this.userAuthenticated = true;
+      this.authStatusListener.next(true);
     }
   }
 
