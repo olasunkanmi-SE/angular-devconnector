@@ -24,27 +24,7 @@
           <div class="col-md-5 mb-3">
             <div class="card">
               <div class="card-body">
-                <form class="form-example">
-                  <p>
-                    <mat-form-field appearance="fill" class="full-width">
-                      <mat-label>
-                        <fa-icon [icon]="faFeather"></fa-icon> Start a
-                        post</mat-label
-                      >
-                      <textarea matInput></textarea>
-                    </mat-form-field>
-                  </p>
-                  <p>
-                    <button
-                      class="postbtn"
-                      mat-raised-button
-                      color="primary"
-                      type="submit"
-                    >
-                      Sign In
-                    </button>
-                  </p>
-                </form>
+                <app-create-post></app-create-post>
               </div>
             </div>
           </div>
@@ -73,7 +53,7 @@
                   </div>
 
                   <button class="dvbutton">Follow +</button>
-                  <button (click)="onClick()">Follow +</button>
+                  <!-- <button (click)="onClick()">Follow +</button> -->
                 </div>
               </li>
             </ul>
@@ -81,7 +61,9 @@
         </div>
         <div class="row" style="margin-top: -10px;">
           <div class="col-md-3 mb-3"></div>
-          <div class="col-md-5 mb-3"><app-post-list></app-post-list></div>
+          <div class="col-md-5 mb-3">
+            <app-post-list></app-post-list>
+          </div>
 
           <div class="col-md-4 mb-3"></div>
         </div>
