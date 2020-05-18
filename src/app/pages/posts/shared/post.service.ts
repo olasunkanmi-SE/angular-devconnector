@@ -34,7 +34,7 @@ export class PostService implements OnDestroy {
             count: postData.count,
           };
         }),
-        takeUntil(this.destroy$)
+        takeUntil(this.destroy$.asObservable())
       );
   }
 

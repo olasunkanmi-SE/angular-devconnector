@@ -28,7 +28,7 @@ module.exports.auth = async (req, res, next) => {
 
 module.exports.getCurrentUser = async (req, res, next) => {
     try {
-        res.json({ user: _.pick(req.user, ['_id', 'name', 'email']) });
+        res.json({ user: _.pick(req.user, ['_id', 'name', 'email', 'avatar']) });
     } catch (ex) {
         next(ex);
     }

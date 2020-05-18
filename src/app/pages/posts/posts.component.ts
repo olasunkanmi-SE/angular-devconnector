@@ -1,3 +1,4 @@
+import { User } from "./model/user";
 import { Router } from "@angular/router";
 import { StorageService } from "./../../core/storage/storage.service";
 import { AuthService } from "./../../core/auth/services/auth/auth.service";
@@ -12,11 +13,14 @@ import { Title } from "@angular/platform-browser";
   styleUrls: ["./posts.component.css"],
 })
 export class PostsComponent implements OnInit {
+  userSubs: Subscription;
+  user: User;
   faUser = faUserCircle;
   faFeather = faFeather;
   authListenerSubscription: Subscription;
   userAuthenticated: boolean = false;
   pageTitle: string = "Developers Feed";
+  currentUser;
 
   constructor(
     private authservice: AuthService,
@@ -26,6 +30,11 @@ export class PostsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.intitialize();
+    this.getCurrentUser();
+  }
+
+  intitialize() {
     this.title.setTitle(this.pageTitle);
     new Promise((resolve, reject) => {
       resolve(
@@ -52,7 +61,15 @@ export class PostsComponent implements OnInit {
     console.log(+this.storage.getItem("expiration") > Date.now());
   }
 
+  getCurrentUser() {
+    this.userSubs = this.authservice.currentUser$().subscribe((res) => {
+      this.user = res;
+      this.currentUser = res.user;
+    });
+  }
+
   ngOnDestroy() {
     this.authListenerSubscription.unsubscribe();
+    this.userSubs.unsubscribe();
   }
 }

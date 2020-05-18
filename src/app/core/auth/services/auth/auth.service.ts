@@ -1,3 +1,6 @@
+import { User } from "./../../../../pages/posts/model/user";
+import { environment } from "./../../../../../environments/environment";
+import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { ApiMethod, AuthEndPoints } from "./../http/consts";
 import { StorageService } from "./../../../storage/storage.service";
@@ -6,7 +9,8 @@ import { ErrorService } from "./../error/error.service";
 import { HttpService } from "./../http/http.service";
 import { Injectable, OnDestroy } from "@angular/core";
 import { Subject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
+import { takeUntil, take } from "rxjs/operators";
+import { Observable } from "rxjs";
 
 @Injectable({
   providedIn: "root",
@@ -17,13 +21,15 @@ export class AuthService implements OnDestroy {
   private authStatusListener: Subject<boolean> = new Subject<boolean>();
 
   private userAuthenticated: boolean = false;
-  private tokenTImer: any;
+  private tokenTimer: any;
+  backendURL = environment.backendAPI;
 
   constructor(
     private http: HttpService,
     private err: ErrorService,
     private storage: StorageService,
-    private router: Router
+    private router: Router,
+    private httpclient: HttpClient
   ) {}
 
   getAuthStatusListener() {
@@ -72,13 +78,10 @@ export class AuthService implements OnDestroy {
     return this.token;
   }
 
-  currentUser() {
-    this.http
-      .requestCall(AuthEndPoints.CURRENT_USER, ApiMethod.GET)
-      .pipe(takeUntil(this.destroy$.asObservable()))
-      .subscribe((res) => {
-        console.log(res);
-      });
+  currentUser$(): Observable<User> {
+    return this.httpclient
+      .get<User>(`${this.backendURL}/auth/current`)
+      .pipe(takeUntil(this.destroy$.asObservable()));
   }
 
   logout() {
@@ -114,7 +117,7 @@ export class AuthService implements OnDestroy {
   }
 
   private setLogOutTimer(duration) {
-    this.tokenTImer = setTimeout(() => {
+    this.tokenTimer = setTimeout(() => {
       this.logout();
     }, duration);
   }
@@ -143,6 +146,6 @@ export class AuthService implements OnDestroy {
     this.destroy$.next(true);
     this.destroy$.unsubscribe();
     this.authStatusListener.unsubscribe();
-    clearTimeout(this.tokenTImer);
+    clearTimeout(this.tokenTimer);
   }
 }

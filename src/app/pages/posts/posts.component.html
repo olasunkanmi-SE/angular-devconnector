@@ -9,7 +9,9 @@
               <a class="dvprofile" href="profile.html"
                 ><li class="list-group-item text-center">
                   <fa-icon [icon]="faUser" size="3x"></fa-icon>
-                  <p class="dvhead">Oyinlola Olasunkanmi Raymond</p>
+                  <p *ngIf="currentUser" class="dvhead">
+                    {{ currentUser.name }}
+                  </p>
                   <small style="font-weight: 350;"
                     >Software Engineer at ViewQwest</small
                   >
