@@ -1,22 +1,21 @@
-import { Subject } from "rxjs";
+import { Subject, Observable } from "rxjs";
 import { Post } from "./../model/post";
 import { environment } from "./../../../../environments/environment";
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { Injectable, OnDestroy } from "@angular/core";
 import { takeUntil, map } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root",
 })
-export class PostService {
+export class PostService implements OnDestroy {
   posts: Post[] = [];
   backendURL = environment.backendAPI;
   destroy$: Subject<boolean> = new Subject<boolean>();
-  private postsUpdated = new Subject<{ posts: Post[]; postsCount: number }>();
   constructor(private http: HttpClient) {}
 
-  getPosts() {
-    this.http
+  getPosts$(): Observable<{ count: string; posts: any }> {
+    return this.http
       .get<{ count: string; posts: any }>(`${this.backendURL}/posts`)
       .pipe(
         map((postData) => {
@@ -36,17 +35,11 @@ export class PostService {
           };
         }),
         takeUntil(this.destroy$)
-      )
-      .subscribe((res) => {
-        this.posts = res.posts;
-        this.postsUpdated.next({
-          posts: [...this.posts],
-          postsCount: +res.count,
-        });
-      });
+      );
   }
 
-  getPostsUpdateListener() {
-    return this.postsUpdated.asObservable();
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
   }
 }

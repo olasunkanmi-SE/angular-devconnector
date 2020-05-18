@@ -4,6 +4,7 @@ import { AuthService } from "./../../core/auth/services/auth/auth.service";
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { faUserCircle, faFeather } from "@fortawesome/free-solid-svg-icons";
 import { Observable, Subscription } from "rxjs";
+import { Title } from "@angular/platform-browser";
 
 @Component({
   selector: "app-posts",
@@ -15,14 +16,17 @@ export class PostsComponent implements OnInit {
   faFeather = faFeather;
   authListenerSubscription: Subscription;
   userAuthenticated: boolean = false;
+  pageTitle: string = "Developers Feed";
 
   constructor(
     private authservice: AuthService,
     private storage: StorageService,
-    private router: Router
+    private router: Router,
+    private title: Title
   ) {}
 
   ngOnInit() {
+    this.title.setTitle(this.pageTitle);
     new Promise((resolve, reject) => {
       resolve(
         (this.authListenerSubscription = this.authservice
