@@ -20,7 +20,9 @@
           <div>
             <small class="dvSmall"> Software Engineer at ViewQwest</small>
           </div>
-          <div><small class="dvSmall"> 20h</small></div>
+          <div>
+            <small class="dvSmall">{{ post.date | date }}</small>
+          </div>
         </div>
       </div>
       <div class="d-flex bd-highlight" style="margin-top: -10px;">
@@ -102,7 +104,11 @@
             *ngFor="let comment of post.comments"
           >
             <div class="p-2 bd-highlight">
-              <fa-icon [icon]="faUser" size="2x"></fa-icon>
+              <img
+                width="40"
+                src="{{ comment.avatar }}"
+                alt="devconnector user image"
+              />
             </div>
             <div class="p-2 flex-fill">
               <div><small> Oyinlola Olasunkanmi Raymond</small></div>
@@ -111,10 +117,7 @@
               </div>
               <div>
                 <p class="dvp">
-                  My faith has found a resting place, Not in device nor creed; I
-                  trust the Ever-living One, His wounds for me shall plead. I
-                  need no other argument, I need no other plea; It is enough
-                  that Jesus died, And that He died for me.
+                  {{ comment.text }}
                 </p>
               </div>
             </div>

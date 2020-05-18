@@ -9,8 +9,8 @@ module.exports.createPost = async (req, res, next) => {
         if (!isValid) return res.status(400).json(errors);
         let post = new Post({
             text: req.body.text,
-            name: req.body.name,
-            avatar: req.body.avatar,
+            name: req.user.name,
+            avatar: req.user.avatar,
             user: req.user.id
         });
 

@@ -24,7 +24,7 @@ export class PostService implements OnDestroy {
               return {
                 text: post.text,
                 id: post._id,
-                creator: post.user,
+                creator: post.name,
                 avatar: post.avatar,
                 likes: post.likes,
                 comments: post.comments,
