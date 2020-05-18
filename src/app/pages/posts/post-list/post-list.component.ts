@@ -1,3 +1,4 @@
+import { Post } from "./../model/post";
 import { PostService } from "./../shared/post.service";
 import { Component, OnInit } from "@angular/core";
 import {
@@ -15,6 +16,8 @@ import {
   styleUrls: ["./post-list.component.css"],
 })
 export class PostListComponent implements OnInit {
+  posts: Post[] = [];
+  totalPosts: number;
   faCoffee = faCoffee;
   faUser = faUserCircle;
   faThumbsUp = faThumbsUp;
@@ -22,9 +25,17 @@ export class PostListComponent implements OnInit {
   faComment = faComment;
   faFeather = faFeather;
 
-  constructor(private postservice: PostService) {}
-
-  ngOnInit() {
-    this.postservice.getPosts();
+  constructor(private postservice: PostService) {
+    this.postservice
+      .getPostsUpdateListener()
+      .subscribe((postData: { posts: Post[]; postsCount: number }) => {
+        this.posts = postData.posts;
+        this.totalPosts = postData.postsCount;
+      });
+    setTimeout(() => {
+      console.log(this.totalPosts);
+    }, 2000);
   }
+
+  ngOnInit() {}
 }

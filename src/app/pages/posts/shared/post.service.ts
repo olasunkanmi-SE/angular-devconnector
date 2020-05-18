@@ -12,6 +12,7 @@ export class PostService {
   posts: Post[] = [];
   backendURL = environment.backendAPI;
   destroy$: Subject<boolean> = new Subject<boolean>();
+  private postsUpdated = new Subject<{ posts: Post[]; postsCount: number }>();
   constructor(private http: HttpClient) {}
 
   getPosts() {
@@ -36,6 +37,16 @@ export class PostService {
         }),
         takeUntil(this.destroy$)
       )
-      .subscribe((res) => console.log(res));
+      .subscribe((res) => {
+        this.posts = res.posts;
+        this.postsUpdated.next({
+          posts: [...this.posts],
+          postsCount: +res.count,
+        });
+      });
+  }
+
+  getPostsUpdateListener() {
+    return this.postsUpdated.asObservable();
   }
 }

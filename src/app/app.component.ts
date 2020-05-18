@@ -13,5 +13,7 @@ export class AppComponent {
     private authservice: AuthService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.authservice.autoAuthenticateUser();
+  }
 }
