@@ -9,7 +9,7 @@ import {
   faComment,
   faFeather,
 } from "@fortawesome/free-solid-svg-icons";
-import { Subscription } from "rxjs";
+import { Subscription, Observable } from "rxjs";
 
 @Component({
   selector: "app-post-list",
@@ -17,7 +17,7 @@ import { Subscription } from "rxjs";
   styleUrls: ["./post-list.component.css"],
 })
 export class PostListComponent implements OnInit, OnDestroy {
-  posts: Post[] = [];
+  posts$: Observable<Post[]>;
   totalPosts: number;
   postCreated: Date;
   isloading: boolean;
@@ -40,8 +40,8 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.isloading = true;
     this.postUpdatedSub = this.postservice.getPosts$().subscribe(
       (res) => {
-        this.posts = res.posts;
-        console.log(this.posts);
+        this.posts$ = res.posts;
+        console.log(this.posts$);
         this.totalPosts = +res.count;
         this.isloading = false;
       },
