@@ -24,3 +24,4 @@ Error: error
     at Function.Module.runMain (internal/modules/cjs/loader.js:1043:10)
     at internal/main/run_main_module.js:17:11
 2020-04-14T14:03:58.686Z debug: validateUser is not defined
+2020-05-18T16:08:49.292Z debug: post validation failed: comments.0.text: Path `text` is required.
