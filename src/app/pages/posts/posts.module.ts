@@ -1,3 +1,4 @@
+import { GhostListModule } from "./ghost-list/ghost-list.module";
 import { HttpClientModule } from "@angular/common/http";
 import { CreatePostModule } from "./create-post/create-post.module";
 import { PostListModule } from "./post-list/post-list.module";
@@ -18,6 +19,7 @@ import { PostsComponent } from "./posts.component";
     PostListModule,
     CreatePostModule,
     HttpClientModule,
+    GhostListModule,
   ],
 })
 export class PostsModule {}
