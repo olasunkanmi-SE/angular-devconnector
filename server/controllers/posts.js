@@ -74,18 +74,18 @@ module.exports.likeOrUnlikeAPost = async (req, res, next) => {
     try {
         let post = await Post.findById(req.params.id);
         let likes = post.likes;
-        if (likes.find(item => item.user.toString() == req.user.id)) {
+        if (likes.filter(item => item.user.toString() == req.user.id).length > 0) {
             const removeLike = likes.map(like => like.user.toString()).indexOf(req.user.id);
             likes.splice(removeLike, 1);
             post.save();
             return res.status(201).json({ unliked: true });
         }
 
-        // if ((likes.filter(item => item.user.toString() == req.user.id).length == 0) || likes.filter(item => item.user.toString() !== req.user.id)) {
-        //     likes.unshift({ user: req.user.id });
-        //     post.save()
-        //     return res.status(201).json(post);
-        // }
+        if ((likes.filter(item => item.user.toString() == req.user.id).length == 0) || likes.filter(item => item.user.toString() !== req.user.id)) {
+            likes.unshift({ user: req.user.id });
+            post.save()
+            return res.status(201).json(post);
+        }
 
 
         else {
@@ -129,7 +129,7 @@ module.exports.replyAComment = async (req, res, next) => {
     try {
         let post = await Post.findById(req.params.id);
         let comments = post.comments;
-        if (comments.find(comment => comment.id == req.params.commentId)) {
+        if (comments.filter(comment => comment.id == req.params.commentId)) {
             const reply = {
                 user: req.user.id,
                 text: req.body.text,
@@ -155,6 +155,42 @@ module.exports.replyAComment = async (req, res, next) => {
 
 }
 
+//Like a comment
+
+module.exports.likeAComment = async (req, res, next) => {
+    try {
+        let post = await Post.findById(req.params.id);
+        let comments = post.comments;
+        if (comments.filter(comment => comment.id == req.params.commentId)) {
+            comments.map(comment => {
+                if (comment.id == req.params.commentId) {
+                    let likes = comment.likes;
+                    if (likes.filter(like => like.user.toString() == req.user.id).length > 0) {
+                        const disLike = likes.map(like => like.user.toString()).indexOf(req.user.id);
+                        likes.splice(disLike, 1);
+                        post.save();
+                        return res.status(201).json('disliked');
+
+                    }
+                    else {
+                        comment.likes.unshift({ user: req.user.id });
+                        post.save();
+                        return res.status(201).json(post)
+                    }
+                }
+
+            })
+
+        }
+
+
+
+
+    } catch (ex) {
+        console.log(ex);
+
+    }
+}
 //Remove a Comment
 
 module.exports.deleteAComment = async (req, res, next) => {

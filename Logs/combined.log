@@ -25,3 +25,22 @@ Error: error
     at internal/main/run_main_module.js:17:11
 2020-04-14T14:03:58.686Z debug: validateUser is not defined
 2020-05-18T16:08:49.292Z debug: post validation failed: comments.0.text: Path `text` is required.
+2020-05-26T11:54:54.743Z debug: post validation failed: comments.0.replies.0.text: Path `text` is required.
+2020-05-26T11:55:09.953Z debug: post validation failed: comments.0.replies.0.text: Path `text` is required.
+2020-05-26T12:10:43.980Z debug: Can't save() the same doc multiple times in parallel. Document: 5ecce1621143a02fdcc64f9d
+2020-05-26T12:15:08.335Z debug: Can't save() the same doc multiple times in parallel. Document: 5ecce1621143a02fdcc64f9d
+2020-05-26T12:15:33.832Z debug: Can't save() the same doc multiple times in parallel. Document: 5ecce1621143a02fdcc64f9d
+2020-05-26T12:16:18.542Z debug: Can't save() the same doc multiple times in parallel. Document: 5ecce1621143a02fdcc64f9d
+2020-05-26T12:18:32.030Z debug: Can't save() the same doc multiple times in parallel. Document: 5ecce1621143a02fdcc64f9d
+2020-05-26T12:19:49.763Z debug: Can't save() the same doc multiple times in parallel. Document: 5ecce1621143a02fdcc64f9d
+2020-05-26T12:19:51.429Z debug: Can't save() the same doc multiple times in parallel. Document: 5ecce1621143a02fdcc64f9d
+2020-05-26T12:19:52.817Z debug: Can't save() the same doc multiple times in parallel. Document: 5ecce1621143a02fdcc64f9d
+2020-05-26T12:20:02.067Z debug: Can't save() the same doc multiple times in parallel. Document: 5ecce1621143a02fdcc64f9d
+2020-05-26T12:20:34.638Z debug: Can't save() the same doc multiple times in parallel. Document: 5ecce1621143a02fdcc64f9d
+2020-05-26T12:21:53.965Z debug: Can't save() the same doc multiple times in parallel. Document: 5ecce1621143a02fdcc64f9d
+2020-05-26T12:22:23.816Z debug: Can't save() the same doc multiple times in parallel. Document: 5ecce1621143a02fdcc64f9d
+2020-05-26T12:22:40.060Z debug: Can't save() the same doc multiple times in parallel. Document: 5ecce1621143a02fdcc64f9d
+2020-05-26T12:22:51.576Z debug: Can't save() the same doc multiple times in parallel. Document: 5ecce1621143a02fdcc64f9d
+2020-05-26T12:23:07.923Z debug: Can't save() the same doc multiple times in parallel. Document: 5ecce1621143a02fdcc64f9d
+2020-05-26T12:23:32.484Z debug: Can't save() the same doc multiple times in parallel. Document: 5ecce1621143a02fdcc64f9d
+2020-05-26T12:26:33.887Z debug: Can't save() the same doc multiple times in parallel. Document: 5ecce1621143a02fdcc64f9d
