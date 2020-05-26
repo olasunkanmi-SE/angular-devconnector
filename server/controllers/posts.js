@@ -74,18 +74,18 @@ module.exports.likeOrUnlikeAPost = async (req, res, next) => {
     try {
         let post = await Post.findById(req.params.id);
         let likes = post.likes;
-        if (likes.filter(item => item.user.toString() == req.user.id).length > 0) {
+        if (likes.find(item => item.user.toString() == req.user.id)) {
             const removeLike = likes.map(like => like.user.toString()).indexOf(req.user.id);
             likes.splice(removeLike, 1);
             post.save();
             return res.status(201).json({ unliked: true });
         }
 
-        if ((likes.filter(item => item.user.toString() == req.user.id).length == 0) || likes.filter(item => item.user.toString() !== req.user.id)) {
-            likes.unshift({ user: req.user.id });
-            post.save()
-            return res.status(201).json(post);
-        }
+        // if ((likes.filter(item => item.user.toString() == req.user.id).length == 0) || likes.filter(item => item.user.toString() !== req.user.id)) {
+        //     likes.unshift({ user: req.user.id });
+        //     post.save()
+        //     return res.status(201).json(post);
+        // }
 
 
         else {
@@ -129,7 +129,7 @@ module.exports.replyAComment = async (req, res, next) => {
     try {
         let post = await Post.findById(req.params.id);
         let comments = post.comments;
-        if (comments.filter(comment => comment.id == req.params.commentId)) {
+        if (comments.find(comment => comment.id == req.params.commentId)) {
             const reply = {
                 user: req.user.id,
                 text: req.body.text,
