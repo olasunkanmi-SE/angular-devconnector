@@ -183,11 +183,8 @@ module.exports.likeAComment = async (req, res, next) => {
 
         }
 
-
-
-
     } catch (ex) {
-        console.log(ex);
+        next(ex);
 
     }
 }
