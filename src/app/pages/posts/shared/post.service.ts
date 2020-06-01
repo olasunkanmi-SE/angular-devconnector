@@ -1,4 +1,4 @@
-import { Subject, Observable } from "rxjs";
+import { Subject, Observable, BehaviorSubject } from "rxjs";
 import { Post, singlePost } from "./../model/post";
 import { environment } from "./../../../../environments/environment";
 import { HttpClient } from "@angular/common/http";
@@ -12,7 +12,17 @@ export class PostService implements OnDestroy {
   posts: Post[] = [];
   backendURL = environment.backendAPI;
   destroy$: Subject<boolean> = new Subject<boolean>();
+  private postSubject = new Subject<any>();
   constructor(private http: HttpClient) {}
+  private post;
+
+  sendPost(post: singlePost) {
+    this.postSubject.next(post);
+  }
+
+  getPost(): Observable<any> {
+    return this.postSubject.asObservable();
+  }
 
   getPosts$(): Observable<{ count: string; posts: any }> {
     return this.http
@@ -38,14 +48,16 @@ export class PostService implements OnDestroy {
       );
   }
 
-  createPost$(post: singlePost): Observable<{ post: any }> {
+  createPost$(post) {
     return this.http
-      .post<{ post: any }>(`${this.backendURL}/posts`, post)
+      .post<{ post }>(`${this.backendURL}/posts`, post)
       .pipe(takeUntil(this.destroy$));
   }
 
   ngOnDestroy() {
     this.destroy$.next(true);
+    this.postSubject.next();
     this.destroy$.unsubscribe();
+    this.postSubject.unsubscribe();
   }
 }

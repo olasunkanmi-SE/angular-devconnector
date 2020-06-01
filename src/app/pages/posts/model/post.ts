@@ -9,5 +9,12 @@ export interface Post {
 }
 
 export interface singlePost {
+  _id?: string;
+  avatar?: string;
+  comments?: [];
+  date?: Date;
+  likes?: [];
+  name?: string;
   text: string;
+  user?: string;
 }

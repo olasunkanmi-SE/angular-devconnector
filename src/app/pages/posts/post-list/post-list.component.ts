@@ -1,3 +1,4 @@
+import { Router } from "@angular/router";
 import { Post } from "./../model/post";
 import { PostService } from "./../shared/post.service";
 import { Component, OnInit, OnDestroy } from "@angular/core";
@@ -17,7 +18,7 @@ import { Subscription, Observable } from "rxjs";
   styleUrls: ["./post-list.component.css"],
 })
 export class PostListComponent implements OnInit, OnDestroy {
-  posts$: Observable<Post[]>;
+  posts$: Post[];
   totalPosts: number;
   postCreated: Date;
   isloading: boolean;
@@ -29,8 +30,15 @@ export class PostListComponent implements OnInit, OnDestroy {
   faThumbsDown = faThumbsDown;
   faComment = faComment;
   faFeather = faFeather;
+  newPostSub: Subscription;
+  newPost;
 
-  constructor(private postservice: PostService) {}
+  constructor(private postService: PostService, private router: Router) {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.newPostSub = this.postService.getPost().subscribe((post) => {
+      this.posts$.unshift(post);
+    });
+  }
 
   ngOnInit() {
     this.getPostsList();
@@ -38,7 +46,7 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   private getPostsList() {
     this.isloading = true;
-    this.postUpdatedSub = this.postservice.getPosts$().subscribe(
+    this.postUpdatedSub = this.postService.getPosts$().subscribe(
       (res) => {
         this.posts$ = res.posts;
         this.totalPosts = +res.count;

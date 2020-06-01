@@ -1,3 +1,4 @@
+import { PostService } from "./shared/post.service";
 import { User } from "./model/user";
 import { Router } from "@angular/router";
 import { StorageService } from "./../../core/storage/storage.service";
@@ -21,12 +22,15 @@ export class PostsComponent implements OnInit {
   userAuthenticated: boolean = false;
   pageTitle: string = "Developers Feed";
   currentUser;
+  newPost;
+
+  post;
 
   constructor(
     private authservice: AuthService,
     private storage: StorageService,
-    private router: Router,
-    private title: Title
+    private title: Title,
+    private postService: PostService
   ) {}
 
   ngOnInit() {
