@@ -155,7 +155,7 @@ module.exports.replyAComment = async (req, res, next) => {
 
 }
 
-//Like a comment
+//LikeDislike a comment
 
 module.exports.likeAComment = async (req, res, next) => {
     try {

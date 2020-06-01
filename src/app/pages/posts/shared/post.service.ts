@@ -1,5 +1,5 @@
 import { Subject, Observable } from "rxjs";
-import { Post } from "./../model/post";
+import { Post, singlePost } from "./../model/post";
 import { environment } from "./../../../../environments/environment";
 import { HttpClient } from "@angular/common/http";
 import { Injectable, OnDestroy } from "@angular/core";
@@ -36,6 +36,12 @@ export class PostService implements OnDestroy {
         }),
         takeUntil(this.destroy$.asObservable())
       );
+  }
+
+  createPost$(post: singlePost): Observable<{ post: any }> {
+    return this.http
+      .post<{ post: any }>(`${this.backendURL}/posts`, post)
+      .pipe(takeUntil(this.destroy$));
   }
 
   ngOnDestroy() {

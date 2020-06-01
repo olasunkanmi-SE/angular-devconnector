@@ -1,3 +1,6 @@
+import { singlePost } from "./../model/post";
+import { Subscription, BehaviorSubject } from "rxjs";
+import { PostService } from "./../shared/post.service";
 import { Validators } from "@angular/forms";
 import { FormBuilder } from "@angular/forms";
 import { Component, OnInit } from "@angular/core";
@@ -11,8 +14,13 @@ import { faFeather } from "@fortawesome/free-solid-svg-icons";
 export class CreatePostComponent implements OnInit {
   faFeather = faFeather;
   postForm;
+  post$: BehaviorSubject<singlePost>;
+  postSubs: Subscription;
 
-  constructor(private formbuilder: FormBuilder) {}
+  constructor(
+    private formbuilder: FormBuilder,
+    private postService: PostService
+  ) {}
 
   ngOnInit() {
     this.initializeForm();
@@ -27,4 +35,17 @@ export class CreatePostComponent implements OnInit {
   get text() {
     return this.postForm.get("text");
   }
+
+  createPost() {
+    this.postSubs = this.postService.createPost$(this.postForm.value).subscribe(
+      (res) => {
+        this.post$ = res.post;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
+  OnDestroy() {}
 }

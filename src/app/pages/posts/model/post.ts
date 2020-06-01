@@ -7,3 +7,7 @@ export interface Post {
   comments: [];
   date: Date;
 }
+
+export interface singlePost {
+  text: string;
+}
