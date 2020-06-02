@@ -18,3 +18,5 @@ export interface singlePost {
   text: string;
   user?: string;
 }
+
+export interface comment {}

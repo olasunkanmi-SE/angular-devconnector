@@ -89,9 +89,10 @@
                     color="primary"
                     type="submit"
                   >
-                    Sign In
+                    Comment
                   </button>
                 </p>
+                <!-- <p><button (click)="checkPost()">postbyid</button></p> -->
               </div>
             </div>
           </div>
@@ -175,9 +176,9 @@
                       {{ reply.text }}
                     </p>
                   </div>
-                  <!-- <div *ngFor="let reply of comment.replies">
-                  {{ reply.text }}
-                </div> -->
+                  <div *ngFor="let reply of comment.replies">
+                    {{ reply.text }}
+                  </div>
                 </div>
               </div>
             </div>

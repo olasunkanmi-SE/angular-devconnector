@@ -1,11 +1,10 @@
 import { PostService } from "./shared/post.service";
 import { User } from "./model/user";
-import { Router } from "@angular/router";
 import { StorageService } from "./../../core/storage/storage.service";
 import { AuthService } from "./../../core/auth/services/auth/auth.service";
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { faUserCircle, faFeather } from "@fortawesome/free-solid-svg-icons";
-import { Observable, Subscription } from "rxjs";
+import { Subscription } from "rxjs";
 import { Title } from "@angular/platform-browser";
 
 @Component({
@@ -13,7 +12,7 @@ import { Title } from "@angular/platform-browser";
   templateUrl: "./posts.component.html",
   styleUrls: ["./posts.component.css"],
 })
-export class PostsComponent implements OnInit {
+export class PostsComponent implements OnInit, OnDestroy {
   userSubs: Subscription;
   user: User;
   faUser = faUserCircle;
@@ -29,8 +28,7 @@ export class PostsComponent implements OnInit {
   constructor(
     private authservice: AuthService,
     private storage: StorageService,
-    private title: Title,
-    private postService: PostService
+    private title: Title
   ) {}
 
   ngOnInit() {

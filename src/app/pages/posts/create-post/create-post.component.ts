@@ -48,5 +48,7 @@ export class CreatePostComponent implements OnInit {
     );
   }
 
-  OnDestroy() {}
+  OnDestroy() {
+    this.postSubs.unsubscribe();
+  }
 }

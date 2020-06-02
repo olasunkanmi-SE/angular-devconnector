@@ -54,6 +54,17 @@ export class PostService implements OnDestroy {
       .pipe(takeUntil(this.destroy$));
   }
 
+  getPostById$(id: number) {
+    return this.http
+      .get(`${this.backendURL}/posts/${id}`)
+      .pipe(takeUntil(this.destroy$));
+  }
+
+  // createComment$(id,comment){
+  //   return this.http.post
+
+  // }
+
   ngOnDestroy() {
     this.destroy$.next(true);
     this.postSubject.next();

@@ -31,11 +31,16 @@ export class PostListComponent implements OnInit, OnDestroy {
   faComment = faComment;
   faFeather = faFeather;
   newPostSub: Subscription;
+  postSub: Subscription;
   newPost;
+  private post;
+  id: number;
 
   constructor(private postService: PostService, private router: Router) {
-    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    // this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.newPostSub = this.postService.getPost().subscribe((post) => {
+      this.id = post._id;
+      console.log(this.id);
       this.posts$.unshift(post);
     });
   }
@@ -58,6 +63,22 @@ export class PostListComponent implements OnInit, OnDestroy {
         this.error = true;
       }
     );
+  }
+
+  getPostById(id) {
+    this.post = this.posts$.find((post) => {
+      if (post.id == id) {
+        this.postSub = this.postService.getPostById$(id).subscribe((res) => {
+          this.post = res;
+          console.log(this.post);
+        });
+      }
+      return;
+    });
+  }
+
+  checkPost() {
+    this.getPostById(this.id);
   }
 
   ngOnDestroy() {
