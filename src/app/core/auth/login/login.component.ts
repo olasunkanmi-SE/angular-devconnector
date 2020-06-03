@@ -14,11 +14,13 @@ export class LoginComponent implements OnInit {
   signInForm;
   hide: boolean = true;
   ValidationErrors: any;
+
   isLoading: boolean = false;
   constructor(
     private formbuilder: FormBuilder,
     private auth: AuthService,
     private storage: StorageService,
+
     private router: Router
   ) {}
 
@@ -57,5 +59,9 @@ export class LoginComponent implements OnInit {
   onLogin(): any {
     this.auth.login(this.signInForm.value);
     this.isLoading = true;
+  }
+
+  onClick() {
+    this.auth.currentUser();
   }
 }
