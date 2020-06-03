@@ -23,6 +23,10 @@ const routes: Routes = [
     loadChildren: () =>
       import("./ghost-list/ghost-list.module").then((m) => m.GhostListModule),
   },
+  {
+    path: "post",
+    loadChildren: () => import("./post/post.module").then((m) => m.PostModule),
+  },
 ];
 
 @NgModule({

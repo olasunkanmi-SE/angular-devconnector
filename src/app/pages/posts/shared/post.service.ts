@@ -2,7 +2,7 @@ import { Subject, Observable, BehaviorSubject } from "rxjs";
 import { Post, singlePost } from "./../model/post";
 import { environment } from "./../../../../environments/environment";
 import { HttpClient } from "@angular/common/http";
-import { Injectable, OnDestroy } from "@angular/core";
+import { Injectable, OnDestroy, Output, EventEmitter } from "@angular/core";
 import { takeUntil, map } from "rxjs/operators";
 
 @Injectable({
@@ -14,7 +14,7 @@ export class PostService implements OnDestroy {
   destroy$: Subject<boolean> = new Subject<boolean>();
   private postSubject = new Subject<any>();
   constructor(private http: HttpClient) {}
-  private post;
+  @Output() post = new EventEmitter<singlePost>();
 
   sendPost(post: singlePost) {
     this.postSubject.next(post);
