@@ -1,5 +1,4 @@
-import { Router } from "@angular/router";
-import { Post } from "./../model/post";
+import { FormBuilder } from "@angular/forms";
 import { PostService } from "./../shared/post.service";
 import { Component, OnInit, OnDestroy, Input } from "@angular/core";
 import {
@@ -27,13 +26,26 @@ export class PostListComponent implements OnInit, OnDestroy {
   postSub: Subscription;
 
   @Input() post: any;
+  id: string;
+  commentForm;
 
-  constructor(private postService: PostService, private router: Router) {}
+  constructor(
+    private postService: PostService,
+    private formBuilder: FormBuilder
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.validateOnInit();
+  }
 
   getExactPost() {
     this.postService.handlePost(this.post);
+  }
+
+  validateOnInit() {
+    this.commentForm = this.formBuilder.group({
+      text: [""],
+    });
   }
 
   getPost() {
@@ -41,8 +53,19 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.postSub = this.postService
       .getPostById$(this.post.id)
       .subscribe((res) => {
-        console.log(res);
+        this.id = res.id;
       });
+  }
+
+  createComment() {
+    this.getPost();
+    setTimeout(() => {
+      this.postService
+        .createComment$(this.id, this.commentForm.value)
+        .subscribe((res) => {
+          console.log(res);
+        });
+    }, 1000);
   }
 
   ngOnDestroy() {

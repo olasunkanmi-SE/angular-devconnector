@@ -38,6 +38,7 @@ export class PostService implements OnDestroy {
               return {
                 text: post.text,
                 id: post._id,
+                user: post.user,
                 creator: post.name,
                 avatar: post.avatar,
                 likes: post.likes,
@@ -59,12 +60,24 @@ export class PostService implements OnDestroy {
   }
 
   getPostById$(id: any) {
-    return this.http
-      .get(`${this.backendURL}/posts/${id}`)
-      .pipe(takeUntil(this.destroy$));
+    return this.http.get<singlePost>(`${this.backendURL}/posts/${id}`).pipe(
+      map((post) => {
+        return {
+          text: post.text,
+          id: post._id,
+          user: post.user,
+          creator: post.name,
+          avatar: post.avatar,
+          likes: post.likes,
+          comments: post.comments,
+          date: post.date,
+        };
+      }),
+      takeUntil(this.destroy$)
+    );
   }
 
-  createComment$(id: number, comment: Comment) {
+  createComment$(id: string, comment: Comment) {
     return this.http
       .post<singlePost>(`${this.backendURL}/posts/comment/${id}`, comment)
       .pipe(takeUntil(this.destroy$));
