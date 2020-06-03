@@ -1,3 +1,4 @@
+import { Post } from "./model/post";
 import { PostService } from "./shared/post.service";
 import { User } from "./model/user";
 import { StorageService } from "./../../core/storage/storage.service";
@@ -22,18 +23,33 @@ export class PostsComponent implements OnInit, OnDestroy {
   pageTitle: string = "Developers Feed";
   currentUser;
   newPost;
-
-  post;
+  isloading: boolean;
+  postUpdatedSub: Subscription;
+  posts$: Post[];
+  totalPosts: number;
+  postCreated: Date;
+  error: boolean;
+  newPostSub: Subscription;
+  postSub: Subscription;
+  id: number;
 
   constructor(
     private authservice: AuthService,
     private storage: StorageService,
-    private title: Title
-  ) {}
+    private title: Title,
+    private postService: PostService
+  ) {
+    this.newPostSub = this.postService.getPost().subscribe((post) => {
+      this.id = post._id;
+      console.log(this.id);
+      this.posts$.unshift(post);
+    });
+  }
 
   ngOnInit() {
     this.intitialize();
     this.getCurrentUser();
+    this.getPostsList();
   }
 
   intitialize() {
@@ -70,8 +86,25 @@ export class PostsComponent implements OnInit, OnDestroy {
     });
   }
 
+  private getPostsList() {
+    this.isloading = true;
+    this.postUpdatedSub = this.postService.getPosts$().subscribe(
+      (res) => {
+        this.posts$ = res.posts;
+        this.totalPosts = +res.count;
+        this.isloading = false;
+      },
+      (err) => {
+        console.error(err);
+        this.isloading = false;
+        this.error = true;
+      }
+    );
+  }
+
   ngOnDestroy() {
     this.authListenerSubscription.unsubscribe();
     this.userSubs.unsubscribe();
+    this.postUpdatedSub.unsubscribe();
   }
 }
