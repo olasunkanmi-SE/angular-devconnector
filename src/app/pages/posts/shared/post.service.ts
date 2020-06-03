@@ -1,5 +1,5 @@
 import { Subject, Observable, BehaviorSubject } from "rxjs";
-import { Post, singlePost } from "./../model/post";
+import { Post, singlePost, comment } from "./../model/post";
 import { environment } from "./../../../../environments/environment";
 import { HttpClient } from "@angular/common/http";
 import { Injectable, OnDestroy, Output, EventEmitter } from "@angular/core";
@@ -22,6 +22,10 @@ export class PostService implements OnDestroy {
 
   getPost(): Observable<any> {
     return this.postSubject.asObservable();
+  }
+
+  handlePost(post) {
+    this.post.emit(post);
   }
 
   getPosts$(): Observable<{ count: string; posts: any }> {
@@ -50,20 +54,21 @@ export class PostService implements OnDestroy {
 
   createPost$(post) {
     return this.http
-      .post<{ post }>(`${this.backendURL}/posts`, post)
+      .post<{ singlePost }>(`${this.backendURL}/posts`, post)
       .pipe(takeUntil(this.destroy$));
   }
 
-  getPostById$(id: number) {
+  getPostById$(id: any) {
     return this.http
       .get(`${this.backendURL}/posts/${id}`)
       .pipe(takeUntil(this.destroy$));
   }
 
-  // createComment$(id,comment){
-  //   return this.http.post
-
-  // }
+  createComment$(id: number, comment: Comment) {
+    return this.http
+      .post<singlePost>(`${this.backendURL}/posts/comment/${id}`, comment)
+      .pipe(takeUntil(this.destroy$));
+  }
 
   ngOnDestroy() {
     this.destroy$.next(true);

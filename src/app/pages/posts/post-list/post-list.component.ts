@@ -24,12 +24,28 @@ export class PostListComponent implements OnInit, OnDestroy {
   faThumbsDown = faThumbsDown;
   faComment = faComment;
   faFeather = faFeather;
+  postSub: Subscription;
 
-  @Input() post;
+  @Input() post: any;
 
   constructor(private postService: PostService, private router: Router) {}
 
   ngOnInit() {}
 
-  ngOnDestroy() {}
+  getExactPost() {
+    this.postService.handlePost(this.post);
+  }
+
+  getPost() {
+    this.getExactPost();
+    this.postSub = this.postService
+      .getPostById$(this.post.id)
+      .subscribe((res) => {
+        console.log(res);
+      });
+  }
+
+  ngOnDestroy() {
+    this.postSub.unsubscribe();
+  }
 }
