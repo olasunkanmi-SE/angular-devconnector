@@ -1,3 +1,4 @@
+
 import { PostsModule } from "./pages/posts/posts.module";
 import { LoggingInterceptor } from "./core/auth/interceptors/logging-interceptor";
 import { ErrorInterceptor } from "./core/auth/interceptors/error-interceptor";
@@ -12,6 +13,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { HomeModule } from "./pages/home/home.module";
 
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -23,6 +25,7 @@ import { HomeModule } from "./pages/home/home.module";
     HttpClientModule,
     PostsModule,
     HomeModule,
+
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
