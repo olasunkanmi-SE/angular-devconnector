@@ -9,12 +9,41 @@
   >
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item href="#">Developers</a>
-      <a mat-list-item href="#">Feed</a>
-      <a mat-list-item href="#">Notifications</a>
-      <a mat-list-item [routerLink]="['/auth/signup']">Sign Up</a>
-      <a mat-list-item [routerLink]="['/auth/login']">Sign In</a>
-      <a mat-list-item [routerLink]="['/']">Sign Out</a>
+      <a
+        *ngIf="userAuthenticated"
+        mat-list-item
+        [routerLink]="['/pages/posts']"
+      >
+        <fa-icon [icon]="faUser" size="1x"></fa-icon> &nbsp;Home</a
+      >
+      <a mat-list-item [routerLink]="['/pages/profiles']">Developers</a>
+      <a *ngIf="userAuthenticated" mat-list-item [routerLink]="['/pages/posts']"
+        >feeds</a
+      >
+      <a
+        *ngIf="userAuthenticated"
+        mat-list-item
+        [routerLink]="['/pages/profile']"
+        >Profile</a
+      >
+      <a *ngIf="userAuthenticated" mat-list-item href="#">Notifications</a>
+      <a
+        *ngIf="!userAuthenticated"
+        mat-list-item
+        [routerLink]="['/auth/signup']"
+        >Sign Up</a
+      >
+      <a *ngIf="!userAuthenticated" mat-list-item [routerLink]="['/auth/login']"
+        >Sign In</a
+      >
+      <button
+        (click)="onLogout()"
+        mat-raised-button
+        color="accent"
+        *ngIf="userAuthenticated"
+      >
+        Logout
+      </button>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -33,12 +62,32 @@
 
       <span class="spacer"></span>
       <span class="main-menu">
-        <a [routerLink]="['/']">Home</a>
-        <a href="#"> Developers</a>
-        <a href="#">Feed</a>
-        <a [routerLink]="['/auth/signup']">Sign Up</a>
-        <a [routerLink]="['/auth/login']">Sign In</a>
-        <a [routerLink]="['/']">Sign Out</a>
+        <a *ngIf="userAuthenticated" [routerLink]="['/pages/posts']"
+          ><fa-icon [icon]="faUser" size="1x"></fa-icon
+        ></a>
+        <a [routerLink]="['/pages/profiles']">Developers</a>
+        <a
+          *ngIf="userAuthenticated"
+          mat-list-item
+          [routerLink]="['/pages/posts']"
+          >feeds</a
+        >
+        <a *ngIf="userAuthenticated" [routerLink]="['/pages/profile']"
+          >Profile</a
+        >
+        <a href="#" *ngIf="userAuthenticated">Notification</a>
+        <a *ngIf="!userAuthenticated" [routerLink]="['/auth/signup']"
+          >Sign Up</a
+        >
+        <a *ngIf="!userAuthenticated" [routerLink]="['/auth/login']">Sign In</a>
+        <button
+          (click)="onLogout()"
+          mat-raised-button
+          color="accent"
+          *ngIf="userAuthenticated"
+        >
+          Logout
+        </button>
       </span>
     </mat-toolbar>
     <ng-content></ng-content>

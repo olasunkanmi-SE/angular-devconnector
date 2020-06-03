@@ -36,6 +36,10 @@ router.post('/comment/reply/:id/:commentId', auth, postController.replyAComment)
 //Remove a Comment
 
 router.delete('/comment/:id/:commentId', auth, postController.deleteAComment);
+//where :id = post Id
+
+//Like a comment
+router.post('/comment/like/:id/:commentId', auth, postController.likeAComment);
 
 //delete reply
 

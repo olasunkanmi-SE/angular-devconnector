@@ -10,11 +10,18 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   background-color: #fafafa;
-  overflow-y: hidden;
 }
 
 input:-internal-autofill-selected {
   background-color: none !important;
   background-image: none !important;
   color: -internal-light-dark-color(black, white) !important;
+}
+.mat-drawer-inner-container {
+  background-color: #160338 !important;
+}
+
+.mat-list-base .mat-list-item .mat-list-item-content,
+.mat-list-base .mat-list-option .mat-list-item-content {
+  color: #fff !important;
 }

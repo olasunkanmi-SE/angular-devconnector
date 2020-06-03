@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <section class="dvspace">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3 mb-3">
+            <ul class="list-group">
+              <a class="dvprofile" href="profile.html"
+                ><li class="list-group-item text-center">
+                  <fa-icon [icon]="faUser" size="3x"></fa-icon>
+                  <p *ngIf="currentUser" class="dvhead">
+                    {{ currentUser.name }}
+                  </p>
+                  <small style="font-weight: 350;"
+                    >Software Engineer at ViewQwest</small
+                  >
+                </li>
+              </a>
+
+              <li class="list-group-item text-center">
+                <span color="primary" class="dvstatus">Employed</span>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-5 mb-3">
+            <div class="card">
+              <div class="card-body">
+                <app-create-post></app-create-post>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <ul class="list-group">
+              <li class="list-group-item text-center">Random Developers</li>
+              <li class="list-group-item">
+                <div class="d-flex bd-highlight">
+                  <div class="p-2 flex-fill bd-highlight">
+                    <fa-icon [icon]="faUser" size="2x"></fa-icon>
+                  </div>
+                  <div class="p-2 flex-fill bd-highlight">
+                    <small>Oyinlola Olasunkanmi</small>
+                  </div>
+
+                  <button class="dvbutton">Follow +</button>
+                </div>
+              </li>
+              <li class="list-group-item">
+                <div class="d-flex bd-highlight">
+                  <div class="p-2 flex-fill bd-highlight">
+                    <fa-icon [icon]="faUser" size="2x"></fa-icon>
+                  </div>
+                  <div class="p-2 flex-fill bd-highlight">
+                    <small>Oyinlola Olasunkanmi</small>
+                  </div>
+
+                  <button class="dvbutton">Follow +</button>
+                  <!-- <button (click)="onClick()">Follow +</button> -->
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="row" style="margin-top: -10px;">
+          <div class="col-md-3 mb-3"></div>
+          <div class="col-md-5 mb-3">
+            <!-- <app-ghost-list></app-ghost-list> -->
+            <app-post-list
+              *ngFor="let post of posts$"
+              [post]="post"
+            ></app-post-list>
+          </div>
+
+          <div class="col-md-4 mb-3"></div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

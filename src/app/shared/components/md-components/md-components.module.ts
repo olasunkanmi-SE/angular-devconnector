@@ -11,8 +11,10 @@ import { MatInputModule } from "@angular/material/input";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatRadioModule } from "@angular/material/radio";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
+import { MatDialogModule } from "@angular/material/dialog";
 import { MatTabsModule } from "@angular/material/tabs";
 import { NgModule } from "@angular/core";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
 @NgModule({
   exports: [
@@ -30,6 +32,8 @@ import { NgModule } from "@angular/core";
     MatListModule,
     MatAutocompleteModule,
     MatTabsModule,
+    MatDialogModule,
+    MatProgressSpinnerModule,
   ],
 })
 export class MdComponentsModule {}

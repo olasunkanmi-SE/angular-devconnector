@@ -1,3 +1,4 @@
+import { StorageService } from "./../../storage/storage.service";
 import { AuthService } from "./../services/auth/auth.service";
 import { PatternValidation } from "./../../../shared/helpers/custom-validation";
 import { Component, OnInit } from "@angular/core";
@@ -13,13 +14,20 @@ export class LoginComponent implements OnInit {
   signInForm;
   hide: boolean = true;
   ValidationErrors: any;
+
+  isLoading: boolean = false;
   constructor(
     private formbuilder: FormBuilder,
     private auth: AuthService,
+    private storage: StorageService,
+
     private router: Router
   ) {}
 
   ngOnInit() {
+    if (+this.storage.getItem("expiration") > Date.now()) {
+      return this.router.navigate(["pages/posts"]);
+    }
     this.signInForm = this.formbuilder.group({
       email: [
         "",
@@ -48,8 +56,9 @@ export class LoginComponent implements OnInit {
   //   this.signInForm.valueChanges.subscribe((data) => console.log(data));
   // }
 
-  onLogin() {
+  onLogin(): any {
     this.auth.login(this.signInForm.value);
+    this.isLoading = true;
   }
 
   onClick() {
