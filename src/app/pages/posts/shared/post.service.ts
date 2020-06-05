@@ -17,7 +17,7 @@ export class PostService implements OnDestroy {
   private postsSubject = new Subject<any>();
   constructor(private http: HttpClient) {}
   @Output() post = new EventEmitter<singlePost>();
-
+  @Output() comment = new EventEmitter<Comment>();
   sendPost(post: singlePost) {
     this.postSubject.next(post);
   }
@@ -36,6 +36,10 @@ export class PostService implements OnDestroy {
 
   handlePost(post) {
     this.post.emit(post);
+  }
+
+  handleComment(comment) {
+    this.comment.emit(comment);
   }
 
   getPosts$(): Observable<{ count: string; posts: any }> {
@@ -98,6 +102,8 @@ export class PostService implements OnDestroy {
       .post<singlePost>(`${this.backendURL}/posts/like/${id}`, user)
       .pipe(takeUntil(this.destroy$));
   }
+
+  replyComment$() {}
 
   ngOnDestroy() {
     this.destroy$.next(true);

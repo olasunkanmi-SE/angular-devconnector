@@ -27,4 +27,14 @@ export interface comment {
   avatar?: string;
   replies?: [];
   likes?: [];
+  date?: Date;
+}
+
+export interface reply {
+  _id?: string;
+  user?: string;
+  text?: string;
+  name?: string;
+  avatar?: string;
+  date?: Date;
 }
