@@ -14,6 +14,7 @@
           <fa-icon [icon]="faUser" size="2x"></fa-icon>
         </div>
         <div class="p-2 flex-fill">
+          <button (click)="currentUser()">user</button>
           <div>
             <small>{{ post.creator }}</small>
           </div>
@@ -56,7 +57,9 @@
           >
             <ul class="list-inline">
               <li class="list-inline-item">
-                <fa-icon [icon]="faThumbsUp"></fa-icon>
+                <a (click)="likeDisLikeComment()"
+                  ><fa-icon [icon]="faThumbsUp"></fa-icon
+                ></a>
                 <small> Like</small>
               </li>
 

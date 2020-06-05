@@ -12,7 +12,6 @@ import { Subject } from "rxjs";
 import { takeUntil, take } from "rxjs/operators";
 import { Observable } from "rxjs";
 
-
 @Injectable({
   providedIn: "root",
 })
@@ -79,7 +78,7 @@ export class AuthService implements OnDestroy {
     return this.token;
   }
 
-  currentUser$(): Observable<User> {
+  currentUser$() {
     return this.httpclient
       .get<User>(`${this.backendURL}/auth/current`)
       .pipe(takeUntil(this.destroy$.asObservable()));

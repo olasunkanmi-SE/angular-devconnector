@@ -79,7 +79,7 @@ module.exports.likeOrUnlikeAPost = async (req, res, next) => {
             const removeLike = likes.map(like => like.user.toString()).indexOf(req.user.id);
             likes.splice(removeLike, 1);
             post.save();
-            return res.status(201).json({ unliked: true });
+            return res.status(201).json(post);
         }
 
         if ((likes.filter(item => item.user.toString() == req.user.id).length == 0) || likes.filter(item => item.user.toString() !== req.user.id)) {

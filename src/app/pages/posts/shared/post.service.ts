@@ -1,3 +1,4 @@
+import { User } from "./../model/user";
 import { Subject, Observable, BehaviorSubject } from "rxjs";
 import { Post, singlePost, comment } from "./../model/post";
 import { environment } from "./../../../../environments/environment";
@@ -88,7 +89,13 @@ export class PostService implements OnDestroy {
 
   createComment$(id: string, comment: Comment) {
     return this.http
-      .post<comment>(`${this.backendURL}/posts/comment/${id}`, comment)
+      .post<singlePost>(`${this.backendURL}/posts/comment/${id}`, comment)
+      .pipe(takeUntil(this.destroy$));
+  }
+
+  likeDislikePost$(id: string, user: User) {
+    return this.http
+      .post<singlePost>(`${this.backendURL}/posts/like/${id}`, user)
       .pipe(takeUntil(this.destroy$));
   }
 
