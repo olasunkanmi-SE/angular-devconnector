@@ -118,8 +118,8 @@ module.exports.createAPostComment = async (req, res, next) => {
         comments.unshift(newComment);
         post.save();
         return res.status(201).json(post)
-    } catch (ex) {
-        next(ex);
+    } catch (err) {
+        console.error(err);
     }
 
 }

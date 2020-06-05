@@ -1,3 +1,4 @@
+import { singlePost } from "./../model/post";
 import { FormBuilder } from "@angular/forms";
 import { PostService } from "./../shared/post.service";
 import { Component, OnInit, OnDestroy, Input } from "@angular/core";
@@ -24,10 +25,12 @@ export class PostListComponent implements OnInit, OnDestroy {
   faComment = faComment;
   faFeather = faFeather;
   postSub: Subscription;
-
+  postsListSub: Subscription;
   @Input() post: any;
+  posts: singlePost[];
   id: string;
   commentForm;
+  comment: Comment[];
 
   constructor(
     private postService: PostService,
@@ -38,14 +41,14 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.validateOnInit();
   }
 
-  getExactPost() {
-    this.postService.handlePost(this.post);
-  }
-
   validateOnInit() {
     this.commentForm = this.formBuilder.group({
       text: [""],
     });
+  }
+
+  getExactPost() {
+    this.postService.handlePost(this.post);
   }
 
   getPost() {
@@ -58,14 +61,11 @@ export class PostListComponent implements OnInit, OnDestroy {
   }
 
   createComment() {
-    this.getPost();
-    setTimeout(() => {
-      this.postService
-        .createComment$(this.id, this.commentForm.value)
-        .subscribe((res) => {
-          console.log(res);
-        });
-    }, 1000);
+    this.postService
+      .createComment$(this.post.id, this.commentForm.value)
+      .subscribe((res: singlePost) => {
+        this.post.comments = res.comments;
+      });
   }
 
   ngOnDestroy() {

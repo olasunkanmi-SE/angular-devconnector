@@ -1,4 +1,4 @@
-import { Post } from "./model/post";
+import { singlePost } from "./model/post";
 import { PostService } from "./shared/post.service";
 import { User } from "./model/user";
 import { StorageService } from "./../../core/storage/storage.service";
@@ -25,13 +25,17 @@ export class PostsComponent implements OnInit, OnDestroy {
   newPost;
   isloading: boolean;
   postUpdatedSub: Subscription;
-  posts$: Post[];
+  posts: singlePost[];
   totalPosts: number;
   postCreated: Date;
   error: boolean;
   newPostSub: Subscription;
   postSub: Subscription;
-  id: number;
+  newCommentSub: Subscription;
+  id: any;
+  comment;
+  post: singlePost;
+  postsListSub: Subscription;
 
   constructor(
     private authservice: AuthService,
@@ -39,17 +43,21 @@ export class PostsComponent implements OnInit, OnDestroy {
     private title: Title,
     private postService: PostService
   ) {
+    this.subscribeToNewPost();
+  }
+
+  subscribeToNewPost() {
     this.newPostSub = this.postService.getPost().subscribe((post) => {
-      this.id = post._id;
-      console.log(this.id);
-      this.posts$.unshift(post);
+      this.id = post.id;
+      this.posts.unshift(post);
+      return this.id;
     });
   }
 
   ngOnInit() {
     this.intitialize();
     this.getCurrentUser();
-    this.getPostsList();
+    this.getPostsList$();
   }
 
   intitialize() {
@@ -86,11 +94,12 @@ export class PostsComponent implements OnInit, OnDestroy {
     });
   }
 
-  private getPostsList() {
+  private getPostsList$() {
     this.isloading = true;
     this.postUpdatedSub = this.postService.getPosts$().subscribe(
       (res) => {
-        this.posts$ = res.posts;
+        this.posts = res.posts;
+        this.postService.sendPosts(this.posts);
         this.totalPosts = +res.count;
         this.isloading = false;
       },
@@ -106,5 +115,6 @@ export class PostsComponent implements OnInit, OnDestroy {
     this.authListenerSubscription.unsubscribe();
     this.userSubs.unsubscribe();
     this.postUpdatedSub.unsubscribe();
+    this.newPostSub.unsubscribe();
   }
 }

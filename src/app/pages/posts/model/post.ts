@@ -20,8 +20,11 @@ export interface singlePost {
 }
 
 export interface comment {
+  _id?: string;
   user?: string;
   text?: string;
   name?: string;
   avatar?: string;
+  replies?: [];
+  likes?: [];
 }
