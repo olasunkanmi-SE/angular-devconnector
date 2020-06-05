@@ -28,12 +28,11 @@ export class PostListComponent implements OnInit, OnDestroy {
   faFeather = faFeather;
   postSub: Subscription;
   postsListSub: Subscription;
-  @Input() post: singlePost;
-  @Input() comment: Comment;
+  @Input() post: any;
   posts: singlePost[];
+  comments: Comment[];
   id: string;
   commentForm;
-  replyForm;
   userSub: Subscription;
   user: User;
   commentSub: Subscription;
@@ -53,9 +52,6 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.commentForm = this.formBuilder.group({
       text: [""],
     });
-    this.replyForm = this.formBuilder.group({
-      text: [""],
-    });
   }
 
   getExactPost() {
@@ -65,7 +61,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   getPost() {
     this.getExactPost();
     this.postSub = this.postService
-      .getPostById$(this.post._id)
+      .getPostById$(this.post.id)
       .subscribe((res) => {
         this.id = res.id;
       });
@@ -73,16 +69,17 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   createComment() {
     this.commentSub = this.postService
-      .createComment$(this.post._id, this.commentForm.value)
+      .createComment$(this.post.id, this.commentForm.value)
       .subscribe((res: singlePost) => {
         this.post.comments = res.comments;
+        this.comments = this.post.comments;
       });
   }
 
   likeDisLikeComment() {
     this.currentUser();
     this.likeSub = this.postService
-      .likeDislikePost$(this.post._id, this.user)
+      .likeDislikePost$(this.post.id, this.user)
       .subscribe((res) => {
         this.post.likes = res.likes;
       });
@@ -96,5 +93,8 @@ export class PostListComponent implements OnInit, OnDestroy {
     if (this.postSub) {
       this.postSub.unsubscribe();
     }
+    this.userSub.unsubscribe();
+    this.commentSub.unsubscribe();
+    this.likeSub.unsubscribe();
   }
 }

@@ -10,6 +10,7 @@ export interface Post {
 
 export interface singlePost {
   _id?: string;
+  id?: string;
   avatar?: string;
   comments?: [];
   date?: Date;
@@ -21,6 +22,7 @@ export interface singlePost {
 
 export interface comment {
   _id?: string;
+  id?: string;
   user?: string;
   text?: string;
   name?: string;
