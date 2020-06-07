@@ -1,10 +1,10 @@
 import { User } from "./../model/user";
 import { Subject, Observable, BehaviorSubject } from "rxjs";
-import { Post, singlePost, comment } from "./../model/post";
+import { Post, SinglePost, Comment, Reply } from "./../model/post";
 import { environment } from "./../../../../environments/environment";
 import { HttpClient } from "@angular/common/http";
 import { Injectable, OnDestroy, Output, EventEmitter } from "@angular/core";
-import { takeUntil, map } from "rxjs/operators";
+import { takeUntil, map, take } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root",
@@ -16,9 +16,9 @@ export class PostService implements OnDestroy {
   private postSubject = new Subject<any>();
   private postsSubject = new Subject<any>();
   constructor(private http: HttpClient) {}
-  @Output() post = new EventEmitter<singlePost>();
+  @Output() post = new EventEmitter<SinglePost>();
   @Output() comment = new EventEmitter<Comment>();
-  sendPost(post: singlePost) {
+  sendPost(post: SinglePost) {
     this.postSubject.next(post);
   }
 
@@ -26,7 +26,7 @@ export class PostService implements OnDestroy {
     return this.postSubject.asObservable();
   }
 
-  sendPosts(posts: singlePost[]) {
+  sendPosts(posts: SinglePost[]) {
     this.postsSubject.next(posts);
   }
 
@@ -69,12 +69,12 @@ export class PostService implements OnDestroy {
 
   createPost$(post) {
     return this.http
-      .post<{ singlePost }>(`${this.backendURL}/posts`, post)
+      .post<{ SinglePost }>(`${this.backendURL}/posts`, post)
       .pipe(takeUntil(this.destroy$));
   }
 
   getPostById$(id: any) {
-    return this.http.get<singlePost>(`${this.backendURL}/posts/${id}`).pipe(
+    return this.http.get<SinglePost>(`${this.backendURL}/posts/${id}`).pipe(
       map((post) => {
         return {
           text: post.text,
@@ -93,17 +93,24 @@ export class PostService implements OnDestroy {
 
   createComment$(id: string, comment: Comment) {
     return this.http
-      .post<singlePost>(`${this.backendURL}/posts/comment/${id}`, comment)
+      .post<SinglePost>(`${this.backendURL}/posts/comment/${id}`, comment)
       .pipe(takeUntil(this.destroy$));
   }
 
   likeDislikePost$(id: string, user: User) {
     return this.http
-      .post<singlePost>(`${this.backendURL}/posts/like/${id}`, user)
+      .post<SinglePost>(`${this.backendURL}/posts/like/${id}`, user)
       .pipe(takeUntil(this.destroy$));
   }
 
-  replyComment$() {}
+  replyComment$(id: string, commentId: Comment, reply: Reply) {
+    return this.http
+      .post<SinglePost>(
+        `${this.backendURL}/posts/comment/reply/${id}/${commentId}`,
+        reply
+      )
+      .pipe(takeUntil(this.destroy$));
+  }
 
   ngOnDestroy() {
     this.destroy$.next(true);

@@ -1,5 +1,7 @@
+import { SinglePost, Comment } from "./../model/post";
+import { Subscription } from "rxjs";
 import { PostService } from "./../shared/post.service";
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, OnDestroy } from "@angular/core";
 import {
   faCoffee,
   faUserCircle,
@@ -22,11 +24,25 @@ export class CommentComponent implements OnInit {
   faComment = faComment;
   faFeather = faFeather;
   @Input() comment: Comment;
+  @Input() post: SinglePost;
+  replySub: Subscription;
   constructor(private postService: PostService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getComment();
+  }
 
   getComment() {
     this.postService.handleComment(this.comment);
+  }
+
+  replyComment() {
+    console.log(this.post._id);
+  }
+
+  ngOnDestroy() {
+    if (this.replySub) {
+      this.replySub.unsubscribe();
+    }
   }
 }

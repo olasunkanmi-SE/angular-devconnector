@@ -1,3 +1,4 @@
+import { PostModule } from "./../post/post.module";
 import { CommentModule } from "./../comment/comment.module";
 import { FormsModule } from "@angular/forms";
 import { ReactiveFormsModule } from "@angular/forms";
@@ -19,6 +20,7 @@ import { PostListRoutingModule } from "./post-list-routing.module";
     ReactiveFormsModule,
     FormsModule,
     CommentModule,
+    PostModule,
   ],
 })
 export class PostListModule {}

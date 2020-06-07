@@ -1,4 +1,4 @@
-import { singlePost } from "./model/post";
+import { SinglePost } from "./model/post";
 import { PostService } from "./shared/post.service";
 import { User } from "./model/user";
 import { StorageService } from "./../../core/storage/storage.service";
@@ -25,7 +25,7 @@ export class PostsComponent implements OnInit, OnDestroy {
   newPost;
   isloading: boolean;
   postUpdatedSub: Subscription;
-  posts: singlePost[];
+  posts: SinglePost[];
   totalPosts: number;
   postCreated: Date;
   error: boolean;
@@ -34,7 +34,7 @@ export class PostsComponent implements OnInit, OnDestroy {
   newCommentSub: Subscription;
   id: any;
   comment;
-  post: singlePost;
+  post: SinglePost;
   postsListSub: Subscription;
 
   constructor(

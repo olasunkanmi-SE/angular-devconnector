@@ -47,3 +47,6 @@ Error: error
 2020-06-03T16:13:44.012Z debug: post validation failed: comments.0.text: Path `text` is required.
 2020-06-05T04:28:10.863Z debug: post validation failed: comments.0.text: Path `text` is required.
 2020-06-05T04:28:28.330Z debug: post validation failed: comments.0.text: Path `text` is required.
+2020-06-05T08:52:42.708Z debug: post validation failed: comments.0.text: Path `text` is required.
+2020-06-07T02:35:01.040Z debug: post validation failed: comments.0.text: Path `text` is required.
+2020-06-07T02:35:12.965Z debug: post validation failed: comments.0.text: Path `text` is required.

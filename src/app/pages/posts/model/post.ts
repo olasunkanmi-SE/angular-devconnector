@@ -8,7 +8,7 @@ export interface Post {
   date: Date;
 }
 
-export interface singlePost {
+export interface SinglePost {
   _id?: string;
   id?: string;
   avatar?: string;
@@ -20,7 +20,7 @@ export interface singlePost {
   user?: string;
 }
 
-export interface comment {
+export interface Comment {
   _id?: string;
   id?: string;
   user?: string;
@@ -32,7 +32,7 @@ export interface comment {
   date?: Date;
 }
 
-export interface reply {
+export interface Reply {
   _id?: string;
   user?: string;
   text?: string;
