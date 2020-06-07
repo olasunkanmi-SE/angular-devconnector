@@ -1,15 +1,36 @@
-import { Component, OnInit } from '@angular/core';
+import { Subscription } from "rxjs";
+import { PostService } from "./../shared/post.service";
+import { Component, OnInit, Input, OnDestroy } from "@angular/core";
+import { FormBuilder, Validators } from "@angular/forms";
+import {
+  faCoffee,
+  faUserCircle,
+  faThumbsUp,
+  faThumbsDown,
+  faComment,
+  faFeather,
+} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
-  selector: 'app-reply',
-  templateUrl: './reply.component.html',
-  styleUrls: ['./reply.component.css']
+  selector: "app-reply",
+  templateUrl: "./reply.component.html",
+  styleUrls: ["./reply.component.css"],
 })
 export class ReplyComponent implements OnInit {
+  faCoffee = faCoffee;
+  faUser = faUserCircle;
+  faThumbsUp = faThumbsUp;
+  faThumbsDown = faThumbsDown;
+  faComment = faComment;
+  faFeather = faFeather;
+  @Input() comment: any;
+  @Input() reply: any;
+  constructor(
+    private formbuilder: FormBuilder,
+    private postService: PostService
+  ) {}
 
-  constructor() { }
+  ngOnInit() {}
 
-  ngOnInit() {
-  }
-
+  ngOnDestroy() {}
 }

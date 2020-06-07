@@ -18,6 +18,7 @@ export class PostService implements OnDestroy {
   constructor(private http: HttpClient) {}
   @Output() post = new EventEmitter<SinglePost>();
   @Output() comment = new EventEmitter<Comment>();
+  @Output() reply = new EventEmitter<Reply>();
 
   sendPost(post: SinglePost) {
     this.postSubject.next(post);
@@ -41,6 +42,10 @@ export class PostService implements OnDestroy {
 
   handleComment(comment) {
     this.comment.emit(comment);
+  }
+
+  handleReply(reply) {
+    this.reply.emit(reply);
   }
 
   getPosts$(): Observable<{ count: string; posts: any }> {

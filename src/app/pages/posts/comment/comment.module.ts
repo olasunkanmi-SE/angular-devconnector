@@ -1,3 +1,4 @@
+import { ReplyModule } from "./../reply/reply.module";
 import { FormsModule } from "@angular/forms";
 import { ReactiveFormsModule } from "@angular/forms";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
@@ -18,6 +19,7 @@ import { CommentComponent } from "./comment.component";
     FontAwesomeModule,
     ReactiveFormsModule,
     FormsModule,
+    ReplyModule,
   ],
 })
 export class CommentModule {}
