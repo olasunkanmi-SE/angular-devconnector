@@ -14,10 +14,11 @@ export class PostService implements OnDestroy {
   backendURL = environment.backendAPI;
   destroy$: Subject<boolean> = new Subject<boolean>();
   private postSubject = new Subject<any>();
-  private postsSubject = new Subject<any>();
+  private replySubject = new Subject<any>();
   constructor(private http: HttpClient) {}
   @Output() post = new EventEmitter<SinglePost>();
   @Output() comment = new EventEmitter<Comment>();
+
   sendPost(post: SinglePost) {
     this.postSubject.next(post);
   }
@@ -26,12 +27,12 @@ export class PostService implements OnDestroy {
     return this.postSubject.asObservable();
   }
 
-  sendPosts(posts: SinglePost[]) {
-    this.postsSubject.next(posts);
+  sendReply(comment: Comment[]) {
+    this.replySubject.next(comment);
   }
 
-  getPosts() {
-    return this.postsSubject.asObservable();
+  getReply() {
+    return this.replySubject.asObservable();
   }
 
   handlePost(post) {

@@ -50,7 +50,7 @@ export class PostsComponent implements OnInit, OnDestroy {
     this.newPostSub = this.postService.getPost().subscribe((post) => {
       this.id = post.id;
       this.posts.unshift(post);
-      return this.id;
+      return this.getPostsList$();
     });
   }
 
@@ -99,7 +99,6 @@ export class PostsComponent implements OnInit, OnDestroy {
     this.postUpdatedSub = this.postService.getPosts$().subscribe(
       (res) => {
         this.posts = res.posts;
-        this.postService.sendPosts(this.posts);
         this.totalPosts = +res.count;
         this.isloading = false;
       },

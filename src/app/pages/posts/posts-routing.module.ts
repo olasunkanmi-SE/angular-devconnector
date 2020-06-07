@@ -32,6 +32,7 @@ const routes: Routes = [
     loadChildren: () =>
       import("./comment/comment.module").then((m) => m.CommentModule),
   },
+  { path: 'reply', loadChildren: () => import('./reply/reply.module').then(m => m.ReplyModule) },
 ];
 
 @NgModule({
