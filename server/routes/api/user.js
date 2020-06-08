@@ -29,8 +29,22 @@ router.post('/register', async (req, res) => {
         user.password = await bcrypt.hash(user.password, salt);
 
         await user.save();
-        //this uses the pick feature of lodash to display picked user variables
-        return res.json({ user: _.pick(user, ['_id', 'name', 'email', 'date']) });
+        return res.status(201).json({
+            message: 'user created successfully',
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                avatar: user.avatar,
+                request: {
+                    type: 'GET',
+                    url: 'http://localhost:3000/api/users/${user._id}'
+                }
+
+
+            }
+        });
+
     } catch (error) {
         console.log(error);
     }

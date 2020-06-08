@@ -21,5 +21,5 @@ function validateCarBrand(carbrand) {
     return Schema.validate(carbrand);
 }
 
-exports.Brand = carbrand;
+exports.Brand = CarBrand;
 exports.validate = validateCarBrand;
