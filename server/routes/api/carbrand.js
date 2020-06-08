@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../../middlewares/auth');
-const brandController = require('../../controllers/carbrand');
+const carBrandController = require('../../controllers/carbrand');
 
 
-router.post('/create', auth, brandController.create);
+router.post('/create', auth, carBrandController.create);
 
-router.get('/', auth, brandController.brands);
+router.get('/', auth, carBrandController.brands);
 
-router.get('/brand', auth, brandController.brand);
+router.get('/brand/:id', auth, carBrandController.brand);
