@@ -105,6 +105,7 @@
             *ngFor="let comment of comments"
             [comment]="comment"
             [post]="post"
+            (reply)="detectReply($event)"
           ></app-comment>
         </div>
       </div>

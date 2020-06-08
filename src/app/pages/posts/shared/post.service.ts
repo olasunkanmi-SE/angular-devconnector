@@ -109,7 +109,7 @@ export class PostService implements OnDestroy {
       .pipe(takeUntil(this.destroy$));
   }
 
-  replyComment$(id: string, commentId: Comment, reply: Reply) {
+  replyComment$(id: string, commentId: string, reply: Reply) {
     return this.http
       .post<SinglePost>(
         `${this.backendURL}/posts/comment/reply/${id}/${commentId}`,
@@ -117,6 +117,13 @@ export class PostService implements OnDestroy {
       )
       .pipe(takeUntil(this.destroy$));
   }
+
+  // likeDisLikeComment$(id: string, commentId: string, user: User) {
+  //   return this.http.post<SinglePost>(
+  //     `${this.backendURL}/posts/comment/like/${id}/${commentId}`,
+  //     user
+  //   );
+  // }
 
   ngOnDestroy() {
     this.destroy$.next(true);

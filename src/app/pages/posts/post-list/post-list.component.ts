@@ -43,19 +43,11 @@ export class PostListComponent implements OnInit, OnDestroy {
     private postService: PostService,
     private formBuilder: FormBuilder,
     private authService: AuthService
-  ) {
-    this.subscribeToNewReply();
-  }
+  ) {}
 
   ngOnInit() {
     this.validateOnInit();
     this.comments = this.getComments();
-  }
-
-  subscribeToNewReply() {
-    this.replySub = this.postService.getReply().subscribe((comments) => {
-      this.post.comments = comments;
-    });
   }
 
   validateOnInit() {

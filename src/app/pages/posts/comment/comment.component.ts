@@ -2,7 +2,14 @@ import { FormBuilder, Validators } from "@angular/forms";
 import { SinglePost, Comment } from "./../model/post";
 import { Subscription } from "rxjs";
 import { PostService } from "./../shared/post.service";
-import { Component, OnInit, Input, OnDestroy } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  Input,
+  OnDestroy,
+  Output,
+  EventEmitter,
+} from "@angular/core";
 import {
   faCoffee,
   faUserCircle,
@@ -26,6 +33,7 @@ export class CommentComponent implements OnInit {
   faFeather = faFeather;
   @Input() comment: any;
   @Input() post: SinglePost;
+  @Input() reply;
   replySub: Subscription;
   replyForm;
   constructor(
@@ -53,8 +61,8 @@ export class CommentComponent implements OnInit {
     this.replySub = this.postService
       .replyComment$(this.post.id, this.comment._id, this.replyForm.value)
       .subscribe((res) => {
-        this.post.comments = res.comments;
-        this.postService.sendReply(this.post.comments);
+        this.reply = res;
+        // this.post.comments = res.comments;
       });
   }
 

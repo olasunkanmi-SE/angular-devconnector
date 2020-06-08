@@ -49,8 +49,12 @@ export class PostsComponent implements OnInit, OnDestroy {
   subscribeToNewPost() {
     this.newPostSub = this.postService.getPost().subscribe((post) => {
       this.id = post.id;
-      this.posts.unshift(post);
-      return this.getPostsList$();
+      if (!this.posts) {
+        this.getPostsList$();
+      } else {
+        this.posts.unshift(post);
+        return this.getPostsList$();
+      }
     });
   }
 
