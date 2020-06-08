@@ -13,7 +13,7 @@ const app = express();
 
 
 //Connect mongoose to database
-mongoose.connect('mongodb://localhost/social')
+mongoose.connect('mongodb://localhost/carsome')
     .then(() => console.log('connected to database successfully'))
     .catch(err => console.err());
 
@@ -37,7 +37,7 @@ require('./config/passport')(passport);
 app.use('/api/users', user);
 app.use('/api/auth', auth);
 app.use('/api/model', model);
-app.use('/api/brand', brand);
+app.use('/api/brand', brand)
 
 //Send all other requests to the angular App
 

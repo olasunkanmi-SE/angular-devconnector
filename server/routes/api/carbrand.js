@@ -9,3 +9,5 @@ router.post('/create', auth, carBrandController.create);
 router.get('/', auth, carBrandController.brands);
 
 router.get('/:id', auth, carBrandController.brand);
+
+module.exports = router;
