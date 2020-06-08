@@ -12,7 +12,7 @@ module.exports.create = async (req, res) => {
         return res.status(201).json({
             brand: {
                 id: brand._id,
-                name: brand.name
+                name: brand.name,
             }
         })
     } catch (error) {

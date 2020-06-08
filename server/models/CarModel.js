@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Joi = require('@hapi/joi');
 const { Schema } = mongoose;
 
 const carModelSchema = new Schema({
@@ -6,13 +7,16 @@ const carModelSchema = new Schema({
         type: String,
         required: true
     },
+    brand: {
+        type: Schema.Types.ObjectId,
+        ref: 'CarBrand',
+        required: true
+    },
     date: {
         type: Date,
         default: Date.now
-    },
-    brand: {
-        name: Schema.Types.ObjectId,
     }
+
 
 });
 

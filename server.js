@@ -36,8 +36,8 @@ require('./config/passport')(passport);
 //API location
 app.use('/api/users', user);
 app.use('/api/auth', auth);
-app.use('/api/model', model);
-app.use('/api/brand', brand)
+app.use('/api/models', model);
+app.use('/api/brands', brand)
 
 //Send all other requests to the angular App
 

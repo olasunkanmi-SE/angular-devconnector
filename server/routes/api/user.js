@@ -10,7 +10,7 @@ router.get('/', userController.users);
 
 
 //Register a user
-router.post('/register', auth, userController.register);
+router.post('/register', userController.register);
 
 
 module.exports = router;

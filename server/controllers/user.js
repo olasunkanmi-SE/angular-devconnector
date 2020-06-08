@@ -3,6 +3,8 @@ const gravatar = require('gravatar');
 const _ = require('lodash');
 const bcrypt = require('bcryptjs');
 
+//Register a new User
+
 module.exports.register = async (req, res) => {
     const { error } = validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
@@ -42,6 +44,8 @@ module.exports.register = async (req, res) => {
     }
 
 }
+
+//Get all Users
 
 module.exports.users = async (req, res) => {
     try {

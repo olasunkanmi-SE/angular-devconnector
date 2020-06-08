@@ -1,25 +1,27 @@
 const { Model, validate } = require('../models/CarModel');
+const { Brand } = require('../models/CarBrand')
 
 
 module.exports.create = async (req, res) => {
     const { error } = validate(req.body);
-    if (error) return status(400).send(error.details[0].message);
+    if (error) return res.status(400).send(error.details[0].message);
     try {
-        model = new Model({
-            name: req.body.name,
-            brand: req.brand.id
-        });
+        let brand = await Brand.findById(req.params.id);
+        console.log(brand);
+        let models = brand.models;
+        if (brand) {
+            model = new Model({
+                name: req.body.name,
+                brand: req.params.id
+            });
+            models.unshift(model);
+            brand.save();
+            await model.save();
+            return res.status(200).json(model)
+        }
 
-        await model.save();
-        return res.status(200).json({
-            model: {
-                id: model._id,
-                name: model.name,
-                brand: model.brand
-            }
-        })
     } catch (error) {
-        consols.log(error);
+        console.log(error);
 
     }
 }
