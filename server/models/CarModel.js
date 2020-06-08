@@ -9,6 +9,9 @@ const carModelSchema = new Schema({
     date: {
         type: Date,
         default: Date.now
+    },
+    brand: {
+        name: Schema.Types.ObjectId,
     }
 
 });
