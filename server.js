@@ -4,6 +4,8 @@ const path = require('path');
 const http = require('http');
 const user = require('./server/routes/api/user');
 const auth = require('./server/routes/api/auth');
+const model = require('./server/routes/api/carmodel');
+const brand = require('./server/routes/api/carbrand');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const app = express();
@@ -34,6 +36,8 @@ require('./config/passport')(passport);
 //API location
 app.use('/api/users', user);
 app.use('/api/auth', auth);
+app.use('/api/model', model);
+app.use('/api/brand', brand);
 
 //Send all other requests to the angular App
 

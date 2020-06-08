@@ -8,4 +8,4 @@ router.post('/create', auth, carBrandController.create);
 
 router.get('/', auth, carBrandController.brands);
 
-router.get('/brand/:id', auth, carBrandController.brand);
+router.get('/:id', auth, carBrandController.brand);
