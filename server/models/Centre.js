@@ -35,6 +35,11 @@ const centreSchema = new Schema({
                 max: maxDays
             },
 
+            date: {
+                type: Date,
+                default: Date.now
+            }
+
         }
     ]
 
@@ -48,3 +53,15 @@ Date.prototype.addDays = function (days) {
 
 var date = new Date();
 var maxDays = date.addDays(14);
+
+const Center = mongoose.model('center', centreSchema);
+
+function validateCenter(center) {
+    const Schema = Joi.object().keys({
+        name: Joi.string().min(2).max(50).required(),
+    });
+    return Schema.validate(center);
+}
+
+exports.Center = Center;
+exports.validate = validateCenter;
