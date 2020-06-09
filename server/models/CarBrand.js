@@ -8,10 +8,23 @@ const carBrandSchema = new Schema({
         type: String,
         required: true
     },
+    popular: {
+        type: Boolean,
+        required: true
+    },
     models: [
         {
-            type: Schema.Types.ObjectId,
-            ref: 'CarModel',
+            name: {
+                type: String,
+                required: true
+            },
+            description: {
+                type: String
+            },
+            date: {
+                type: Date,
+                default: Date.now
+            }
         }
     ]
 
@@ -22,7 +35,9 @@ const CarBrand = mongoose.model('carbrand', carBrandSchema);
 
 function validateCarBrand(carbrand) {
     const Schema = Joi.object().keys({
-        name: Joi.string().min(2).max(50)
+        name: Joi.string().min(2).max(50).required(),
+        popular: Joi.boolean().required(),
+        description: Joi.string()
     });
 
     return Schema.validate(carbrand);
