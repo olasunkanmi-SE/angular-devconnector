@@ -141,11 +141,13 @@ module.exports.replyAComment = async (req, res, next) => {
                 if (comment.id == req.params.commentId) {
                     comment.replies.unshift(reply);
                 }
+
+
+                return res.status(201).json(comment);
+
             });
 
             post.save();
-
-            return res.status(201).json(post);
 
 
         }

@@ -1,5 +1,5 @@
 import { FormBuilder, Validators } from "@angular/forms";
-import { SinglePost, Comment } from "./../model/post";
+import { SinglePost, Comment, Reply } from "./../model/post";
 import { Subscription } from "rxjs";
 import { PostService } from "./../shared/post.service";
 import {
@@ -33,7 +33,7 @@ export class CommentComponent implements OnInit {
   faFeather = faFeather;
   @Input() comment: any;
   @Input() post: SinglePost;
-  @Input() reply;
+  replies: Reply[];
   replySub: Subscription;
   replyForm;
   constructor(
@@ -44,7 +44,7 @@ export class CommentComponent implements OnInit {
   ngOnInit() {
     this.getComment();
     this.validateOnInit();
-    this.getReplies();
+    this.getComments();
   }
 
   validateOnInit() {
@@ -61,12 +61,12 @@ export class CommentComponent implements OnInit {
     this.replySub = this.postService
       .replyComment$(this.post.id, this.comment._id, this.replyForm.value)
       .subscribe((res) => {
-        this.reply = res;
-        // this.post.comments = res.comments;
+        this.comment = res;
+        this.replies = this.comment.replies;
       });
   }
 
-  getReplies() {
+  getComments() {
     return this.post.comments;
   }
 

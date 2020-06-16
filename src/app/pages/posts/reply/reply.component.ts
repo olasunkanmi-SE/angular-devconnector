@@ -1,7 +1,5 @@
-import { Subscription } from "rxjs";
 import { PostService } from "./../shared/post.service";
 import { Component, OnInit, Input, OnDestroy } from "@angular/core";
-import { FormBuilder, Validators } from "@angular/forms";
 import {
   faCoffee,
   faUserCircle,
@@ -25,10 +23,9 @@ export class ReplyComponent implements OnInit {
   faFeather = faFeather;
   @Input() comment: any;
   @Input() reply: any;
-  constructor(
-    private formbuilder: FormBuilder,
-    private postService: PostService
-  ) {}
+  constructor(private postService: PostService) {
+    this.postService.sendReply(this.reply);
+  }
 
   ngOnInit() {}
 
