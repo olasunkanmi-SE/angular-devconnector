@@ -16,12 +16,29 @@ module.exports.createPost = async (req, res, next) => {
         });
 
         post = await post.save();
-        res.status(201).json(post);
+        return res.status(201).json(post);
 
     } catch (ex) {
         next(ex);
     }
 
+}
+
+//Update a Post
+
+module.exports.updatePost = async (req, res, next) => {
+    try {
+        let post = await Post.findById(req.params.id);
+        if (post) {
+            post.text = req.body.text
+        }
+
+        post = await post.save();
+        return res.status(201).json(post);
+
+    } catch (error) {
+
+    }
 }
 
 //Get all posts
@@ -124,33 +141,54 @@ module.exports.createAPostComment = async (req, res, next) => {
 
 }
 
+//Update a comment
+
+module.exports.updateComment = async (req, res, next) => {
+    try {
+        let post = await Post.findById(req.params.id);
+        let comments = post.comments;
+        comments.map(comment => {
+            if (req.user.id == comment.user.toString()) {
+                if (comment.id === req.params.commentId) {
+                    comment.text = req.body.text;
+                    post.save();
+                    return res.status(201).json(comment);
+                }
+            } else {
+                return res.status(400).json({ msg: 'you do not have the permission to update this comment' })
+            }
+
+        })
+
+    } catch (error) {
+        console.log(error)
+            ;
+    }
+}
+
 //Reply a comment
 
 module.exports.replyAComment = async (req, res, next) => {
     try {
+        let comment;
         let post = await Post.findById(req.params.id);
         let comments = post.comments;
-        if (comments.filter(comment => comment.id == req.params.commentId)) {
+        comments.map(comment => {
             const reply = {
                 user: req.user.id,
                 text: req.body.text,
                 name: req.user.name,
                 avatar: req.user.avatar
             }
-            comments.map(comment => {
-                if (comment.id == req.params.commentId) {
-                    comment.replies.unshift(reply);
-                }
+            if (comment.id == req.params.commentId) {
+                comment.replies.unshift(reply);
+            }
 
-                post.save();
-                return res.status(201).json(comment);
+            post.save();
+            return res.status(201).json(comment);
 
-            });
+        });
 
-
-
-
-        }
 
     } catch (ex) {
         next(ex);
@@ -164,27 +202,24 @@ module.exports.likeAComment = async (req, res, next) => {
     try {
         let post = await Post.findById(req.params.id);
         let comments = post.comments;
-        if (comments.filter(comment => comment.id == req.params.commentId)) {
-            comments.map(comment => {
-                if (comment.id == req.params.commentId) {
-                    let likes = comment.likes;
-                    if (likes.filter(like => like.user.toString() == req.user.id).length > 0) {
-                        const disLike = likes.map(like => like.user.toString()).indexOf(req.user.id);
-                        likes.splice(disLike, 1);
-                        post.save();
-                        return res.status(201).json(comment);
+        comments.map(comment => {
+            if (comment.id == req.params.commentId) {
+                let likes = comment.likes;
+                if (likes.filter(like => like.user.toString() == req.user.id).length > 0) {
+                    const disLike = likes.map(like => like.user.toString()).indexOf(req.user.id);
+                    likes.splice(disLike, 1);
+                    post.save();
+                    return res.status(201).json(comment);
 
-                    }
-                    else {
-                        comment.likes.unshift({ user: req.user.id });
-                        post.save();
-                        return res.status(201).json(comment)
-                    }
                 }
+                else {
+                    comment.likes.unshift({ user: req.user.id });
+                    post.save();
+                    return res.status(201).json(comment)
+                }
+            }
 
-            })
-
-        }
+        })
 
     } catch (ex) {
         next(ex);
@@ -209,8 +244,6 @@ module.exports.deleteAComment = async (req, res, next) => {
             }
         });
 
-
-
     } catch (ex) {
         next(ex);
     }
@@ -219,45 +252,33 @@ module.exports.deleteAComment = async (req, res, next) => {
 //delete reply
 
 module.exports.deleteAReply = async (req, res, next) => {
+
     try {
+        let replies
         let post = await Post.findById(req.params.id);
         let comments = post.comments;
-        if (comments.filter(comment => comment.replies.map(reply => {
-            if (reply.user.toString() == req.user.id) {
-                if (comments.filter(comment => comment.replies.map(reply => {
+
+        comments.map(comment => {
+            if (comment.user.toString() == req.user.id) {
+                replies = comment.replies;
+                replies.map((reply) => {
                     if (reply.id === req.params.replyId) {
-                        comments.filter(comment => {
-                            let removeReply = comment.replies.map(item => item.id).indexOf(req.params.replyId);
-                            comment.replies.splice(removeReply, 1);
-                        })
-                        post.save();
-                        return res.status(200).json(post);
+                        let removeReply = comment.replies.map(item => item.id).indexOf(req.params.replyId);
+                        comment.replies.splice(removeReply, 1);
                     }
-                }
-                ))) { }
 
-            }
-            //  else if (comments.filter(comment => comment.replies.map(reply => {
-            //     if (reply.user.toString() != req.user.id) {
-            //         return res.status(400).json({ error: 'you are not authorized to delete the reply' });
-
-            //     }
-            // })))
-            {
-
+                })
             }
 
-        }
+        })
+
+        post.save();
+        res.status(200).json(replies);
 
 
-        ))) {
+    }
 
-        }
-
-
-
-
-    } catch (ex) {
-        next(ex);
+    catch (ex) {
+        console.log(ex);
     }
 }
