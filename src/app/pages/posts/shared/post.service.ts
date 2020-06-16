@@ -14,7 +14,7 @@ export class PostService implements OnDestroy {
   backendURL = environment.backendAPI;
   destroy$: Subject<boolean> = new Subject<boolean>();
   private postSubject = new Subject<any>();
-  private replySubject = new Subject<Reply>();
+  private deleteSubject = new Subject<Post[]>();
   constructor(private http: HttpClient) {}
   @Output() post = new EventEmitter<SinglePost>();
   @Output() comment = new EventEmitter<Comment>();
@@ -28,12 +28,12 @@ export class PostService implements OnDestroy {
     return this.postSubject.asObservable();
   }
 
-  sendReply(reply: Reply) {
-    this.replySubject.next(reply);
+  sendPosts(posts: Post[]) {
+    this.deleteSubject.next(posts);
   }
 
-  getReply$() {
-    return this.replySubject.asObservable();
+  getnewPosts$() {
+    return this.deleteSubject.asObservable();
   }
 
   handlePost(post) {
@@ -124,6 +124,12 @@ export class PostService implements OnDestroy {
         `${this.backendURL}/posts/comment/like/${id}/${commentId}`,
         user
       )
+      .pipe(takeUntil(this.destroy$));
+  }
+
+  deletePost$(id: string) {
+    return this.http
+      .delete<Post[]>(`${this.backendURL}/posts/${id}`)
       .pipe(takeUntil(this.destroy$));
   }
 

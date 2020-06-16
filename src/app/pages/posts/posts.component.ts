@@ -44,6 +44,7 @@ export class PostsComponent implements OnInit, OnDestroy {
     private postService: PostService
   ) {
     this.subscribeToNewPost();
+    this.postService.getnewPosts$().subscribe((res) => (this.posts = res));
   }
 
   subscribeToNewPost() {

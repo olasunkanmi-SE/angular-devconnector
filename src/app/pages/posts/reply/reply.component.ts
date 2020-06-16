@@ -23,9 +23,7 @@ export class ReplyComponent implements OnInit {
   faFeather = faFeather;
   @Input() comment: any;
   @Input() reply: any;
-  constructor(private postService: PostService) {
-    this.postService.sendReply(this.reply);
-  }
+  constructor(private postService: PostService) {}
 
   ngOnInit() {}
 

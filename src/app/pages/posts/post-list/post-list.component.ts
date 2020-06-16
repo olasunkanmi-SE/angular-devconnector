@@ -38,12 +38,15 @@ export class PostListComponent implements OnInit, OnDestroy {
   commentSub: Subscription;
   likeSub: Subscription;
   replySub;
+  deleteSub;
 
   constructor(
     private postService: PostService,
     private formBuilder: FormBuilder,
     private authService: AuthService
-  ) {}
+  ) {
+    this.posts;
+  }
 
   ngOnInit() {
     this.validateOnInit();
@@ -94,6 +97,15 @@ export class PostListComponent implements OnInit, OnDestroy {
       this.user = res;
     });
   }
+
+  deletePost() {
+    this.deleteSub = this.postService
+      .deletePost$(this.post.id)
+      .subscribe((res) => {
+        this.posts = res;
+        this.postService.sendPosts(res);
+      });
+  }
   ngOnDestroy() {
     if (this.postSub) {
       this.postSub.unsubscribe();
@@ -106,6 +118,9 @@ export class PostListComponent implements OnInit, OnDestroy {
     }
     if (this.likeSub) {
       this.likeSub.unsubscribe();
+    }
+    if (this.deleteSub) {
+      this.deleteSub.unsubscribe();
     }
   }
 }

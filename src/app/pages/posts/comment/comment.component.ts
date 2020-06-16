@@ -82,7 +82,9 @@ export class CommentComponent implements OnInit {
     this.likeSub = this.postService
       .likeDisLikeComment$(this.post.id, this.comment._id, this.user)
       .subscribe((res) => {
-        this.comment.likes = res.likes;
+        setTimeout(() => {
+          this.comment.likes = res.likes;
+        }, 1500);
       });
   }
 

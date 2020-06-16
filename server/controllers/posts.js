@@ -73,15 +73,26 @@ module.exports.getPostById = async (req, res, next) => {
 
 module.exports.deletePost = async (req, res, next) => {
     try {
-        let post = await Post.findOne({ user: req.user.id });
+        /*****
+         * Find one returns the latest entry from a user
+         * let post = await Post.findOne({ user: req.user.id });
+         * */
+        let post = await Post.findById(req.params.id);
         if (req.user.id == post.user.toString()) {
-            post.remove();
-            return res.status(200).json({ success: true })
+            if (post.id.toString() == req.params.id) {
+                post.remove();
+                const posts = await Post.find().sort({ date: -1 });
+                posts.splice(post, 1);
+                return res.status(200).json(posts)
+            } else {
+                return res.status(404).json({ msg: 'not found' })
+            }
+
         } else {
             return res.send(401).json('you cannot delete post')
         }
     } catch (ex) {
-        next(ex);
+        console.log(ex);
     }
 
 }
@@ -155,7 +166,7 @@ module.exports.updateComment = async (req, res, next) => {
                     return res.status(201).json(comment);
                 }
             } else {
-                return res.status(400).json({ msg: 'you do not have the permission to update this comment' })
+                return res.status(400).json({ msg: 'unauthorized action' })
             }
 
         })
@@ -268,6 +279,8 @@ module.exports.deleteAReply = async (req, res, next) => {
                     }
 
                 })
+            } else {
+                return res.status(400).json({ msg: 'unauthorized action' })
             }
 
         })
