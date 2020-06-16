@@ -14,9 +14,35 @@
           <fa-icon [icon]="faUser" size="2x"></fa-icon>
         </div>
         <div class="p-2 flex-fill">
-          <div>
-            <small>{{ post.creator }}</small>
+          <div class="d-flex bd-highlight">
+            <div class="p-2 w-100 bd-highlight">
+              <small>{{ post.creator }}</small>
+            </div>
+            <div class="p-2 flex-shrink-1 bd-highlight">
+              <button
+                mat-icon-button
+                [matMenuTriggerFor]="menu"
+                aria-label="Example icon-button with a menu"
+              >
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item>
+                  <mat-icon>dialpad</mat-icon>
+                  <span>Update Post</span>
+                </button>
+                <button mat-menu-item>
+                  <mat-icon>voicemail</mat-icon>
+                  <span>Copy post link</span>
+                </button>
+                <button mat-menu-item>
+                  <mat-icon>notifications_off</mat-icon>
+                  <span>Delete Post</span>
+                </button>
+              </mat-menu>
+            </div>
           </div>
+
           <div>
             <small class="dvSmall"> Software Engineer at ViewQwest</small>
           </div>

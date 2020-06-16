@@ -3,9 +3,35 @@
     <img width="40" src="{{ comment.avatar }}" alt="devconnector user image" />
   </div>
   <div class="p-2 flex-fill">
-    <div>
-      <small>{{ comment.name }}</small>
+    <div class="d-flex bd-highlight">
+      <div class="p-2 w-100 bd-highlight">
+        <small>{{ comment.name }}</small>
+      </div>
+      <div class="p-2 flex-shrink-1 bd-highlight">
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="menu"
+          aria-label="Example icon-button with a menu"
+        >
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>
+            <mat-icon>dialpad</mat-icon>
+            <span>Update Comment</span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon>voicemail</mat-icon>
+            <span>Copy comment Link</span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon>notifications_off</mat-icon>
+            <span>Delete comment</span>
+          </button>
+        </mat-menu>
+      </div>
     </div>
+
     <div>
       <small class="dvSmall"> Software Engineer at ViewQwest</small>
     </div>
@@ -33,7 +59,9 @@
         >
           <ul class="list-inline">
             <li class="list-inline-item">
-              <fa-icon [icon]="faThumbsUp"></fa-icon>
+              <a (click)="likeDislikeComment()"
+                ><fa-icon [icon]="faThumbsUp"></fa-icon
+              ></a>
               <small> Like</small>
             </li>
             <li class="list-inline-item">

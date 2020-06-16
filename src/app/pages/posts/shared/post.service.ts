@@ -111,19 +111,21 @@ export class PostService implements OnDestroy {
 
   replyComment$(id: string, commentId: string, reply: Reply) {
     return this.http
-      .post<SinglePost>(
+      .post<Comment>(
         `${this.backendURL}/posts/comment/reply/${id}/${commentId}`,
         reply
       )
       .pipe(takeUntil(this.destroy$));
   }
 
-  // likeDisLikeComment$(id: string, commentId: string, user: User) {
-  //   return this.http.post<SinglePost>(
-  //     `${this.backendURL}/posts/comment/like/${id}/${commentId}`,
-  //     user
-  //   );
-  // }
+  likeDisLikeComment$(id: string, commentId: string, user: User) {
+    return this.http
+      .post<Comment>(
+        `${this.backendURL}/posts/comment/like/${id}/${commentId}`,
+        user
+      )
+      .pipe(takeUntil(this.destroy$));
+  }
 
   ngOnDestroy() {
     this.destroy$.next(true);

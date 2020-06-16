@@ -142,12 +142,12 @@ module.exports.replyAComment = async (req, res, next) => {
                     comment.replies.unshift(reply);
                 }
 
-
+                post.save();
                 return res.status(201).json(comment);
 
             });
 
-            post.save();
+
 
 
         }
@@ -172,13 +172,13 @@ module.exports.likeAComment = async (req, res, next) => {
                         const disLike = likes.map(like => like.user.toString()).indexOf(req.user.id);
                         likes.splice(disLike, 1);
                         post.save();
-                        return res.status(201).json('disliked');
+                        return res.status(201).json(comment);
 
                     }
                     else {
                         comment.likes.unshift({ user: req.user.id });
                         post.save();
-                        return res.status(201).json(post)
+                        return res.status(201).json(comment)
                     }
                 }
 

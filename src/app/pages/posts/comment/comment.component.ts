@@ -1,3 +1,5 @@
+import { User } from "./../model/user";
+import { AuthService } from "./../../../core/auth/services/auth/auth.service";
 import { FormBuilder, Validators } from "@angular/forms";
 import { SinglePost, Comment, Reply } from "./../model/post";
 import { Subscription } from "rxjs";
@@ -34,17 +36,22 @@ export class CommentComponent implements OnInit {
   @Input() comment: any;
   @Input() post: SinglePost;
   replies: Reply[];
+  user: User;
   replySub: Subscription;
+  likeSub: Subscription;
+  userSub: Subscription;
   replyForm;
   constructor(
     private postService: PostService,
-    private formbuilder: FormBuilder
+    private formbuilder: FormBuilder,
+    private authservice: AuthService
   ) {}
 
   ngOnInit() {
     this.getComment();
     this.validateOnInit();
     this.getComments();
+    this.getCurrentUser();
   }
 
   validateOnInit() {
@@ -54,7 +61,7 @@ export class CommentComponent implements OnInit {
   }
 
   getComment() {
-    this.postService.handleComment(this.comment);
+    return this.comment;
   }
 
   replyComment() {
@@ -65,6 +72,19 @@ export class CommentComponent implements OnInit {
         this.replies = this.comment.replies;
       });
   }
+  getCurrentUser() {
+    this.userSub = this.authservice.currentUser$().subscribe((res) => {
+      this.user = res;
+    });
+  }
+
+  likeDislikeComment() {
+    this.likeSub = this.postService
+      .likeDisLikeComment$(this.post.id, this.comment._id, this.user)
+      .subscribe((res) => {
+        this.comment.likes = res.likes;
+      });
+  }
 
   getComments() {
     return this.post.comments;
@@ -73,6 +93,12 @@ export class CommentComponent implements OnInit {
   ngOnDestroy() {
     if (this.replySub) {
       this.replySub.unsubscribe();
+    }
+    if (this.likeSub) {
+      this.likeSub.unsubscribe();
+    }
+    if (this.userSub) {
+      this.userSub.unsubscribe();
     }
   }
 }

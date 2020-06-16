@@ -83,7 +83,6 @@ export class PostListComponent implements OnInit, OnDestroy {
   }
 
   likeDisLikeComment() {
-    this.currentUser();
     this.likeSub = this.postService
       .likeDislikePost$(this.post.id, this.user)
       .subscribe((res) => {
