@@ -24,7 +24,6 @@ export class PostsComponent implements OnInit, OnDestroy {
   authListenerSubscription: Subscription;
   userAuthenticated: boolean = false;
   pageTitle: string = "Developers Feed";
-  currentUser;
   newPost;
   isloading: boolean;
   postUpdatedSub: Subscription;
@@ -45,6 +44,8 @@ export class PostsComponent implements OnInit, OnDestroy {
   myControl = new FormControl();
   options: string[] = this.devNames;
   filteredOptions: Observable<string[]>;
+  userName;
+  randomDev;
 
   constructor(
     private authservice: AuthService,
@@ -53,6 +54,7 @@ export class PostsComponent implements OnInit, OnDestroy {
     private postService: PostService,
     private authService: AuthService
   ) {
+    this.getCurrentUser();
     this.subscribeToNewPost();
     this.postService.getnewPosts$().subscribe((res) => (this.posts = res));
     this.getDevelopersByName();
@@ -73,7 +75,6 @@ export class PostsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.intitialize();
-    this.getCurrentUser();
     this.getPostsList$();
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(""),
@@ -118,7 +119,7 @@ export class PostsComponent implements OnInit, OnDestroy {
   getCurrentUser() {
     this.userSubs = this.authservice.currentUser$().subscribe((res) => {
       this.user = res;
-      this.currentUser = res.user;
+      this.userName = this.user["name"];
     });
   }
 
