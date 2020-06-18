@@ -20,12 +20,22 @@
       <a *ngIf="userAuthenticated" mat-list-item [routerLink]="['/pages/posts']"
         >feeds</a
       >
-      <a
+      <button
         *ngIf="userAuthenticated"
-        mat-list-item
-        [routerLink]="['/pages/profile']"
-        >Profile</a
+        mat-button
+        [matMenuTriggerFor]="beforeMenu"
+        class="btncolor"
       >
+        Profile
+      </button>
+      <mat-menu #beforeMenu="matMenu" xPosition="after">
+        <button mat-menu-item>Account</button>
+        <button [routerLink]="['/pages/profile']" mat-menu-item>
+          View Profile
+        </button>
+        <button mat-menu-item>Settings</button>
+        <button mat-menu-item>Post & Activities</button>
+      </mat-menu>
       <a *ngIf="userAuthenticated" mat-list-item href="#">Notifications</a>
       <a
         *ngIf="!userAuthenticated"
@@ -37,12 +47,13 @@
         >Sign In</a
       >
       <button
+        class="btnmove"
         (click)="onLogout()"
         mat-raised-button
         color="accent"
         *ngIf="userAuthenticated"
       >
-        Logout
+        Sign Out
       </button>
     </mat-nav-list>
   </mat-sidenav>
@@ -72,9 +83,22 @@
           [routerLink]="['/pages/posts']"
           >feeds</a
         >
-        <a *ngIf="userAuthenticated" [routerLink]="['/pages/profile']"
-          >Profile</a
+
+        <button
+          *ngIf="userAuthenticated"
+          mat-button
+          [matMenuTriggerFor]="beforeMenu"
         >
+          Profile
+        </button>
+        <mat-menu #beforeMenu="matMenu" xPosition="before">
+          <button mat-menu-item>Account</button>
+          <button [routerLink]="['/pages/profile']" mat-menu-item>
+            View Profile
+          </button>
+          <button mat-menu-item>Settings</button>
+          <button mat-menu-item>Post & Activities</button>
+        </mat-menu>
         <a href="#" *ngIf="userAuthenticated">Notification</a>
         <a *ngIf="!userAuthenticated" [routerLink]="['/auth/signup']"
           >Sign Up</a
@@ -86,7 +110,7 @@
           color="accent"
           *ngIf="userAuthenticated"
         >
-          Logout
+          Sign Out
         </button>
       </span>
     </mat-toolbar>

@@ -8,7 +8,7 @@ const auth = require('../../middleware/auth');
 
 //Get Current Profile
 
-router.get('/current/user', auth, profileController.getCurrentUser);
+router.get('/user/profile', auth, profileController.getCurrentUserProfile);
 
 //Create and Update Profile
 

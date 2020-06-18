@@ -7,7 +7,7 @@ const validateEducation = require('../validation/education');
 
 //Get Current Profile
 
-module.exports.getCurrentUser = async (req, res, next) => {
+module.exports.getCurrentUserProfile = async (req, res, next) => {
 
     try {
         const profile = (await Profile.findOne({ user: req.user._id }));
