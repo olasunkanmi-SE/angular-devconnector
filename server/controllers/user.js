@@ -55,7 +55,8 @@ module.exports.createUser = async (req, res, next) => {
         if (user) return res.status(400).json('user already exists');
         const avatar = gravatar.url(req.body.email, { s: 200, r: 'pg', d: 'mm' });
         user = new User({
-            name: req.body.name,
+            firstName: req.body.lastName,
+            lastName: req.body.lastName,
             email: req.body.email,
             password: req.body.password,
             confirmPassword: req.body.confirmPassword,
