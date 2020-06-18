@@ -13,7 +13,7 @@ const postSchema = new Schema({
         required: true
     },
 
-    name: {
+    firstname: {
         type: String
     },
 
@@ -44,7 +44,7 @@ const postSchema = new Schema({
                 type: String,
                 required: true
             },
-            name: {
+            firstname: {
                 type: String
             },
 
@@ -67,7 +67,7 @@ const postSchema = new Schema({
                         type: String,
                         required: true
                     },
-                    name: {
+                    firstname: {
                         type: String
                     },
 

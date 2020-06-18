@@ -18,13 +18,14 @@ module.exports.getUserById = async (req, res, next) => {
 
 module.exports.getUsers = async (req, res, next) => {
     try {
-        const users = await User.find().select('_id name email avatar date');
+        const users = await User.find();
         response = {
             count: users.length,
             users: users.map(user => {
                 return {
                     id: user._id,
-                    name: user.name,
+                    firstname: user.firstname,
+                    lastname: user.lastname,
                     email: user.email,
                     avatar: user.avatar,
                     date: user.date,
@@ -55,8 +56,8 @@ module.exports.createUser = async (req, res, next) => {
         if (user) return res.status(400).json('user already exists');
         const avatar = gravatar.url(req.body.email, { s: 200, r: 'pg', d: 'mm' });
         user = new User({
-            firstName: req.body.lastName,
-            lastName: req.body.lastName,
+            firstname: req.body.firstname,
+            lastname: req.body.lastname,
             email: req.body.email,
             password: req.body.password,
             confirmPassword: req.body.confirmPassword,
@@ -73,7 +74,8 @@ module.exports.createUser = async (req, res, next) => {
             message: "User created successfully",
             createdUser: {
                 id: user._id,
-                name: user.name,
+                firstname: user.firstname,
+                lastname: user.lastname,
                 email: user.email,
                 avatar: user.avatar,
                 gender: user.gender,

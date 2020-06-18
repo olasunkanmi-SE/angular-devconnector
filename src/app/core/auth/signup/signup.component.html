@@ -2,11 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6 mb-3 dvcard dvavatar">
-        <img
-          style="max-width: 100%;"
-          src="assets/img/devconnector.svg"
-          alt=""
-        />
+        <img style="max-width: 90%;" src="assets/img/devconnector.svg" alt="" />
         <span>
           <mat-tab-group>
             <mat-tab label="People">
@@ -98,22 +94,57 @@
                   </mat-error>
                 </mat-form-field>
               </p>
+
               <p>
                 <mat-form-field class="example-full-width" appearance="outline">
-                  <mat-label>Name</mat-label>
-                  <input matInput type="text" formControlName="name" value="" />
-                  <mat-error *ngIf="name.touched && name.invalid">
+                  <mat-label>First Name</mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    formControlName="firstname"
+                    value=""
+                  />
+                  <mat-error *ngIf="firstname.touched && firstname.invalid">
                     <mat-error
-                      *ngIf="signUpForm.controls['name'].hasError('required')"
-                      >Name is required</mat-error
+                      *ngIf="
+                        signUpForm.controls['firstname'].hasError('required')
+                      "
+                      >First Name is required</mat-error
                     >
-                    <mat-error *ngIf="name.errors.minlength">
+                    <mat-error *ngIf="firstname.errors.minlength">
                       name shoild be minimum of
-                      {{ name.errors.minlength.requiredLength }} characters
+                      {{ firstname.errors.minlength.requiredLength }} characters
                     </mat-error>
-                    <mat-error *ngIf="name.errors.maxlength">
+                    <mat-error *ngIf="firstname.errors.maxlength">
                       Name should be maximum of
-                      {{ name.errors.maxlength.requiredLength }} characters
+                      {{ firstname.errors.maxlength.requiredLength }} characters
+                    </mat-error>
+                  </mat-error>
+                </mat-form-field>
+              </p>
+              <p>
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <mat-label>Last Name</mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    formControlName="lastname"
+                    value=""
+                  />
+                  <mat-error *ngIf="lastname.touched && lastname.invalid">
+                    <mat-error
+                      *ngIf="
+                        signUpForm.controls['lastNname'].hasError('required')
+                      "
+                      >Last Name is required</mat-error
+                    >
+                    <mat-error *ngIf="lastname.errors.minlength">
+                      Last Name shoild be minimum of
+                      {{ lastname.errors.minlength.requiredLength }} characters
+                    </mat-error>
+                    <mat-error *ngIf="lastname.errors.maxlength">
+                      Name should be maximum of
+                      {{ lastname.errors.maxlength.requiredLength }} characters
                     </mat-error>
                   </mat-error>
                 </mat-form-field>

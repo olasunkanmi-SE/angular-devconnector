@@ -15,7 +15,7 @@ export interface SinglePost {
   comments?: [];
   date?: Date;
   likes?: [];
-  name?: string;
+  firstname?: string;
   text: string;
   user?: string;
 }
@@ -25,7 +25,7 @@ export interface Comment {
   id?: string;
   user?: string;
   text?: string;
-  name?: string;
+  firstname?: string;
   avatar?: string;
   replies?: [];
   likes?: [];
@@ -36,7 +36,7 @@ export interface Reply {
   _id?: string;
   user?: string;
   text?: string;
-  name?: string;
+  firstname?: string;
   avatar?: string;
   date?: Date;
 }

@@ -10,7 +10,7 @@ module.exports.createPost = async (req, res, next) => {
         if (!isValid) return res.status(400).json(errors);
         let post = new Post({
             text: req.body.text,
-            name: req.user.name,
+            firstname: req.user.firstname,
             avatar: req.user.avatar,
             user: req.user.id
         });
@@ -140,7 +140,7 @@ module.exports.createAPostComment = async (req, res, next) => {
         const newComment = {
             user: req.user.id,
             text: req.body.text,
-            name: req.user.name,
+            firstname: req.user.firstname,
             avatar: req.user.avatar
         }
         comments.unshift(newComment);
@@ -188,7 +188,7 @@ module.exports.replyAComment = async (req, res, next) => {
             const reply = {
                 user: req.user.id,
                 text: req.body.text,
-                name: req.user.name,
+                firstname: req.user.firstname,
                 avatar: req.user.avatar
             }
             if (comment.id == req.params.commentId) {
