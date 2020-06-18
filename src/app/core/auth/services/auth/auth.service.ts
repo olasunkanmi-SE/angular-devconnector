@@ -84,6 +84,12 @@ export class AuthService implements OnDestroy {
       .pipe(takeUntil(this.destroy$.asObservable()));
   }
 
+  getUsers$() {
+    return this.httpclient
+      .get<{ count: any; users: any }>(`${this.backendURL}/users`)
+      .pipe(takeUntil(this.destroy$));
+  }
+
   logout() {
     this.clearAuthData();
     this.userAuthenticated = false;

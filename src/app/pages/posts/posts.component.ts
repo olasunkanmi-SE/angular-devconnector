@@ -1,3 +1,5 @@
+import { map } from "rxjs/operators";
+import { FormControl } from "@angular/forms";
 import { SinglePost } from "./model/post";
 import { PostService } from "./shared/post.service";
 import { User } from "./model/user";
@@ -5,8 +7,9 @@ import { StorageService } from "./../../core/storage/storage.service";
 import { AuthService } from "./../../core/auth/services/auth/auth.service";
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { faUserCircle, faFeather } from "@fortawesome/free-solid-svg-icons";
-import { Subscription } from "rxjs";
+import { Subscription, Observable } from "rxjs";
 import { Title } from "@angular/platform-browser";
+import { startWith } from "rxjs/operators";
 
 @Component({
   selector: "app-posts",
@@ -36,15 +39,24 @@ export class PostsComponent implements OnInit, OnDestroy {
   comment;
   post: SinglePost;
   postsListSub: Subscription;
+  getUsersSub: Subscription;
+  developers: [] = [];
+  devNames: string[] = [];
+  myControl = new FormControl();
+  options: string[] = this.devNames;
+  filteredOptions: Observable<string[]>;
 
   constructor(
     private authservice: AuthService,
     private storage: StorageService,
     private title: Title,
-    private postService: PostService
+    private postService: PostService,
+    private authService: AuthService
   ) {
     this.subscribeToNewPost();
     this.postService.getnewPosts$().subscribe((res) => (this.posts = res));
+    this.getDevelopersByName();
+    this.devNames;
   }
 
   subscribeToNewPost() {
@@ -63,6 +75,10 @@ export class PostsComponent implements OnInit, OnDestroy {
     this.intitialize();
     this.getCurrentUser();
     this.getPostsList$();
+    this.filteredOptions = this.myControl.valueChanges.pipe(
+      startWith(""),
+      map((value) => this._filter(value))
+    );
   }
 
   intitialize() {
@@ -76,6 +92,13 @@ export class PostsComponent implements OnInit, OnDestroy {
           }))
       );
     }).then(this.checkStorage());
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLocaleLowerCase();
+    return this.options.filter(
+      (option) => option.toLocaleLowerCase().indexOf(filterValue) === 0
+    );
   }
 
   checkStorage(): any {
@@ -96,6 +119,17 @@ export class PostsComponent implements OnInit, OnDestroy {
     this.userSubs = this.authservice.currentUser$().subscribe((res) => {
       this.user = res;
       this.currentUser = res.user;
+    });
+  }
+
+  getDevelopersByName() {
+    this.getUsersSub = this.authService.getUsers$().subscribe((res) => {
+      this.developers = res.users;
+      this.developers.filter((developer) => {
+        const name = developer["name"];
+        this.devNames.push(name);
+        return this.devNames;
+      });
     });
   }
 
@@ -120,5 +154,6 @@ export class PostsComponent implements OnInit, OnDestroy {
     this.userSubs.unsubscribe();
     this.postUpdatedSub.unsubscribe();
     this.newPostSub.unsubscribe();
+    this.getUsersSub.unsubscribe();
   }
 }

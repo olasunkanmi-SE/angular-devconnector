@@ -13,6 +13,7 @@ import {
   faFeather,
 } from "@fortawesome/free-solid-svg-icons";
 import { Subscription, Observable, Subject } from "rxjs";
+import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 
 @Component({
   selector: "app-post-list",
@@ -43,7 +44,8 @@ export class PostListComponent implements OnInit, OnDestroy {
   constructor(
     private postService: PostService,
     private formBuilder: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private dialog: MatDialog
   ) {
     this.posts;
   }
@@ -106,6 +108,9 @@ export class PostListComponent implements OnInit, OnDestroy {
         this.postService.sendPosts(res);
       });
   }
+
+  updatePost() {}
+
   ngOnDestroy() {
     if (this.postSub) {
       this.postSub.unsubscribe();

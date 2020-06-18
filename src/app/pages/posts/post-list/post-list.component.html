@@ -28,15 +28,15 @@
               </button>
               <mat-menu #menu="matMenu">
                 <button mat-menu-item>
-                  <mat-icon>dialpad</mat-icon>
-                  <span>Update Post</span>
+                  <mat-icon>edit</mat-icon>
+                  <a (click)="updatePost()"><span>Update Post</span></a>
                 </button>
                 <button mat-menu-item>
-                  <mat-icon>voicemail</mat-icon>
+                  <mat-icon>check</mat-icon>
                   <span>Copy post link</span>
                 </button>
                 <button mat-menu-item>
-                  <mat-icon>notifications_off</mat-icon>
+                  <mat-icon>delete</mat-icon>
                   <a (click)="deletePost()"><span>Delete Post</span></a>
                 </button>
               </mat-menu>

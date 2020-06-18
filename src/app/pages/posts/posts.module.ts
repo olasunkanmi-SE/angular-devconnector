@@ -1,3 +1,5 @@
+import { FormsModule } from "@angular/forms";
+import { ReactiveFormsModule } from "@angular/forms";
 import { CommentModule } from "./comment/comment.module";
 import { GhostListModule } from "./ghost-list/ghost-list.module";
 import { HttpClientModule } from "@angular/common/http";
@@ -22,6 +24,8 @@ import { PostsComponent } from "./posts.component";
     HttpClientModule,
     GhostListModule,
     CommentModule,
+    ReactiveFormsModule,
+    FormsModule,
   ],
 })
 export class PostsModule {}
