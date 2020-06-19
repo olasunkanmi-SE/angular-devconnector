@@ -15,6 +15,7 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { MatTabsModule } from "@angular/material/tabs";
 import { NgModule } from "@angular/core";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { MatSelectModule } from "@angular/material/select";
 
 @NgModule({
   exports: [
@@ -34,6 +35,7 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
     MatTabsModule,
     MatDialogModule,
     MatProgressSpinnerModule,
+    MatSelectModule,
   ],
 })
 export class MdComponentsModule {}

@@ -1,0 +1,28 @@
+.info h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 200;
+  line-height: 1.2;
+  color: rgb(47, 47, 47);
+}
+
+.info p {
+  line-height: 2 !important;
+  color: rgb(47, 47, 47);
+}
+
+.infospace {
+  margin-top: 30px;
+}
+
+.example-form {
+  min-width: 150px;
+  margin-top: 5px;
+  max-width: inherit;
+  width: 100%;
+  position: relative;
+}
+
+.example-full-width {
+  width: 100%;
+}

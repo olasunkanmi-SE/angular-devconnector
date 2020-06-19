@@ -1,3 +1,5 @@
+import { Country, UserStatus } from "./../../shared/model/info";
+import { InfoService } from "./../../shared/info.service";
 import { PatternValidation } from "./../../shared/helpers/custom-validation";
 import { FormBuilder, Validators } from "@angular/forms";
 import { Component, OnInit } from "@angular/core";
@@ -9,10 +11,14 @@ import { Component, OnInit } from "@angular/core";
 })
 export class InfoComponent implements OnInit {
   infoForm;
-  constructor(private formBuilder: FormBuilder) {}
+  locations: Country[];
+  statuses: UserStatus[];
+  constructor(private formBuilder: FormBuilder, private info: InfoService) {}
 
   ngOnInit() {
     this.initializeForm();
+    this.locations = this.info.countries;
+    this.statuses = this.info.status;
   }
 
   initializeForm() {
@@ -25,7 +31,7 @@ export class InfoComponent implements OnInit {
           Validators.maxLength(40),
         ],
       ],
-      company: ["", [Validators.maxLength(40)]],
+      company: ["", [Validators.maxLength(40), Validators.minLength(2)]],
       status: ["", [Validators.required]],
       website: [
         "",
