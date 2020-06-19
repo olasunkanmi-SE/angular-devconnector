@@ -1,3 +1,4 @@
+import { AuthGuardGuard } from "src/app/core/auth/guards/auth-guard.guard";
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { HomeComponent } from "./pages/home/home.component";
@@ -10,6 +11,7 @@ const routes: Routes = [
   },
   {
     path: "pages",
+    canActivate: [AuthGuardGuard],
     loadChildren: () =>
       import("./pages/pages.module").then((m) => m.PagesModule),
   },
@@ -18,10 +20,15 @@ const routes: Routes = [
     component: HomeComponent,
   },
   {
+    path: "onboarding",
+    canActivate: [AuthGuardGuard],
+    loadChildren: () =>
+      import("./onboarding/onboarding.module").then((m) => m.OnboardingModule),
+  },
+  {
     path: "**",
     redirectTo: "",
   },
-  { path: 'start', loadChildren: () => import('./onboarding/start/start.module').then(m => m.StartModule) },
 ];
 
 @NgModule({

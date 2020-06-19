@@ -16,10 +16,14 @@ const profileSchema = new Schema({
         max: 40
     },
     company: {
-        type: String
+        type: String,
+        min: 2,
+        max: 40
     },
     status: {
-        type: String
+        type: String,
+        required: true,
+        enum: ['employed', 'actively looking', 'not looking']
     },
     website: {
         type: String
@@ -30,7 +34,8 @@ const profileSchema = new Schema({
         trim: true
     },
     location: {
-        type: String
+        type: String,
+        required: true
     },
     bio: {
         type: String

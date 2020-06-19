@@ -1,5 +1,4 @@
-import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
-import { MdComponentsModule } from "./../../../shared/components/md-components/md-components.module";
+import { MdComponentsModule } from "src/app/shared/components/md-components/md-components.module";
 import { FormsModule } from "@angular/forms";
 import { ReactiveFormsModule } from "@angular/forms";
 import { NgModule } from "@angular/core";
@@ -16,7 +15,6 @@ import { InfoComponent } from "./info.component";
     ReactiveFormsModule,
     FormsModule,
     MdComponentsModule,
-    FontAwesomeModule,
   ],
 })
 export class InfoModule {}

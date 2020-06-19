@@ -5,7 +5,7 @@ import { PostsComponent } from "./posts.component";
 import { AuthGuardGuard } from "src/app/core/auth/guards/auth-guard.guard";
 
 const routes: Routes = [
-  { path: "", component: PostsComponent, canActivate: [AuthGuardGuard] },
+  { path: "", component: PostsComponent },
   {
     path: "post-list",
     loadChildren: () =>
@@ -32,7 +32,11 @@ const routes: Routes = [
     loadChildren: () =>
       import("./comment/comment.module").then((m) => m.CommentModule),
   },
-  { path: 'reply', loadChildren: () => import('./reply/reply.module').then(m => m.ReplyModule) },
+  {
+    path: "reply",
+    loadChildren: () =>
+      import("./reply/reply.module").then((m) => m.ReplyModule),
+  },
 ];
 
 @NgModule({
