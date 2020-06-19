@@ -21,6 +21,7 @@ const routes: Routes = [
     path: "**",
     redirectTo: "",
   },
+  { path: 'start', loadChildren: () => import('./onboarding/start/start.module').then(m => m.StartModule) },
 ];
 
 @NgModule({
