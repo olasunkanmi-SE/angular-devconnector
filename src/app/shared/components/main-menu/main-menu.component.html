@@ -10,18 +10,26 @@
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
       <a
-        *ngIf="userAuthenticated"
+        *ngIf="userAuthenticated && userHandle"
         mat-list-item
         [routerLink]="['/pages/posts']"
       >
         <fa-icon [icon]="faUser" size="1x"></fa-icon> &nbsp;Home</a
       >
-      <a mat-list-item [routerLink]="['/pages/profiles']">Developers</a>
-      <a *ngIf="userAuthenticated" mat-list-item [routerLink]="['/pages/posts']"
+      <a
+        *ngIf="userAuthenticated && userHandle"
+        mat-list-item
+        [routerLink]="['/pages/profiles']"
+        >Developers</a
+      >
+      <a
+        *ngIf="userAuthenticated && userHandle"
+        mat-list-item
+        [routerLink]="['/pages/posts']"
         >feeds</a
       >
       <button
-        *ngIf="userAuthenticated"
+        *ngIf="userAuthenticated && userHandle"
         mat-button
         [matMenuTriggerFor]="beforeMenu"
         class="btncolor"
@@ -36,7 +44,9 @@
         <button mat-menu-item>Settings</button>
         <button mat-menu-item>Post & Activities</button>
       </mat-menu>
-      <a *ngIf="userAuthenticated" mat-list-item href="#">Notifications</a>
+      <a *ngIf="userAuthenticated && userHandle" mat-list-item href="#"
+        >Notifications</a
+      >
       <a
         *ngIf="!userAuthenticated"
         mat-list-item
@@ -73,19 +83,25 @@
 
       <span class="spacer"></span>
       <span class="main-menu">
-        <a *ngIf="userAuthenticated" [routerLink]="['/pages/posts']"
+        <a
+          *ngIf="userAuthenticated && userHandle"
+          [routerLink]="['/pages/posts']"
           ><fa-icon [icon]="faUser" size="1x"></fa-icon
         ></a>
-        <a [routerLink]="['/pages/profiles']">Developers</a>
         <a
-          *ngIf="userAuthenticated"
+          *ngIf="userAuthenticated && userHandle"
+          [routerLink]="['/pages/profiles']"
+          >Developers</a
+        >
+        <a
+          *ngIf="userAuthenticated && userHandle"
           mat-list-item
           [routerLink]="['/pages/posts']"
           >feeds</a
         >
 
         <button
-          *ngIf="userAuthenticated"
+          *ngIf="userAuthenticated && userHandle"
           mat-button
           [matMenuTriggerFor]="beforeMenu"
         >
@@ -99,7 +115,7 @@
           <button mat-menu-item>Settings</button>
           <button mat-menu-item>Post & Activities</button>
         </mat-menu>
-        <a href="#" *ngIf="userAuthenticated">Notification</a>
+        <a href="#" *ngIf="userAuthenticated && userHandle">Notification</a>
         <a *ngIf="!userAuthenticated" [routerLink]="['/auth/signup']"
           >Sign Up</a
         >

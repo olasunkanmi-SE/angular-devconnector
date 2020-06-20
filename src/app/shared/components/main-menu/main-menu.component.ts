@@ -26,6 +26,7 @@ export class MainMenuComponent implements OnInit, OnDestroy {
   options: string[] = ["One", "Two", "Three"];
   private authListenerSubscription: Subscription;
   userAuthenticated: boolean = false;
+  userHandle: string;
 
   constructor(
     private breakpointObserver: BreakpointObserver,
@@ -44,6 +45,7 @@ export class MainMenuComponent implements OnInit, OnDestroy {
           }))
       );
     }).then(this.checkStorage());
+    this.userHandle = this.storage.getItem("handle");
   }
 
   checkStorage(): any {

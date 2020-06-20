@@ -21,6 +21,12 @@ export class ProfileService {
       .post<Profile>(`${this.backendURL}/profiles/createupdate`, profile)
       .pipe(takeUntil(this.destroy$));
   }
+
+  getCurrentUserProfile$() {
+    return this.http
+      .get<Profile>(`${this.backendURL}/profiles/users/profile`)
+      .pipe(takeUntil(this.destroy$));
+  }
   ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.unsubscribe();

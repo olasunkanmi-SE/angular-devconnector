@@ -1,3 +1,4 @@
+import { ProfileService } from "./../../../../pages/profiles/shared/profile.service";
 import { User } from "./../../../../pages/posts/model/user";
 import { environment } from "./../../../../../environments/environment";
 import { HttpClient } from "@angular/common/http";
@@ -8,7 +9,7 @@ import { AuthPayload } from "./../../interfaces/auth";
 import { ErrorService } from "./../error/error.service";
 import { HttpService } from "./../http/http.service";
 import { Injectable, OnDestroy } from "@angular/core";
-import { Subject } from "rxjs";
+import { Subject, Subscription } from "rxjs";
 import { takeUntil, take } from "rxjs/operators";
 import { Observable } from "rxjs";
 
@@ -23,13 +24,17 @@ export class AuthService implements OnDestroy {
   private userAuthenticated: boolean = false;
   private tokenTimer: any;
   backendURL = environment.backendAPI;
+  currentUserSub: Subscription;
+  userProfileSub: Subscription;
+  userHandle: string;
 
   constructor(
     private http: HttpService,
     private err: ErrorService,
     private storage: StorageService,
     private router: Router,
-    private httpclient: HttpClient
+    private httpclient: HttpClient,
+    private profileService: ProfileService
   ) {}
 
   getAuthStatusListener() {
@@ -58,6 +63,7 @@ export class AuthService implements OnDestroy {
       .requestCall(AuthEndPoints.AUTH, ApiMethod.POST, loginPayload)
       .pipe(takeUntil(this.destroy$.asObservable()))
       .subscribe((res: any) => {
+        console.log(res);
         const token = res.token;
         this.token = token;
         this.err.userNotification(200, "successfully logged in");
@@ -69,8 +75,14 @@ export class AuthService implements OnDestroy {
           this.userAuthenticated = true;
           this.authStatusListener.next(true);
           this.saveAuthData(token, expirationTime.toString());
-
-          this.router.navigate(["pages/posts"]);
+          this.getCurrentUserProfile();
+          setTimeout(() => {
+            if (this.storage.getItem("handle")) {
+              this.router.navigate(["pages/posts"]);
+            } else {
+              this.router.navigate(["onboarding/info"]);
+            }
+          }, 2000);
         }
       });
   }
@@ -83,6 +95,21 @@ export class AuthService implements OnDestroy {
     return this.httpclient
       .get<User>(`${this.backendURL}/auth/current`)
       .pipe(takeUntil(this.destroy$.asObservable()));
+  }
+
+  getCurrentUser() {
+    this.currentUserSub = this.currentUser$().subscribe((res) =>
+      console.log(res)
+    );
+  }
+
+  getCurrentUserProfile() {
+    this.userProfileSub = this.profileService
+      .getCurrentUserProfile$()
+      .subscribe((res) => {
+        this.userHandle = res.handle;
+        this.storage.saveItem("handle", this.userHandle);
+      });
   }
 
   getUsers$() {
@@ -147,12 +174,17 @@ export class AuthService implements OnDestroy {
   private clearAuthData() {
     this.storage.removeItem("token");
     this.storage.removeItem("expiration");
+    this.storage.removeItem("handle");
   }
 
   ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.unsubscribe();
     this.authStatusListener.unsubscribe();
+    if (this.currentUserSub) {
+      this.currentUserSub.unsubscribe();
+    }
+    this.userProfileSub.unsubscribe();
     clearTimeout(this.tokenTimer);
   }
 }
