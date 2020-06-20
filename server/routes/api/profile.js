@@ -12,7 +12,7 @@ router.get('/user/profile', auth, profileController.getCurrentUserProfile);
 
 //Create and Update Profile
 
-router.post('/', auth, profileController.createOrUpdateUser);
+router.post('/createupdate', auth, profileController.createOrUpdateUser);
 
 //Get Profile by Handle
 

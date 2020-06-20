@@ -12,6 +12,7 @@ const profileSchema = new Schema({
     handle: {
         type: String,
         required: true,
+        unique: true,
         min: 2,
         max: 40
     },
@@ -101,17 +102,19 @@ const profileSchema = new Schema({
 
             degree: {
                 type: String,
+                enum: ['Phd', 'Doctorate', 'Msc', 'Bsc', 'Diploma', 'Others']
             },
             fieldofstudy: {
                 type: String
             },
             startyear: {
                 type: Date,
-                // required: true
-                default: Date.now
+                required: true,
+
             },
             endyear: {
                 type: Date,
+                required: true,
             },
             grade: {
                 type: String,

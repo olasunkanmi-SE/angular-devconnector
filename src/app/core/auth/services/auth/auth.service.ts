@@ -69,6 +69,7 @@ export class AuthService implements OnDestroy {
           this.userAuthenticated = true;
           this.authStatusListener.next(true);
           this.saveAuthData(token, expirationTime.toString());
+
           this.router.navigate(["pages/posts"]);
         }
       });

@@ -11,7 +11,11 @@
           </p>
         </div>
         <div>
-          <form class="example-form" [formGroup]="infoForm">
+          <form
+            class="example-form"
+            [formGroup]="infoForm"
+            (ngSubmit)="createProfile()"
+          >
             <p>
               <mat-form-field class="example-full-width" appearance="outline">
                 <mat-label>Handle</mat-label>
@@ -42,8 +46,10 @@
                     {{ status.value }}
                   </mat-option>
                 </mat-select>
-                <mat-error *ngIf="status.errors.required">
-                  Location is required
+                <mat-error *ngIf="handle.touched && handle.invalid">
+                  <mat-error *ngIf="status.errors.required">
+                    Status is required
+                  </mat-error>
                 </mat-error>
               </mat-form-field>
             </p>
@@ -116,8 +122,10 @@
                     {{ location.value }}
                   </mat-option>
                 </mat-select>
-                <mat-error *ngIf="location.errors.required">
-                  Location is required
+                <mat-error *ngIf="handle.touched && handle.invalid">
+                  <mat-error *ngIf="location.errors.required">
+                    Location is required
+                  </mat-error>
                 </mat-error>
               </mat-form-field>
             </p>

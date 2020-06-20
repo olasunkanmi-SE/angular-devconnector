@@ -1,8 +1,13 @@
+import { Router } from "@angular/router";
+import { StorageService } from "./../../core/storage/storage.service";
+import { Subscription } from "rxjs";
+import { ProfileService } from "./../../pages/profiles/shared/profile.service";
 import { Country, UserStatus } from "./../../shared/model/info";
 import { InfoService } from "./../../shared/info.service";
 import { PatternValidation } from "./../../shared/helpers/custom-validation";
 import { FormBuilder, Validators } from "@angular/forms";
 import { Component, OnInit } from "@angular/core";
+import { Profile } from "src/app/pages/profiles/model/profile";
 
 @Component({
   selector: "app-info",
@@ -13,7 +18,15 @@ export class InfoComponent implements OnInit {
   infoForm;
   locations: Country[];
   statuses: UserStatus[];
-  constructor(private formBuilder: FormBuilder, private info: InfoService) {}
+  profileSub: Subscription;
+  profile: Profile;
+  constructor(
+    private formBuilder: FormBuilder,
+    private info: InfoService,
+    private profileService: ProfileService,
+    private storage: StorageService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.initializeForm();
@@ -43,7 +56,13 @@ export class InfoComponent implements OnInit {
       skills: ["", [Validators.required]],
       location: ["", [Validators.required]],
       bio: [""],
-      githubusername: [""],
+      githubusername: [
+        "",
+        PatternValidation.patternValidator(
+          /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/,
+          { hasSpecialCharacter: true }
+        ),
+      ],
     });
   }
 
@@ -77,5 +96,15 @@ export class InfoComponent implements OnInit {
 
   get githubusername() {
     return this.infoForm.get("githubusername");
+  }
+
+  createProfile() {
+    this.profileSub = this.profileService
+      .createProfile$(this.infoForm.value)
+      .subscribe((res) => {
+        this.profile = res;
+        this.storage.saveItem("handle", this.profile.handle);
+        this.router.navigate(["pages/posts"]);
+      });
   }
 }
