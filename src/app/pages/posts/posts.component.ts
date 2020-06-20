@@ -119,7 +119,6 @@ export class PostsComponent implements OnInit, OnDestroy {
   getCurrentUser() {
     this.userSubs = this.authservice.currentUser$().subscribe((res) => {
       this.user = res;
-      console.log(res);
       this.userName = this.user["firstname"];
     });
   }
