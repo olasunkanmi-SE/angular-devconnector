@@ -46,7 +46,7 @@ export class ErrorService {
   constructor(private _snackBar: MatSnackBar) {}
 
   openSnackBar(message: string, action: any) {
-    this._snackBar.open(message, action, { duration: 2500 });
+    this._snackBar.open(message, action, { duration: 2000 });
   }
 
   whichError(errorCode: number, error: string) {
