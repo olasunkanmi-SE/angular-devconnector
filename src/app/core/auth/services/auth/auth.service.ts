@@ -51,7 +51,6 @@ export class AuthService implements OnDestroy {
       .pipe(takeUntil(this.destroy$.asObservable()))
       .subscribe(
         (res: any) => {
-          console.log(res);
           this.err.userNotification(201, "registration successful");
         },
         (error) => console.log(error)
@@ -63,7 +62,6 @@ export class AuthService implements OnDestroy {
       .requestCall(AuthEndPoints.AUTH, ApiMethod.POST, loginPayload)
       .pipe(takeUntil(this.destroy$.asObservable()))
       .subscribe((res: any) => {
-        console.log(res);
         const token = res.token;
         this.token = token;
         this.err.userNotification(200, "successfully logged in");
@@ -75,9 +73,9 @@ export class AuthService implements OnDestroy {
           this.userAuthenticated = true;
           this.authStatusListener.next(true);
           this.saveAuthData(token, expirationTime.toString());
-          this.getCurrentUserProfile();
           setTimeout(() => {
             if (this.storage.getItem("handle")) {
+              this.getCurrentUserProfile();
               this.router.navigate(["pages/posts"]);
             } else {
               this.router.navigate(["onboarding/info"]);
@@ -97,11 +95,11 @@ export class AuthService implements OnDestroy {
       .pipe(takeUntil(this.destroy$.asObservable()));
   }
 
-  getCurrentUser() {
-    this.currentUserSub = this.currentUser$().subscribe((res) =>
-      console.log(res)
-    );
-  }
+  // getCurrentUser() {
+  //   this.currentUserSub = this.currentUser$().subscribe((res) =>
+  //     console.log(res)
+  //   );
+  // }
 
   getCurrentUserProfile() {
     this.userProfileSub = this.profileService
