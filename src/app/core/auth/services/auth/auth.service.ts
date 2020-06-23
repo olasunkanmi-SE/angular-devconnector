@@ -82,7 +82,7 @@ export class AuthService implements OnDestroy {
             } else {
               this.router.navigate(["onboarding/info"]);
             }
-          }, 2000);
+          }, 1000);
         }
       });
   }

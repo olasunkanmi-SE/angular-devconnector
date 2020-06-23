@@ -4,7 +4,7 @@ import { Post, SinglePost, Comment, Reply } from "./../model/post";
 import { environment } from "./../../../../environments/environment";
 import { HttpClient } from "@angular/common/http";
 import { Injectable, OnDestroy, Output, EventEmitter } from "@angular/core";
-import { takeUntil, map, take } from "rxjs/operators";
+import { takeUntil, map, take, concatMap } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root",
@@ -14,7 +14,7 @@ export class PostService implements OnDestroy {
   backendURL = environment.backendAPI;
   destroy$: Subject<boolean> = new Subject<boolean>();
   private postSubject = new Subject<any>();
-  private deleteSubject = new Subject<Post[]>();
+  private postsSubject = new Subject<Post[]>();
   constructor(private http: HttpClient) {}
   @Output() post = new EventEmitter<SinglePost>();
   @Output() comment = new EventEmitter<Comment>();
@@ -29,11 +29,11 @@ export class PostService implements OnDestroy {
   }
 
   sendPosts(posts: Post[]) {
-    this.deleteSubject.next(posts);
+    this.postsSubject.next(posts);
   }
 
   getnewPosts$() {
-    return this.deleteSubject.asObservable();
+    return this.postsSubject.asObservable();
   }
 
   handlePost(post) {
@@ -48,9 +48,9 @@ export class PostService implements OnDestroy {
     this.reply.emit(reply);
   }
 
-  getPosts$(): Observable<{ count: string; posts: any }> {
+  getPosts$(): Observable<{ count: string; posts: SinglePost[] }> {
     return this.http
-      .get<{ count: string; posts: any }>(`${this.backendURL}/posts`)
+      .get<{ count: string; posts: SinglePost[] }>(`${this.backendURL}/posts`)
       .pipe(
         map((postData) => {
           return {
@@ -72,13 +72,23 @@ export class PostService implements OnDestroy {
       );
   }
 
-  createPost$(post) {
+  filterPostExample() {
+    const filteredPost = this.getPosts$().pipe(
+      map((postData) => {
+        let posts: SinglePost[] = postData.posts;
+        posts.filter((post: SinglePost) => post.comments.length > 2);
+      })
+    );
+    return filteredPost;
+  }
+
+  createPost$(post): Observable<SinglePost> {
     return this.http
-      .post<{ SinglePost }>(`${this.backendURL}/posts`, post)
+      .post<SinglePost>(`${this.backendURL}/posts`, post)
       .pipe(takeUntil(this.destroy$));
   }
 
-  getPostById$(id: any) {
+  getPostById$(id: any): Observable<SinglePost> {
     return this.http.get<SinglePost>(`${this.backendURL}/posts/${id}`).pipe(
       map((post) => {
         return {
@@ -96,19 +106,23 @@ export class PostService implements OnDestroy {
     );
   }
 
-  createComment$(id: string, comment: Comment) {
+  createComment$(id: string, comment: Comment): Observable<SinglePost> {
     return this.http
       .post<SinglePost>(`${this.backendURL}/posts/comment/${id}`, comment)
       .pipe(takeUntil(this.destroy$));
   }
 
-  likeDislikePost$(id: string, user: User) {
+  likeDislikePost$(id: string, user: User): Observable<SinglePost> {
     return this.http
       .post<SinglePost>(`${this.backendURL}/posts/like/${id}`, user)
       .pipe(takeUntil(this.destroy$));
   }
 
-  replyComment$(id: string, commentId: string, reply: Reply) {
+  replyComment$(
+    id: string,
+    commentId: string,
+    reply: Reply
+  ): Observable<Comment> {
     return this.http
       .post<Comment>(
         `${this.backendURL}/posts/comment/reply/${id}/${commentId}`,
@@ -117,7 +131,11 @@ export class PostService implements OnDestroy {
       .pipe(takeUntil(this.destroy$));
   }
 
-  likeDisLikeComment$(id: string, commentId: string, user: User) {
+  likeDisLikeComment$(
+    id: string,
+    commentId: string,
+    user: User
+  ): Observable<Comment> {
     return this.http
       .post<Comment>(
         `${this.backendURL}/posts/comment/like/${id}/${commentId}`,
@@ -126,7 +144,7 @@ export class PostService implements OnDestroy {
       .pipe(takeUntil(this.destroy$));
   }
 
-  deletePost$(id: string) {
+  deletePost$(id: string): Observable<Post[]> {
     return this.http
       .delete<Post[]>(`${this.backendURL}/posts/${id}`)
       .pipe(takeUntil(this.destroy$));

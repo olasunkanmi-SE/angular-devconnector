@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 export enum CustomErrorCode {
   UN_KNOWN = 0,
@@ -42,7 +43,11 @@ export enum ClientError {
 })
 export class ErrorService {
   userFeedback: any;
-  constructor() {}
+  constructor(private _snackBar: MatSnackBar) {}
+
+  openSnackBar(message: string, action: any) {
+    this._snackBar.open(message, action, { duration: 2500 });
+  }
 
   whichError(errorCode: number, error: string) {
     switch (errorCode) {
@@ -52,19 +57,19 @@ export class ErrorService {
         break;
       case ClientError.HTTP_400_BAD_REQUEST:
         this.userFeedback = error;
-        alert(this.userFeedback);
+        this.openSnackBar(this.userFeedback, null);
         break;
       case ClientError.HTTP_404_NOT_FOUND:
         this.userFeedback = error;
-        alert(this.userFeedback);
+        this.openSnackBar(this.userFeedback, null);
         break;
       case ClientError.HTTP_401_UNAUTHORIZED:
         this.userFeedback = error;
-        alert(this.userFeedback);
+        this.openSnackBar(this.userFeedback, null);
         break;
       case ClientError.HTTP_408_REQUEST_TIMEOUT:
         this.userFeedback = error;
-        alert(this.userFeedback);
+        this.openSnackBar(this.userFeedback, null);
         break;
       default:
         console.log("unknown Error Code");
