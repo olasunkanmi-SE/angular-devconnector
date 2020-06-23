@@ -45,7 +45,8 @@ router.post('/comment/like/:id/:commentId', auth, postController.likeAComment);
 
 router.delete('/comment/reply/:id/:replyId', auth, postController.deleteAReply);
 
-
+//Update a Comment
+router.put('/:id/:commentId', auth, postController.updateComment)
 
 // Remove a reply
 // router.delete('/comment/reply/:id/:replyId', auth, async (req, res) => {

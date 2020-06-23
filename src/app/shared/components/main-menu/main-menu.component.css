@@ -42,6 +42,14 @@ mat-toolbar a {
   }
 }
 
+.btncolor {
+  color: #fff;
+}
+
+.btnmove {
+  margin-left: 15px;
+}
+
 /* .example-form {
   min-width: 500px;
   max-width: 500px;

@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 export enum CustomErrorCode {
   UN_KNOWN = 0,
@@ -42,32 +43,39 @@ export enum ClientError {
 })
 export class ErrorService {
   userFeedback: any;
-  constructor() {}
+  constructor(private _snackBar: MatSnackBar) {}
+
+  openSnackBar(message: string, action: any) {
+    this._snackBar.open(message, action, { duration: 2500 });
+  }
 
   whichError(errorCode: number, error: string) {
     switch (errorCode) {
       case CustomErrorCode.UN_KNOWN:
-        console.log("Server is Down");
+        this.openSnackBar("Server is Down", null);
         console.error(error);
         break;
       case ClientError.HTTP_400_BAD_REQUEST:
         this.userFeedback = error;
-        alert(this.userFeedback);
+        this.openSnackBar(this.userFeedback, null);
         break;
       case ClientError.HTTP_404_NOT_FOUND:
         this.userFeedback = error;
-        alert(this.userFeedback);
+        this.openSnackBar(this.userFeedback, null);
         break;
       case ClientError.HTTP_401_UNAUTHORIZED:
         this.userFeedback = error;
-        alert(this.userFeedback);
+        this.openSnackBar(this.userFeedback, null);
         break;
       case ClientError.HTTP_408_REQUEST_TIMEOUT:
         this.userFeedback = error;
-        alert(this.userFeedback);
+        this.openSnackBar(this.userFeedback, null);
         break;
+      case ServerError.HTTP_500_INTERNAL_SERVER_ERROR:
+        this.userFeedback = error;
+        this.openSnackBar(this.userFeedback, null);
       default:
-        console.log("unknown Error Code");
+        this.openSnackBar("unknown Error Code", null);
         break;
     }
   }
@@ -75,15 +83,16 @@ export class ErrorService {
   userNotification(notificationCode: number, notification: string) {
     switch (notificationCode) {
       case SuccessCode.HTTP_200_OK:
-        console.log(notification);
+        this.openSnackBar(notification, null);
         break;
       case SuccessCode.HTTP_201_CREATED:
-        console.log(notification);
+        this.openSnackBar(notification, null);
         break;
       case SuccessCode.HTTP_202_ACCEPTED:
-        console.log(notification);
+        this.openSnackBar(notification, null);
       default:
-        console.log("unknown success action");
+        this.openSnackBar("unknown success action", null);
+
         break;
     }
   }

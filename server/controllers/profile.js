@@ -7,14 +7,15 @@ const validateEducation = require('../validation/education');
 
 //Get Current Profile
 
-module.exports.getCurrentUser = async (req, res, next) => {
+module.exports.getCurrentUserProfile = async (req, res, next) => {
 
     try {
         const profile = (await Profile.findOne({ user: req.user._id }));
-        await profile.populate('user', ['name', 'avatar']).execPopulate();
+        await profile.populate('user', ['firstname', 'lastname', 'avatar']).execPopulate();
         if (!profile) return res.status(404).json(err.profileError.noUserProfile);
         return res.status(200).json(profile);
     } catch (ex) {
+        console.log(ex.message)
         next(ex);
     }
 };
@@ -76,7 +77,7 @@ module.exports.createOrUpdateUser = async (req, res, next) => {
 module.exports.getProfileByHandle = async (req, res, next) => {
     try {
         let profile = await Profile.findOne({ handle: req.params.handle });
-        await profile.populate('user', ['name', 'avatar']).execPopulate();
+        await profile.populate('user', ['firstname', 'lastname', 'avatar']).execPopulate();
         if (!profile) return res.status.json(err.profileError.noProfile);
         res.status(200).json(profile);
     } catch (ex) {
@@ -89,7 +90,7 @@ module.exports.getProfileByHandle = async (req, res, next) => {
 module.exports.getProfileById = async (req, res, next) => {
     try {
         let profile = await Profile.findById({ _id: req.params.id });
-        await profile.populate('user', ['name', 'avatar']).execPopulate();
+        await profile.populate('user', ['firstname', 'lastname', 'avatar']).execPopulate();
         if (!profile) return res.status.json(err.profileError.noProfile);
         res.status(200).json(profile);
     } catch (ex) {
@@ -101,7 +102,7 @@ module.exports.getProfileById = async (req, res, next) => {
 
 module.exports.getProfiles = (req, res, next) => {
     try {
-        Profile.find().populate('user', ['name', 'avatar'])
+        Profile.find().populate('user', ['firstname', 'lastname', 'avatar'])
             .then(profiles => {
                 if (!profiles) return res.status(404).json(err.profileError.noProfiles)
                 res.status(200).json(profiles);

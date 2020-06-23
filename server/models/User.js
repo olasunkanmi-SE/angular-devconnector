@@ -4,7 +4,11 @@ const Joi = require('@hapi/joi')
 const { Schema } = mongoose;
 
 const userSchema = new Schema({
-    name: {
+    firstname: {
+        type: String,
+        required: true
+    },
+    lastname: {
         type: String,
         required: true
     },
@@ -39,7 +43,8 @@ const User = mongoose.model('User', userSchema);
 
 function validateUser(user) {
     const Schema = Joi.object().keys({
-        name: Joi.string().min(2).max(50).required(),
+        firstname: Joi.string().min(2).max(50).required(),
+        lastname: Joi.string().min(2).max(50).required(),
         email: Joi.string().required().email(),
         password: Joi.string().required(),
         confirmPassword: Joi.ref('password'),

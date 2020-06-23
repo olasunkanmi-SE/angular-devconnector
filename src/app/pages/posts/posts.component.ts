@@ -1,12 +1,15 @@
-import { Post } from "./model/post";
+import { map } from "rxjs/operators";
+import { FormControl } from "@angular/forms";
+import { SinglePost } from "./model/post";
 import { PostService } from "./shared/post.service";
 import { User } from "./model/user";
 import { StorageService } from "./../../core/storage/storage.service";
 import { AuthService } from "./../../core/auth/services/auth/auth.service";
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { faUserCircle, faFeather } from "@fortawesome/free-solid-svg-icons";
-import { Subscription } from "rxjs";
+import { Subscription, Observable } from "rxjs";
 import { Title } from "@angular/platform-browser";
+import { startWith } from "rxjs/operators";
 
 @Component({
   selector: "app-posts",
@@ -21,35 +24,62 @@ export class PostsComponent implements OnInit, OnDestroy {
   authListenerSubscription: Subscription;
   userAuthenticated: boolean = false;
   pageTitle: string = "Developers Feed";
-  currentUser;
   newPost;
   isloading: boolean;
   postUpdatedSub: Subscription;
-  posts$: Post[];
+  posts: SinglePost[];
   totalPosts: number;
   postCreated: Date;
   error: boolean;
   newPostSub: Subscription;
   postSub: Subscription;
-  id: number;
+  newCommentSub: Subscription;
+  id: any;
+  comment;
+  post: SinglePost;
+  postsListSub: Subscription;
+  getUsersSub: Subscription;
+  developers: [] = [];
+  devNames: string[] = [];
+  myControl = new FormControl();
+  options: string[] = this.devNames;
+  filteredOptions: Observable<string[]>;
+  userName;
+  randomDev;
 
   constructor(
     private authservice: AuthService,
     private storage: StorageService,
     private title: Title,
-    private postService: PostService
+    private postService: PostService,
+    private authService: AuthService
   ) {
+    this.getCurrentUser();
+    this.subscribeToNewPost();
+    this.postService.getnewPosts$().subscribe((res) => (this.posts = res));
+    this.getDevelopersByName();
+    this.devNames;
+  }
+
+  subscribeToNewPost() {
     this.newPostSub = this.postService.getPost().subscribe((post) => {
-      this.id = post._id;
-      console.log(this.id);
-      this.posts$.unshift(post);
+      this.id = post.id;
+      if (!this.posts) {
+        this.getPostsList$();
+      } else {
+        this.posts.unshift(post);
+        return this.getPostsList$();
+      }
     });
   }
 
   ngOnInit() {
     this.intitialize();
-    this.getCurrentUser();
-    this.getPostsList();
+    this.getPostsList$();
+    this.filteredOptions = this.myControl.valueChanges.pipe(
+      startWith(""),
+      map((value) => this._filter(value))
+    );
   }
 
   intitialize() {
@@ -63,6 +93,13 @@ export class PostsComponent implements OnInit, OnDestroy {
           }))
       );
     }).then(this.checkStorage());
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLocaleLowerCase();
+    return this.options.filter(
+      (option) => option.toLocaleLowerCase().indexOf(filterValue) === 0
+    );
   }
 
   checkStorage(): any {
@@ -82,15 +119,26 @@ export class PostsComponent implements OnInit, OnDestroy {
   getCurrentUser() {
     this.userSubs = this.authservice.currentUser$().subscribe((res) => {
       this.user = res;
-      this.currentUser = res.user;
+      this.userName = this.user["firstname"];
     });
   }
 
-  private getPostsList() {
+  getDevelopersByName() {
+    this.getUsersSub = this.authService.getUsers$().subscribe((res) => {
+      this.developers = res.users;
+      this.developers.filter((developer) => {
+        const name = developer["firstname"];
+        this.devNames.push(name);
+        return this.devNames;
+      });
+    });
+  }
+
+  private getPostsList$() {
     this.isloading = true;
     this.postUpdatedSub = this.postService.getPosts$().subscribe(
       (res) => {
-        this.posts$ = res.posts;
+        this.posts = res.posts;
         this.totalPosts = +res.count;
         this.isloading = false;
       },
@@ -106,5 +154,7 @@ export class PostsComponent implements OnInit, OnDestroy {
     this.authListenerSubscription.unsubscribe();
     this.userSubs.unsubscribe();
     this.postUpdatedSub.unsubscribe();
+    this.newPostSub.unsubscribe();
+    this.getUsersSub.unsubscribe();
   }
 }

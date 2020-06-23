@@ -1,0 +1,188 @@
+<section>
+  <div class="container text-center">
+    <div class="row">
+      <div class="col-md-2 mb-3"></div>
+      <div class="col-md-8 mb-3 info infospace">
+        <h1>Welcome, {{ username }}</h1>
+        <div class="infospace">
+          <p>
+            Let's start your profile, connect with other software developers and
+            engage with them on topics you care about.
+          </p>
+        </div>
+        <div>
+          <form
+            class="example-form"
+            [formGroup]="infoForm"
+            (ngSubmit)="createProfile()"
+          >
+            <p>
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Handle</mat-label>
+                <input matInput type="text" formControlName="handle" />
+                <mat-error *ngIf="handle.touched && handle.invalid">
+                  <mat-error *ngIf="handle.errors.required">
+                    Handle is required
+                  </mat-error>
+                  <mat-error *ngIf="handle.errors.minlength">
+                    handle should be minimum of
+                    {{ handle.errors.minlength.requiredLength }} characters
+                  </mat-error>
+                  <mat-error *ngIf="handle.errors.maxlength">
+                    handle should be maximum of
+                    {{ handle.errors.maxlength.requiredLength }} characters
+                  </mat-error>
+                </mat-error>
+              </mat-form-field>
+            </p>
+            <p>
+              <mat-form-field class="example-full-width">
+                <mat-label>Status</mat-label>
+                <mat-select formControlName="status" name="status">
+                  <mat-option
+                    *ngFor="let status of statuses"
+                    [value]="status.value"
+                  >
+                    {{ status.value }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="handle.touched && handle.invalid">
+                  <mat-error *ngIf="status.errors.required">
+                    Status is required
+                  </mat-error>
+                </mat-error>
+              </mat-form-field>
+            </p>
+            <p>
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Company</mat-label>
+                <input matInput type="text" formControlName="company" />
+                <mat-error *ngIf="company.touched && company.invalid">
+                  <mat-error *ngIf="company.errors.minlength">
+                    company should be minimum of
+                    {{ company.errors.minlength.requiredLength }} characters
+                  </mat-error>
+                  <mat-error *ngIf="company.errors.maxlength">
+                    company should be maximum of
+                    {{ company.errors.maxlength.requiredLength }} characters
+                  </mat-error>
+                </mat-error>
+              </mat-form-field>
+            </p>
+            <p>
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Skills</mat-label>
+                <input
+                  matInput
+                  type="text"
+                  formControlName="skills"
+                  placeholder="comma seperated skills e.g javascript, php, typescript"
+                />
+                <mat-error *ngIf="skills.touched && skills.invalid">
+                  <mat-error *ngIf="skills.errors.required">
+                    skills is required
+                  </mat-error>
+                  <mat-error *ngIf="skills.errors.minlength">
+                    skills should be minimum of
+                    {{ skills.errors.minlength.requiredLength }} characters
+                  </mat-error>
+                  <mat-error *ngIf="skills.errors.maxlength">
+                    skills should be maximum of
+                    {{ skills.errors.maxlength.requiredLength }} characters
+                  </mat-error>
+                </mat-error>
+              </mat-form-field>
+            </p>
+
+            <p>
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Website</mat-label>
+                <input matInput type="text" formControlName="website" />
+                <mat-error *ngIf="website.touched && website.invalid">
+                  <mat-error *ngIf="website.errors.minlength">
+                    website should be minimum of
+                    {{ website.errors.minlength.requiredLength }} characters
+                  </mat-error>
+                  <mat-error *ngIf="website.errors.maxlength">
+                    website should be maximum of
+                    {{ website.errors.maxlength.requiredLength }} characters
+                  </mat-error>
+                </mat-error>
+              </mat-form-field>
+            </p>
+
+            <p>
+              <mat-form-field class="example-full-width">
+                <mat-label>Location</mat-label>
+                <mat-select formControlName="location" name="location">
+                  <mat-option
+                    *ngFor="let location of locations"
+                    [value]="location.value"
+                  >
+                    {{ location.value }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="handle.touched && handle.invalid">
+                  <mat-error *ngIf="location.errors.required">
+                    Location is required
+                  </mat-error>
+                </mat-error>
+              </mat-form-field>
+            </p>
+            <p>
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Github</mat-label>
+                <input matInput type="text" formControlName="githubusername" />
+                <mat-error
+                  *ngIf="githubusername.touched && githubusername.invalid"
+                >
+                  <mat-error *ngIf="githubusername.errors.minlength">
+                    githubusername should be minimum of
+                    {{ githubusername.errors.minlength.requiredLength }}
+                    characters
+                  </mat-error>
+                  <mat-error *ngIf="githubusername.errors.maxlength">
+                    githubusername should be maximum of
+                    {{ githubusername.errors.maxlength.requiredLength }}
+                    characters
+                  </mat-error>
+                </mat-error>
+              </mat-form-field>
+            </p>
+            <p>
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Bio</mat-label>
+                <textarea matInput type="text" formControlName="bio"></textarea>
+                <mat-error *ngIf="bio.touched && bio.invalid">
+                  <mat-error *ngIf="bio.errors.required">
+                    bio is required
+                  </mat-error>
+                  <mat-error *ngIf="bio.errors.minlength">
+                    bio should be minimum of
+                    {{ bio.errors.minlength.requiredLength }} characters
+                  </mat-error>
+                  <mat-error *ngIf="bio.errors.maxlength">
+                    bio should be maximum of
+                    {{ bio.errors.maxlength.requiredLength }} characters
+                  </mat-error>
+                </mat-error>
+              </mat-form-field>
+            </p>
+            <p>
+              <button
+                class="example-full-width"
+                mat-raised-button
+                color="primary"
+                type="submit"
+                [disabled]="infoForm.invalid"
+              >
+                Create my profile
+              </button>
+            </p>
+          </form>
+        </div>
+      </div>
+      <div class="col-md-2 mb-3"></div>
+    </div>
+  </div>
+</section>

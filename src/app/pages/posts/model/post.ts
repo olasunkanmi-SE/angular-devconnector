@@ -8,15 +8,35 @@ export interface Post {
   date: Date;
 }
 
-export interface singlePost {
+export interface SinglePost {
   _id?: string;
+  id?: string;
   avatar?: string;
   comments?: [];
   date?: Date;
   likes?: [];
-  name?: string;
+  firstname?: string;
   text: string;
   user?: string;
 }
 
-export interface comment {}
+export interface Comment {
+  _id?: string;
+  id?: string;
+  user?: string;
+  text?: string;
+  firstname?: string;
+  avatar?: string;
+  replies?: [];
+  likes?: [];
+  date?: Date;
+}
+
+export interface Reply {
+  _id?: string;
+  user?: string;
+  text?: string;
+  firstname?: string;
+  avatar?: string;
+  date?: Date;
+}

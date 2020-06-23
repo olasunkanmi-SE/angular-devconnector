@@ -9,8 +9,8 @@
               <a class="dvprofile" href="profile.html"
                 ><li class="list-group-item text-center">
                   <fa-icon [icon]="faUser" size="3x"></fa-icon>
-                  <p *ngIf="currentUser" class="dvhead">
-                    {{ currentUser.name }}
+                  <p class="dvhead">
+                    {{ userName }}
                   </p>
                   <small style="font-weight: 350;"
                     >Software Engineer at ViewQwest</small
@@ -32,18 +32,8 @@
           </div>
           <div class="col-md-4 mb-3">
             <ul class="list-group">
-              <li class="list-group-item text-center">Random Developers</li>
-              <li class="list-group-item">
-                <div class="d-flex bd-highlight">
-                  <div class="p-2 flex-fill bd-highlight">
-                    <fa-icon [icon]="faUser" size="2x"></fa-icon>
-                  </div>
-                  <div class="p-2 flex-fill bd-highlight">
-                    <small>Oyinlola Olasunkanmi</small>
-                  </div>
-
-                  <button class="dvbutton">Follow +</button>
-                </div>
+              <li class="list-group-item text-center">
+                Developers
               </li>
               <li class="list-group-item">
                 <div class="d-flex bd-highlight">
@@ -51,12 +41,37 @@
                     <fa-icon [icon]="faUser" size="2x"></fa-icon>
                   </div>
                   <div class="p-2 flex-fill bd-highlight">
-                    <small>Oyinlola Olasunkanmi</small>
+                    <small>Olasunkanmi Oyinlola</small>
                   </div>
 
                   <button class="dvbutton">Follow +</button>
-                  <!-- <button (click)="onClick()">Follow +</button> -->
                 </div>
+              </li>
+
+              <li class="list-group-item">
+                <form class="example-form">
+                  <mat-form-field class="example-full-width">
+                    <input
+                      type="text"
+                      placeholder="Search Developers"
+                      aria-label="Number"
+                      matInput
+                      [formControl]="myControl"
+                      [matAutocomplete]="auto"
+                    />
+                    <mat-autocomplete
+                      autoActiveFirstOption
+                      #auto="matAutocomplete"
+                    >
+                      <mat-option
+                        *ngFor="let option of filteredOptions | async"
+                        [value]="option"
+                      >
+                        {{ option }}
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+                </form>
               </li>
             </ul>
           </div>
@@ -66,7 +81,7 @@
           <div class="col-md-5 mb-3">
             <!-- <app-ghost-list></app-ghost-list> -->
             <app-post-list
-              *ngFor="let post of posts$"
+              *ngFor="let post of posts"
               [post]="post"
             ></app-post-list>
           </div>

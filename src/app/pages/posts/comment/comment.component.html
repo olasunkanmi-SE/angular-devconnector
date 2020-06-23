@@ -1,0 +1,108 @@
+<div class="d-flex bd-highlight" style="background-color: #f8f8f8;">
+  <div class="p-2 bd-highlight">
+    <img width="40" src="{{ comment.avatar }}" alt="devconnector user image" />
+  </div>
+  <div class="p-2 flex-fill">
+    <div class="d-flex bd-highlight">
+      <div class="p-2 w-100 bd-highlight">
+        <small>{{ comment.firstname }}</small>
+      </div>
+      <div class="p-2 flex-shrink-1 bd-highlight">
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="menu"
+          aria-label="Example icon-button with a menu"
+        >
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>
+            <mat-icon>edit</mat-icon>
+            <span>Update Comment</span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon>check</mat-icon>
+            <span>Copy comment Link</span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon>edit</mat-icon>
+            <span>Delete comment</span>
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+
+    <div>
+      <small class="dvSmall"> Software Engineer at ViewQwest</small>
+    </div>
+    <div>
+      <p class="dvp">
+        {{ comment.text }}
+      </p>
+    </div>
+    <div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item" style="margin-left: -15px;"></li>
+        <li class="list-group-item" style="margin-left: -15px;">
+          <ul class="list-inline">
+            <li class="list-inline-item">
+              <small>{{ comment.likes.length }} Likes</small>
+            </li>
+            <li class="list-inline-item">
+              <small>{{ comment.replies.length }} replies</small>
+            </li>
+          </ul>
+        </li>
+        <li
+          class="list-group-item"
+          style="margin-left: -15px; color: rgba(0, 0, 0, 0.6);"
+        >
+          <ul class="list-inline">
+            <li class="list-inline-item">
+              <a (click)="likeDislikeComment()"
+                ><fa-icon [icon]="faThumbsUp"></fa-icon
+              ></a>
+              <small> Like</small>
+            </li>
+            <li class="list-inline-item">
+              <fa-icon [icon]="faComment" size="1x"></fa-icon>
+              <small> Reply</small>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <div class="d-flex bd-highlight">
+        <form [formGroup]="replyForm" (ngSubmit)="replyComment()">
+          <div class="p-2 flex-fill bd-highlight">
+            <div class="p-2">
+              <p>
+                <mat-form-field class="full-width" appearance="outline">
+                  <mat-label>Reply Comment</mat-label>
+                  <input matInput formControlName="text" />
+                </mat-form-field>
+              </p>
+            </div>
+            <div class="p-2">
+              <p>
+                <button
+                  class="postbtn"
+                  mat-raised-button
+                  color="primary"
+                  type="submit"
+                >
+                  Reply
+                </button>
+              </p>
+              <!-- <p><button (click)="checkPost()">postbyid</button></p> -->
+            </div>
+          </div>
+        </form>
+      </div>
+      <app-reply
+        *ngFor="let reply of comment.replies"
+        [reply]="reply"
+        [comment]="comment"
+      ></app-reply>
+    </div>
+  </div>
+</div>
