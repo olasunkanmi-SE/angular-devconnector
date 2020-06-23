@@ -78,12 +78,14 @@ export class SignupComponent implements OnInit {
     return this.signUpForm.get("email");
   }
 
+
   get firstname() {
     return this.signUpForm.get("firstname");
   }
 
   get lastname() {
     return this.signUpForm.get("lastname");
+
   }
 
   get password() {
