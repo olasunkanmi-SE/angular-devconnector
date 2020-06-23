@@ -62,6 +62,6 @@ export class LoginComponent implements OnInit {
   }
 
   onClick() {
-    this.auth.currentUser();
+    this.auth.currentUser$();
   }
 }
