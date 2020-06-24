@@ -1,9 +1,12 @@
+import { Observable } from "rxjs";
 import { StorageService } from "./../../storage/storage.service";
 import { AuthService } from "./../services/auth/auth.service";
 import { PatternValidation } from "./../../../shared/helpers/custom-validation";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
+import { Store } from "@ngrx/store";
+import * as fromRoot from "../../../app.reducer";
 
 @Component({
   selector: "app-login",
@@ -15,16 +18,17 @@ export class LoginComponent implements OnInit {
   hide: boolean = true;
   ValidationErrors: any;
 
-  isLoading: boolean = false;
+  isLoading$: Observable<boolean>;
   constructor(
     private formbuilder: FormBuilder,
     private auth: AuthService,
     private storage: StorageService,
-
+    private store: Store,
     private router: Router
   ) {}
 
   ngOnInit() {
+    this.isLoading$ = this.store.select(fromRoot.getIsLoading);
     if (+this.storage.getItem("expiration") > Date.now()) {
       return this.router.navigate(["pages/posts"]);
     }
@@ -58,7 +62,6 @@ export class LoginComponent implements OnInit {
 
   onLogin(): any {
     this.auth.login(this.signInForm.value);
-    this.isLoading = true;
   }
 
   onClick() {

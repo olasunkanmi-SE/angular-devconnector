@@ -1,4 +1,3 @@
-
 import { HttpService } from "./../services/http/http.service";
 import { catchError } from "rxjs/operators";
 import { Observable } from "rxjs";
@@ -22,4 +21,3 @@ export class ErrorInterceptor implements HttpInterceptor {
       .pipe(catchError((error) => this.httpservice.handleError(error)));
   }
 }
-
