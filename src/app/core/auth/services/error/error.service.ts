@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { Location } from "@angular/common";
 
 export enum CustomErrorCode {
   UN_KNOWN = 0,
@@ -43,7 +44,7 @@ export enum ClientError {
 })
 export class ErrorService {
   userFeedback: any;
-  constructor(private _snackBar: MatSnackBar) {}
+  constructor(private _snackBar: MatSnackBar, private location: Location) {}
 
   openSnackBar(message: string, action: any) {
     this._snackBar.open(message, action, { duration: 2000 });
@@ -57,6 +58,7 @@ export class ErrorService {
         break;
       case ClientError.HTTP_400_BAD_REQUEST:
         this.userFeedback = error;
+        this.location.back();
         this.openSnackBar(this.userFeedback, null);
         break;
       case ClientError.HTTP_404_NOT_FOUND:

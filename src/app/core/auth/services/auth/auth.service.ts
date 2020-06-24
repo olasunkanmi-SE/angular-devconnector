@@ -59,8 +59,6 @@ export class AuthService implements OnDestroy {
           this.store.dispatch(new UI.StopLoading());
           if (res) {
             this.err.userNotification(201, "registration successful");
-          } else {
-            this.store.dispatch(new UI.StopLoading());
           }
         },
         (error) => console.log(error)

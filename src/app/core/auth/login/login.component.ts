@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
         [
           Validators.required,
           PatternValidation.patternValidator(
-            /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+            /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/,
             { hasEmail: true }
           ),
         ],
