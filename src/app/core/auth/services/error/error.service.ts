@@ -77,7 +77,7 @@ export class ErrorService {
         this.userFeedback = error;
         this.openSnackBar(this.userFeedback, null);
       default:
-        this.openSnackBar("unknown Error Code", null);
+        this.openSnackBar("An Error occured, please try again", null);
         break;
     }
   }
@@ -93,7 +93,7 @@ export class ErrorService {
       case SuccessCode.HTTP_202_ACCEPTED:
         this.openSnackBar(notification, null);
       default:
-        this.openSnackBar("unknown success action", null);
+        this.openSnackBar("successful", null);
 
         break;
     }
