@@ -1,5 +1,7 @@
 import { TodoService } from "./todo.service";
+import { Directive } from "@angular/core";
 
+@Directive()
 export class TodosComponent {
   todos: any[] = [];
   message;
