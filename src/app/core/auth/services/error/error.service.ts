@@ -94,7 +94,6 @@ export class ErrorService {
         this.openSnackBar(notification, null);
       default:
         this.openSnackBar("successful", null);
-
         break;
     }
   }

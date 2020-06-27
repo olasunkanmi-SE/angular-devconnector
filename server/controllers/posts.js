@@ -285,9 +285,13 @@ module.exports.deleteAReply = async (req, res, next) => {
 
         })
 
+
         post.save();
         res.status(200).json(replies);
 
+    catch (ex) {
+        console.log(ex);
+    }
 
     }
 
@@ -295,3 +299,4 @@ module.exports.deleteAReply = async (req, res, next) => {
         console.log(ex);
     }
 }
+

@@ -1,3 +1,4 @@
+
 import { Observable } from "rxjs";
 import { Router } from "@angular/router";
 import { AuthService } from "./../services/auth/auth.service";
@@ -79,6 +80,7 @@ export class SignupComponent implements OnInit {
   get email() {
     return this.signUpForm.get("email");
   }
+
 
   get firstname() {
     return this.signUpForm.get("firstname");

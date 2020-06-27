@@ -76,7 +76,6 @@
                   </mat-error>
                 </mat-form-field>
               </p>
-
               <p *ngIf="!(isLoading$ | async)">
                 <button
                   class="example-full-width"
@@ -88,7 +87,6 @@
                   Sign In
                 </button>
               </p>
-
               <div class="d-flex justify-content-center">
                 <mat-spinner *ngIf="isLoading$ | async"></mat-spinner>
               </div>

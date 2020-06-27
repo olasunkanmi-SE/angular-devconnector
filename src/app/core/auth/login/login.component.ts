@@ -1,3 +1,4 @@
+
 import { Observable } from "rxjs";
 import { StorageService } from "./../../storage/storage.service";
 import { AuthService } from "./../services/auth/auth.service";
@@ -62,6 +63,7 @@ export class LoginComponent implements OnInit {
 
   onLogin(): any {
     this.auth.login(this.signInForm.value);
+    this.isLoading = true;
   }
 
   onClick() {
