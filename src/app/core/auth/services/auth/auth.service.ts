@@ -12,6 +12,9 @@ import { Injectable, OnDestroy } from "@angular/core";
 import { Subject, Subscription } from "rxjs";
 import { takeUntil, take } from "rxjs/operators";
 import { Observable } from "rxjs";
+import * as fromRoot from "../../../../app.reducer";
+import { Store } from "@ngrx/store";
+import * as UI from "../../../../shared/store/action/ui.actions";
 
 @Injectable({
   providedIn: "root",
@@ -34,7 +37,8 @@ export class AuthService implements OnDestroy {
     private storage: StorageService,
     private router: Router,
     private httpclient: HttpClient,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private store: Store<fromRoot.State>
   ) {}
 
   getAuthStatusListener() {
@@ -46,18 +50,23 @@ export class AuthService implements OnDestroy {
   }
 
   register(registerPayload: AuthPayload) {
+    this.store.dispatch(new UI.StartLoading());
     this.http
       .requestCall(AuthEndPoints.REGISTER, ApiMethod.POST, registerPayload)
       .pipe(takeUntil(this.destroy$.asObservable()))
       .subscribe(
         (res: any) => {
-          this.err.userNotification(201, "registration successful");
+          this.store.dispatch(new UI.StopLoading());
+          if (res) {
+            this.err.userNotification(201, "registration successful");
+          }
         },
         (error) => console.log(error)
       );
   }
 
   login(loginPayload: AuthPayload) {
+    this.store.dispatch(new UI.StartLoading());
     this.http
       .requestCall(AuthEndPoints.AUTH, ApiMethod.POST, loginPayload)
       .pipe(takeUntil(this.destroy$.asObservable()))
@@ -76,9 +85,12 @@ export class AuthService implements OnDestroy {
           this.getCurrentUserProfile();
           setTimeout(() => {
             if (this.storage.getItem("handle")) {
+              this.getCurrentUserProfile();
               this.router.navigate(["pages/posts"]);
+              this.store.dispatch(new UI.StopLoading());
             } else {
               this.router.navigate(["onboarding/info"]);
+              this.store.dispatch(new UI.StopLoading());
             }
           }, 1000);
         }

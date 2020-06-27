@@ -4,14 +4,19 @@ import { environment } from "./../../../../../environments/environment";
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { throwError } from "rxjs";
-import { error } from "protractor";
+import { Store } from "@ngrx/store";
+import * as UI from "../../../../shared/store/action/ui.actions";
 
 @Injectable({
   providedIn: "root",
 })
 export class HttpService {
   methods: ApiMethod;
-  constructor(private http: HttpClient, private errorservice: ErrorService) {}
+  constructor(
+    private http: HttpClient,
+    private errorservice: ErrorService,
+    private store: Store
+  ) {}
   /**
    * make API calls with this function *
    * @param method
@@ -46,6 +51,7 @@ export class HttpService {
     if (err.error instanceof ErrorEvent) {
       console.error(`An error occured: ${err.error.message}`);
     } else {
+      this.store.dispatch(new UI.StopLoading());
       this.errorservice.whichError(err.status, err.error);
     }
     return throwError(err);

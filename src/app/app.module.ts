@@ -12,6 +12,8 @@ import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { HomeModule } from "./pages/home/home.module";
+import { reducers } from "./app.reducer";
+import { StoreModule } from "@ngrx/store";
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,6 +27,7 @@ import { HomeModule } from "./pages/home/home.module";
     PostsModule,
     HomeModule,
     OnboardingModule,
+    StoreModule.forRoot(reducers),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

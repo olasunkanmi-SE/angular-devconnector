@@ -1,3 +1,5 @@
+
+import { Observable } from "rxjs";
 import { Router } from "@angular/router";
 import { AuthService } from "./../services/auth/auth.service";
 import { PatternValidation } from "../../../shared/helpers/custom-validation";
@@ -14,6 +16,7 @@ export class SignupComponent implements OnInit {
   menuControl = new FormControl();
   options: String[] = ["one", "two", "three"];
   signUpForm;
+  isLoading$: Observable<boolean>;
 
   constructor(
     private formbuilder: FormBuilder,
@@ -45,7 +48,7 @@ export class SignupComponent implements OnInit {
           [
             Validators.required,
             PatternValidation.patternValidator(
-              /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+              /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
               { hasEmail: true }
             ),
           ],
@@ -85,7 +88,6 @@ export class SignupComponent implements OnInit {
 
   get lastname() {
     return this.signUpForm.get("lastname");
-
   }
 
   get password() {

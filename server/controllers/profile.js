@@ -11,9 +11,12 @@ module.exports.getCurrentUserProfile = async (req, res, next) => {
 
     try {
         const profile = (await Profile.findOne({ user: req.user._id }));
-        await profile.populate('user', ['firstname', 'lastname', 'avatar']).execPopulate();
-        if (!profile) return res.status(404).json(err.profileError.noUserProfile);
-        return res.status(200).json(profile);
+        if (profile) {
+            await profile.populate('user', ['firstname', 'lastname', 'avatar']).execPopulate();
+            if (!profile) return res.status(404).json(err.profileError.noUserProfile);
+            return res.status(200).json(profile);
+        }
+
     } catch (ex) {
         console.log(ex.message)
         next(ex);
