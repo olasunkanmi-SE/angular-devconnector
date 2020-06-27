@@ -1,5 +1,5 @@
 import { SinglePost } from "./../model/post";
-import { Subscription, BehaviorSubject, Observable } from "rxjs";
+import { Subscription } from "rxjs";
 import { PostService } from "./../shared/post.service";
 import { Validators } from "@angular/forms";
 import { FormBuilder } from "@angular/forms";

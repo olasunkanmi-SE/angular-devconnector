@@ -13,8 +13,9 @@ module.exports.getCurrentUserProfile = async (req, res, next) => {
         const profile = (await Profile.findOne({ user: req.user._id }));
         if (profile) {
             await profile.populate('user', ['firstname', 'lastname', 'avatar']).execPopulate();
-            if (!profile) return res.status(404).json(err.profileError.noUserProfile);
             return res.status(200).json(profile);
+        } else {
+            return res.status(404).json(err.profileError.noUserProfile);
         }
 
     } catch (ex) {
@@ -93,9 +94,14 @@ module.exports.getProfileByHandle = async (req, res, next) => {
 module.exports.getProfileById = async (req, res, next) => {
     try {
         let profile = await Profile.findById({ _id: req.params.id });
-        await profile.populate('user', ['firstname', 'lastname', 'avatar']).execPopulate();
-        if (!profile) return res.status.json(err.profileError.noProfile);
-        res.status(200).json(profile);
+        if (profile) {
+            await profile.populate('user', ['firstname', 'lastname', 'handle', 'avatar']).execPopulate();
+            if (!profile) return res.status.json(err.profileError.noProfile);
+            res.status(200).json(profile);
+        } else {
+            return res.status(404).json('no profile found');
+        }
+
     } catch (ex) {
         next(ex);
     }

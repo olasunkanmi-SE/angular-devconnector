@@ -1,5 +1,5 @@
 import { User } from "./../model/user";
-import { Subject, Observable, BehaviorSubject } from "rxjs";
+import { Subject, Observable } from "rxjs";
 import { Post, SinglePost, Comment, Reply } from "./../model/post";
 import { environment } from "./../../../../environments/environment";
 import { HttpClient } from "@angular/common/http";
