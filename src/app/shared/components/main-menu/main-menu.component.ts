@@ -7,6 +7,8 @@ import { Observable, Subscription } from "rxjs";
 import { map, shareReplay } from "rxjs/operators";
 import { FormControl } from "@angular/forms";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
+import { Store } from "@ngrx/store";
+import * as fromRoot from "../../../app.reducer";
 
 @Component({
   selector: "app-main-menu",
@@ -14,6 +16,12 @@ import { faHome } from "@fortawesome/free-solid-svg-icons";
   styleUrls: ["./main-menu.component.css"],
 })
 export class MainMenuComponent implements OnInit, OnDestroy {
+  getMenu$: Observable<{ isAuth: boolean; hasHandle: boolean }>;
+  isAuth: Boolean;
+  hasHandle: Boolean;
+  hasProfileHandle: Subscription;
+  MenuSub: Subscription;
+  token;
   faUser = faHome;
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
@@ -31,8 +39,8 @@ export class MainMenuComponent implements OnInit, OnDestroy {
   constructor(
     private breakpointObserver: BreakpointObserver,
     private authService: AuthService,
-    private router: Router,
-    private storage: StorageService
+    private storage: StorageService,
+    private store: Store
   ) {}
 
   ngOnInit() {
@@ -45,7 +53,11 @@ export class MainMenuComponent implements OnInit, OnDestroy {
           }))
       );
     }).then(this.checkStorage());
-    this.userHandle = this.storage.getItem("handle");
+    this.getMenu$ = this.store.select(fromRoot.getMenu);
+    this.getMenu$.subscribe((res) => {
+      this.isAuth = res.isAuth;
+      this.hasHandle = res.hasHandle;
+    });
   }
 
   checkStorage(): any {
@@ -60,5 +72,6 @@ export class MainMenuComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.authListenerSubscription.unsubscribe();
+    this.MenuSub.unsubscribe();
   }
 }
