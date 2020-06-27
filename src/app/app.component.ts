@@ -1,6 +1,5 @@
 import { AuthService } from "./core/auth/services/auth/auth.service";
 import { StorageService } from "./core/storage/storage.service";
-import { AuthService } from "./core/auth/services/auth/auth.service";
 import { Component, OnInit } from "@angular/core";
 
 @Component({
