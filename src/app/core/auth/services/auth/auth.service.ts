@@ -11,7 +11,6 @@ import { HttpService } from "./../http/http.service";
 import { Injectable, OnDestroy } from "@angular/core";
 import { Subject, Subscription, BehaviorSubject } from "rxjs";
 import { takeUntil, take } from "rxjs/operators";
-import { Observable } from "rxjs";
 import * as fromRoot from "../../../../app.reducer";
 import { Store } from "@ngrx/store";
 import * as UI from "../../../../shared/store/action/ui.actions";

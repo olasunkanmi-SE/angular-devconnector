@@ -12,8 +12,9 @@ import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { HomeModule } from "./pages/home/home.module";
-import { reducers } from "./app.reducer";
+import { reducers, metaReducers } from "./app.reducer";
 import { StoreModule } from "@ngrx/store";
+import { storageReducer } from "./shared/store/storage.metareducer";
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,7 +28,7 @@ import { StoreModule } from "@ngrx/store";
     PostsModule,
     HomeModule,
     OnboardingModule,
-    StoreModule.forRoot(reducers),
+    StoreModule.forRoot(reducers, { metaReducers }),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

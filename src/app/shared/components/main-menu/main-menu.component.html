@@ -44,9 +44,7 @@
         <button mat-menu-item>Settings</button>
         <button mat-menu-item>Post & Activities</button>
       </mat-menu>
-      <a *ngIf="userAuthenticated && userHandle" mat-list-item href="#"
-        >Notifications</a
-      >
+      <a *ngIf="" mat-list-item href="#">Notifications</a>
       <a *ngIf="!isAuth" mat-list-item [routerLink]="['/auth/signup']"
         >Sign Up</a
       >
