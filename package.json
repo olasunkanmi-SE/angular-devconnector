@@ -27,6 +27,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
     "@hapi/joi": "^17.1.1",
     "@ngrx/store": "^9.2.0",
+    "@ngrx/store-devtools": "^9.2.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "bootstrap": "^4.4.1",

@@ -19,9 +19,9 @@ export const reducers: ActionReducerMap<State> = {
   menu: fromMenu.menuReducer,
 };
 
-export const metaReducers: MetaReducer<State>[] = !environment.production
-  ? [storageReducer]
-  : [];
+// export const metaReducers: MetaReducer<State>[] = !environment.production
+//   ? [storageReducer]
+//   : [];
 
 export const getUiState = createFeatureSelector<fromUi.State>("ui");
 export const getMenuState = createFeatureSelector<fromMenu.State>("menu");
