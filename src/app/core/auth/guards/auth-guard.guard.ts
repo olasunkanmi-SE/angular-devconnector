@@ -1,6 +1,6 @@
 import { StorageService } from "./../../storage/storage.service";
 import { AuthService } from "./../services/auth/auth.service";
-import { Router } from "@angular/router";
+import { Router, UrlSegment, CanLoad } from "@angular/router";
 import { Injectable } from "@angular/core";
 import {
   CanActivate,
@@ -9,11 +9,12 @@ import {
   UrlTree,
 } from "@angular/router";
 import { Observable } from "rxjs";
+import { Route } from "@angular/compiler/src/core";
 
 @Injectable({
   providedIn: "root",
 })
-export class AuthGuardGuard implements CanActivate {
+export class AuthGuardGuard implements CanActivate, CanLoad {
   constructor(
     private authservice: AuthService,
     private router: Router,
@@ -27,6 +28,17 @@ export class AuthGuardGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
+    if (+this.storage.getItem("expiration") < Date.now()) {
+      this.authservice.clearStorage();
+      return this.router.navigate(["auth/login"]);
+    }
+    return true;
+  }
+
+  canLoad(
+    route: Route,
+    segments: UrlSegment[]
+  ): Observable<boolean> | Promise<boolean> | boolean {
     if (+this.storage.getItem("expiration") < Date.now()) {
       this.authservice.clearStorage();
       return this.router.navigate(["auth/login"]);
