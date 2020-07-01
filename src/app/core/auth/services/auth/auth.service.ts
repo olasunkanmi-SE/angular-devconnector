@@ -187,6 +187,7 @@ export class AuthService implements OnDestroy {
     this.storage.removeItem("token");
     this.storage.removeItem("expiration");
     this.storage.removeItem("handle");
+    this.store.dispatch(new MENU.LoggedOut());
   }
 
   ngOnDestroy() {

@@ -27,9 +27,9 @@ export function menuReducer(state = initialState, action: MenuActions): State {
   }
 }
 
-export const getMenu = (state: State) => {
+export const getMenu = (menuState: State): State => {
   return {
-    isAuth: state.isAuth,
-    hasHandle: state.hasHandle,
+    isAuth: menuState.isAuth,
+    hasHandle: menuState.hasHandle,
   };
 };

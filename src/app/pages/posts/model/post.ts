@@ -12,7 +12,7 @@ export interface SinglePost {
   _id?: string;
   id?: string;
   avatar?: string;
-  comments?: [];
+  comments?: Comment[];
   date?: Date;
   likes?: [];
   firstname?: string;
@@ -27,7 +27,7 @@ export interface Comment {
   text?: string;
   firstname?: string;
   avatar?: string;
-  replies?: [];
+  replies?: Reply[];
   likes?: [];
   date?: Date;
 }
