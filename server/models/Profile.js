@@ -12,14 +12,19 @@ const profileSchema = new Schema({
     handle: {
         type: String,
         required: true,
+        unique: true,
         min: 2,
         max: 40
     },
     company: {
-        type: String
+        type: String,
+        min: 2,
+        max: 40
     },
     status: {
-        type: String
+        type: String,
+        required: true,
+        enum: ['employed', 'actively looking', 'not looking']
     },
     website: {
         type: String
@@ -30,7 +35,8 @@ const profileSchema = new Schema({
         trim: true
     },
     location: {
-        type: String
+        type: String,
+        required: true
     },
     bio: {
         type: String
@@ -96,17 +102,19 @@ const profileSchema = new Schema({
 
             degree: {
                 type: String,
+                enum: ['Phd', 'Doctorate', 'Msc', 'Bsc', 'Diploma', 'Others']
             },
             fieldofstudy: {
                 type: String
             },
             startyear: {
                 type: Date,
-                // required: true
-                default: Date.now
+                required: true,
+
             },
             endyear: {
                 type: Date,
+                required: true,
             },
             grade: {
                 type: String,

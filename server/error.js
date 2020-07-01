@@ -1,6 +1,6 @@
 module.exports = error = {
     profileError: {
-        noUserProfile: 'user profile does not exist',
+        noUserProfile: 'Please create a profile to continue',
         creatAccount: 'please create an account',
         handleExists: 'Account exists',
         noProfile: 'Profile does not exist',

@@ -1,0 +1,22 @@
+<form class="form-example" [formGroup]="postForm" (ngSubmit)="createPost()">
+  <p>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>
+        <fa-icon [icon]="faFeather"></fa-icon> Start a post</mat-label
+      >
+      <textarea matInput formControlName="text"></textarea>
+    </mat-form-field>
+  </p>
+  <p>
+    <button
+      style="float: right; margin-bottom: 15px; margin-top: -20px;"
+      [disabled]="postForm.invalid"
+      class="postbtn"
+      mat-raised-button
+      color="primary"
+      type="submit"
+    >
+      Post
+    </button>
+  </p>
+</form>

@@ -24,3 +24,48 @@ Error: error
     at Function.Module.runMain (internal/modules/cjs/loader.js:1043:10)
     at internal/main/run_main_module.js:17:11
 2020-04-14T14:03:58.686Z debug: validateUser is not defined
+2020-05-18T16:08:49.292Z debug: post validation failed: comments.0.text: Path `text` is required.
+2020-05-26T11:54:54.743Z debug: post validation failed: comments.0.replies.0.text: Path `text` is required.
+2020-05-26T11:55:09.953Z debug: post validation failed: comments.0.replies.0.text: Path `text` is required.
+2020-05-26T12:10:43.980Z debug: Can't save() the same doc multiple times in parallel. Document: 5ecce1621143a02fdcc64f9d
+2020-05-26T12:15:08.335Z debug: Can't save() the same doc multiple times in parallel. Document: 5ecce1621143a02fdcc64f9d
+2020-05-26T12:15:33.832Z debug: Can't save() the same doc multiple times in parallel. Document: 5ecce1621143a02fdcc64f9d
+2020-05-26T12:16:18.542Z debug: Can't save() the same doc multiple times in parallel. Document: 5ecce1621143a02fdcc64f9d
+2020-05-26T12:18:32.030Z debug: Can't save() the same doc multiple times in parallel. Document: 5ecce1621143a02fdcc64f9d
+2020-05-26T12:19:49.763Z debug: Can't save() the same doc multiple times in parallel. Document: 5ecce1621143a02fdcc64f9d
+2020-05-26T12:19:51.429Z debug: Can't save() the same doc multiple times in parallel. Document: 5ecce1621143a02fdcc64f9d
+2020-05-26T12:19:52.817Z debug: Can't save() the same doc multiple times in parallel. Document: 5ecce1621143a02fdcc64f9d
+2020-05-26T12:20:02.067Z debug: Can't save() the same doc multiple times in parallel. Document: 5ecce1621143a02fdcc64f9d
+2020-05-26T12:20:34.638Z debug: Can't save() the same doc multiple times in parallel. Document: 5ecce1621143a02fdcc64f9d
+2020-05-26T12:21:53.965Z debug: Can't save() the same doc multiple times in parallel. Document: 5ecce1621143a02fdcc64f9d
+2020-05-26T12:22:23.816Z debug: Can't save() the same doc multiple times in parallel. Document: 5ecce1621143a02fdcc64f9d
+2020-05-26T12:22:40.060Z debug: Can't save() the same doc multiple times in parallel. Document: 5ecce1621143a02fdcc64f9d
+2020-05-26T12:22:51.576Z debug: Can't save() the same doc multiple times in parallel. Document: 5ecce1621143a02fdcc64f9d
+2020-05-26T12:23:07.923Z debug: Can't save() the same doc multiple times in parallel. Document: 5ecce1621143a02fdcc64f9d
+2020-05-26T12:23:32.484Z debug: Can't save() the same doc multiple times in parallel. Document: 5ecce1621143a02fdcc64f9d
+2020-05-26T12:26:33.887Z debug: Can't save() the same doc multiple times in parallel. Document: 5ecce1621143a02fdcc64f9d
+2020-06-03T16:13:44.012Z debug: post validation failed: comments.0.text: Path `text` is required.
+2020-06-05T04:28:10.863Z debug: post validation failed: comments.0.text: Path `text` is required.
+2020-06-05T04:28:28.330Z debug: post validation failed: comments.0.text: Path `text` is required.
+2020-06-05T08:52:42.708Z debug: post validation failed: comments.0.text: Path `text` is required.
+2020-06-07T02:35:01.040Z debug: post validation failed: comments.0.text: Path `text` is required.
+2020-06-07T02:35:12.965Z debug: post validation failed: comments.0.text: Path `text` is required.
+2020-06-07T10:23:15.191Z debug: post validation failed: comments.0.replies.0.text: Path `text` is required.
+2020-06-07T13:15:24.189Z debug: Can't save() the same doc multiple times in parallel. Document: 5edce6d52c164f4b24387aee
+2020-06-16T02:45:32.927Z debug: Can't save() the same doc multiple times in parallel. Document: 5ee822bdf3e57a313414921e
+2020-06-16T02:45:43.905Z debug: Can't save() the same doc multiple times in parallel. Document: 5ee822bdf3e57a313414921e
+2020-06-16T02:45:51.130Z debug: Can't save() the same doc multiple times in parallel. Document: 5ee822bdf3e57a313414921e
+2020-06-16T02:52:10.413Z debug: post validation failed: comments.0.replies.0.text: Path `text` is required.
+2020-06-16T02:52:16.418Z debug: post validation failed: comments.0.replies.0.text: Path `text` is required.
+2020-06-16T02:59:20.151Z debug: console is not a function
+2020-06-16T03:02:15.868Z debug: Can't save() the same doc multiple times in parallel. Document: 5ee834f68e16b223780c2b5d
+2020-06-16T03:02:37.143Z debug: Can't save() the same doc multiple times in parallel. Document: 5ee834f68e16b223780c2b5d
+2020-06-16T06:32:00.820Z debug: post validation failed: comments.0.text: Path `text` is required.
+2020-06-16T06:34:45.321Z debug: post validation failed: comments.0.text: Path `text` is required.
+2020-06-16T06:36:31.470Z debug: post validation failed: comments.0.text: Path `text` is required.
+2020-06-16T06:55:01.255Z debug: Can't save() the same doc multiple times in parallel. Document: 5ee83f5e1c563b1ed47f4f4b
+2020-06-16T06:57:51.943Z debug: Can't save() the same doc multiple times in parallel. Document: 5ee83f5e1c563b1ed47f4f4b
+2020-06-16T06:58:09.519Z debug: Can't save() the same doc multiple times in parallel. Document: 5ee83f5e1c563b1ed47f4f4b
+2020-06-16T06:58:39.985Z debug: Can't save() the same doc multiple times in parallel. Document: 5ee83f5e1c563b1ed47f4f4b
+2020-06-16T07:29:42.862Z debug: No document found for query "{ _id: 5ee86e2dd12b2d4d5c1eb70d }" on model "post"
+2020-06-29T21:49:10.051Z debug: Can't save() the same doc multiple times in parallel. Document: 5ef6950c8f759a31c054ca5b

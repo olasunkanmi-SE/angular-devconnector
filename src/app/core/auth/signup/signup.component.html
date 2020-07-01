@@ -1,0 +1,256 @@
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 mb-3 dvcard dvavatar">
+        <img style="max-width: 90%;" src="assets/img/devconnector.svg" alt="" />
+        <span>
+          <mat-tab-group>
+            <mat-tab label="People">
+              <form class="example-form">
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <input
+                    type="text"
+                    placeholder="First Name"
+                    aria-label="Number"
+                    matInput
+                    [formControl]="menuControl"
+                    [matAutocomplete]="auto"
+                  />
+                  <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of options" [value]="option">
+                      {{ option }}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </form>
+            </mat-tab>
+            <mat-tab label="Skill">
+              <form class="example-form">
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <input
+                    type="text"
+                    placeholder="Search skills, subject, or software "
+                    aria-label="Number"
+                    matInput
+                    [formControl]="menuControl"
+                    [matAutocomplete]="auto"
+                  />
+                  <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of options" [value]="option">
+                      {{ option }}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </form>
+            </mat-tab>
+            <mat-tab label="Location">
+              <form class="example-form">
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <input
+                    type="text"
+                    placeholder="Kuala Lumpur"
+                    aria-label="Number"
+                    matInput
+                    [formControl]="menuControl"
+                    [matAutocomplete]="auto"
+                  />
+                  <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of options" [value]="option">
+                      {{ option }}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </form>
+            </mat-tab>
+          </mat-tab-group>
+        </span>
+      </div>
+
+      <div class="col-md-6 mb-3 dvcard">
+        <mat-card class="example-card">
+          <mat-card-header>
+            <mat-card-subtitle
+              ><p>Sign up for the full Experience</p>
+            </mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <form
+              class="example-form"
+              [formGroup]="signUpForm"
+              (ngSubmit)="onSubmit()"
+            >
+              <p>
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <mat-label>Email</mat-label>
+                  <input matInput type="email" formControlName="email" />
+                  <mat-error *ngIf="email.touched && email.invalid">
+                    <mat-error *ngIf="email.errors.required"
+                      >Email is required
+                    </mat-error>
+                    <mat-error
+                      *ngIf="signUpForm.controls['email'].hasError('hasEmail')"
+                      >Please enter a valid email address.</mat-error
+                    >
+                  </mat-error>
+                </mat-form-field>
+              </p>
+
+              <p>
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <mat-label>First Name</mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    formControlName="firstname"
+                    value=""
+                  />
+                  <mat-error *ngIf="firstname.touched && firstname.invalid">
+                    <mat-error
+                      *ngIf="
+                        signUpForm.controls['firstname'].hasError('required')
+                      "
+                      >First Name is required</mat-error
+                    >
+                    <mat-error *ngIf="firstname.errors.minlength">
+                      name should be minimum of
+                      {{ firstname.errors.minlength.requiredLength }} characters
+                    </mat-error>
+                    <mat-error *ngIf="firstname.errors.maxlength">
+                      Name should be maximum of
+                      {{ firstname.errors.maxlength.requiredLength }} characters
+                    </mat-error>
+                  </mat-error>
+                </mat-form-field>
+              </p>
+              <p>
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <mat-label>Last Name</mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    formControlName="lastname"
+                    value=""
+                  />
+                  <mat-error *ngIf="lastname.touched && lastname.invalid">
+                    <mat-error
+                      *ngIf="
+                        signUpForm.controls['lastNname'].hasError('required')
+                      "
+                      >Last Name is required</mat-error
+                    >
+                    <mat-error *ngIf="lastname.errors.minlength">
+                      Last Name shoild be minimum of
+                      {{ lastname.errors.minlength.requiredLength }} characters
+                    </mat-error>
+                    <mat-error *ngIf="lastname.errors.maxlength">
+                      Name should be maximum of
+                      {{ lastname.errors.maxlength.requiredLength }} characters
+                    </mat-error>
+                  </mat-error>
+                </mat-form-field>
+              </p>
+
+              <p>
+                <mat-form-field appearance="outline" class="example-full-width">
+                  <mat-label>Enter password</mat-label>
+                  <input
+                    matInput
+                    [type]="hide ? 'password' : 'text'"
+                    formControlName="password"
+                  />
+                  <button
+                    type="button"
+                    mat-icon-button
+                    matSuffix
+                    (click)="hide = !hide"
+                    [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide"
+                  >
+                    <mat-icon>{{
+                      hide ? "visibility_off" : "visibility"
+                    }}</mat-icon>
+                  </button>
+                  <mat-error *ngIf="password.touched && password.invalid">
+                    <mat-error
+                      *ngIf="
+                        signUpForm.controls['password'].hasError('required')
+                      "
+                      >password is required</mat-error
+                    >
+                    <mat-error
+                      *ngIf="
+                        signUpForm.controls['password'].hasError(
+                          'hasSpecialCharacter'
+                        )
+                      "
+                    >
+                      at least 8 characters, a special character, capital case
+                      and a number
+                    </mat-error>
+                  </mat-error>
+                </mat-form-field>
+              </p>
+              <p>
+                <mat-form-field appearance="outline" class="example-full-width">
+                  <mat-label>Confirm Password</mat-label>
+                  <input
+                    matInput
+                    [type]="hide ? 'password' : 'text'"
+                    formControlName="confirmPassword"
+                  />
+                  <button
+                    type="button"
+                    mat-icon-button
+                    matSuffix
+                    (click)="hide = !hide"
+                    [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide"
+                  >
+                    <mat-icon>{{
+                      hide ? "visibility_off" : "visibility"
+                    }}</mat-icon>
+                  </button>
+                  <mat-error
+                    *ngIf="confirmPassword.touched && confirmPassword.invalid"
+                  >
+                    <mat-error
+                      *ngIf="
+                        signUpForm.controls['confirmPassword'].hasError(
+                          'noPasswordMatch'
+                        )
+                      "
+                    >
+                      Password does not match
+                    </mat-error>
+                  </mat-error>
+                </mat-form-field>
+              </p>
+              <p>
+                <button
+                  class="example-full-width"
+                  mat-raised-button
+                  color="primary"
+                  type="submit"
+                  [disabled]="signUpForm.invalid"
+                >
+                  Sign Up
+                </button>
+              </p>
+            </form>
+          </mat-card-content>
+
+          <div>
+            <p class="dvterms">
+              By signing up, you agree to our
+              <a target="_blank" href="#">Terms</a> ,
+              <a target="_blank" href="#">Data Policy</a> and
+              <a target="_blank" href="#">Cookies Policy</a> .
+            </p>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>

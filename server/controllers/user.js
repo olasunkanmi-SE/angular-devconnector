@@ -3,17 +3,29 @@ const gravatar = require('gravatar');
 const _ = require('lodash');
 const bcrypt = require('bcryptjs');
 
+//Get User by ID
+module.exports.getUserById = async (req, res, next) => {
+    try {
+        const user = await User.findById({ _id: req.params.id });
+        if (!user) return res.status(404).json('user does not exist');
+        return res.status(200).json({ user: user })
+    } catch (ex) {
+        next(ex);
+    }
+}
 
+//Get all Users
 
 module.exports.getUsers = async (req, res, next) => {
     try {
-        const users = await User.find().select('_id name email avatar date');
+        const users = await User.find();
         response = {
             count: users.length,
             users: users.map(user => {
                 return {
                     id: user._id,
-                    name: user.name,
+                    firstname: user.firstname,
+                    lastname: user.lastname,
                     email: user.email,
                     avatar: user.avatar,
                     date: user.date,
@@ -33,34 +45,40 @@ module.exports.getUsers = async (req, res, next) => {
 
 }
 
+//Create User
+
 module.exports.createUser = async (req, res, next) => {
 
     try {
         const { error } = validate(req.body);
         if (error) return res.status(400).send(error.details[0].message);
         let user = await User.findOne({ email: req.body.email });
-        if (user) return res.status(400).json({ email: 'user already exists' });
+        if (user) return res.status(400).json('user already exists');
         const avatar = gravatar.url(req.body.email, { s: 200, r: 'pg', d: 'mm' });
         user = new User({
-            name: req.body.name,
+            firstname: req.body.firstname,
+            lastname: req.body.lastname,
             email: req.body.email,
             password: req.body.password,
-            repeat_password: req.body.repeat_password,
+            confirmPassword: req.body.confirmPassword,
             gender: req.body.gender,
             avatar,
         });
 
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(user.password, salt);
+        user.confirmPassword = await bcrypt.hash(user.confirmPassword, salt);
 
         await user.save();
         return res.status(201).json({
             message: "User created successfully",
             createdUser: {
                 id: user._id,
-                name: user.name,
+                firstname: user.firstname,
+                lastname: user.lastname,
                 email: user.email,
                 avatar: user.avatar,
+                gender: user.gender,
                 date: user.date,
                 request: {
                     type: 'GET',
@@ -72,6 +90,7 @@ module.exports.createUser = async (req, res, next) => {
         next(ex);
 
     }
+
 
 }
 

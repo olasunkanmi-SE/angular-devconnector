@@ -6,6 +6,7 @@ module.exports = function validateUserProfileInput(data) {
     data.handle = !isEmpty(data.handle) ? data.handle : "";
     data.status = !isEmpty(data.status) ? data.status : "";
     data.skills = !isEmpty(data.skills) ? data.skills : "";
+    data.location = !isEmpty(data.location) ? data.location : "";
 
     if (!Validator.isLength(data.handle, { min: 2, max: 40 })) errors.handle = "Handle needs to be between 2 and 40 characters"
 
@@ -14,6 +15,8 @@ module.exports = function validateUserProfileInput(data) {
     if (Validator.isEmpty(data.status)) errors.status = 'User status is required'
 
     if (Validator.isEmpty(data.skills)) errors.skills = 'User skills is required'
+
+    if (Validator.isEmpty(data.location)) errors.location = 'User Location is required'
 
     if (!isEmpty(data.twitter)) {
         if (!Validator.isURL(data.twitter)) {

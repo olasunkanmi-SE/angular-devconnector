@@ -1,0 +1,156 @@
+@media only screen and (max-width: 2000px) {
+  .dvspace {
+    margin-top: 60px;
+  }
+}
+
+.dvstatus {
+  color: #673ab7;
+  font-weight: 500;
+}
+
+.dvhead {
+  font-weight: 500;
+  margin-top: 5px;
+}
+
+.card {
+  height: auto !important;
+  margin: 0 auto !important;
+}
+
+.dvcard {
+  margin-top: 90px !important;
+}
+
+.form-group {
+  margin-bottom: 0.5rem !important;
+}
+
+.form-control {
+  font-weight: 450 !important;
+  font-size: 0.9rem !important;
+  color: rgba(var(--i1d, 38, 38, 38), 1) !important;
+  background-color: #fafafa !important;
+}
+
+.dvbtn {
+  margin-top: 15px;
+}
+
+.dvterms {
+  color: #8e8e8e;
+  color: rgba(var(--f52, 142, 142, 142), 1);
+  font-size: 14px;
+  line-height: 18px;
+  margin: 10px 60px;
+  text-align: center;
+}
+
+.dvterms a {
+  color: #7d7a7a;
+  text-decoration: none !important;
+  font-weight: 500;
+}
+
+@media only screen and (max-width: 600px) {
+  .dvavatar {
+    display: none;
+  }
+}
+
+.devmenu {
+  display: inline-block;
+  padding-top: 0.3125rem;
+  padding-bottom: 0.3125rem;
+  margin-right: 1rem;
+  font-size: 1rem;
+  line-height: inherit;
+  white-space: nowrap;
+  color: rgb(195, 191, 191);
+  text-decoration: none !important;
+}
+
+.devmenu:hover {
+  color: #fff;
+  transition: cubic-bezier(0.6, -0.28, 0.735, 0.045);
+}
+
+.dvbutton {
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition-duration: 167ms;
+  align-items: center;
+  border: none;
+  border-radius: 0.2rem;
+  line-height: 1.5;
+  box-sizing: border-box;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 400;
+  display: inline-flex;
+  justify-content: center;
+  overflow: hidden;
+  text-align: center;
+  transition-property: background-color, box-shadow, color;
+  vertical-align: middle;
+  font-size: 0.875rem;
+  padding: 0.25rem 0.5rem;
+  background-color: transparent;
+  color: #0073b1;
+  /* box-shadow: inset 0 0 0 1px #0073b1; */
+  flex-shrink: 0;
+  text-indent: 0px;
+  display: inline-block;
+}
+
+.profile-card {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 1px solid rgba(0, 0, 0, 0.125);
+  transition: box-shadow 83ms;
+}
+
+.dvlist {
+  border-radius: 0 0 2px 2px;
+  background-color: #f3f6f8;
+  margin-bottom: 10px;
+}
+.small,
+small {
+  font-size: 70% !important;
+  font-weight: 500;
+}
+
+.dvSmall {
+  font-size: 70% !important;
+  font-weight: 350 !important;
+}
+
+.dvp {
+  font-size: 14px !important;
+  line-height: 20px !important;
+  display: inline !important;
+}
+
+.dvprofile {
+  text-decoration: none !important;
+  color: inherit !important;
+}
+.full-width {
+  width: 100%;
+  height: 100%;
+}
+
+.postbtn {
+  float: right;
+  margin-top: -20px;
+}
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}

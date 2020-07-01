@@ -1,16 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const passport = require('passport');
 const postController = require('../../controllers/posts');
+const auth = require('../../middleware/auth');
+
 
 
 //Create a new Post
 
-router.post('/', passport.authenticate('jwt', { session: false }), postController.createPost);
+router.post('/', auth, postController.createPost);
 
 //Get all posts
 
-router.get('/', passport.authenticate('jwt', { session: false }), postController.getPosts);
+router.get('/', auth, postController.getPosts);
 
 // Get a Post by Id
 
@@ -18,31 +19,37 @@ router.get('/:id', postController.getPostById)
 
 //Delete a post
 
-router.delete('/:id', passport.authenticate('jwt', { session: false }), postController.deletePost);
+router.delete('/:id', auth, postController.deletePost);
 
 // Like and Unlike a Post
 
-router.post('/like/:id', passport.authenticate('jwt', { session: false }), postController.likeOrUnlikeAPost);
+router.post('/like/:id', auth, postController.likeOrUnlikeAPost);
 
 //Create a comment
 
-router.post('/comment/:id', passport.authenticate('jwt', { session: false }), postController.createAPostComment);
+router.post('/comment/:id', auth, postController.createAPostComment);
 
 //Reply a comment
 
-router.post('/comment/reply/:id/:commentId', passport.authenticate('jwt', { session: false }), postController.replyAComment);
+router.post('/comment/reply/:id/:commentId', auth, postController.replyAComment);
 
 //Remove a Comment
 
-router.delete('/comment/:id/:commentId', passport.authenticate('jwt', { session: false }), postController.deleteAComment);
+router.delete('/comment/:id/:commentId', auth, postController.deleteAComment);
+//where :id = post Id
+
+//Like a comment
+router.post('/comment/like/:id/:commentId', auth, postController.likeAComment);
 
 //delete reply
 
-router.delete('/comment/reply/:id/:replyId', passport.authenticate('jwt', { session: false }), postController.deleteAReply);
+router.delete('/comment/reply/:id/:replyId', auth, postController.deleteAReply);
 
+//Update a Comment
+router.put('/:id/:commentId', auth, postController.updateComment)
 
 // Remove a reply
-// router.delete('/comment/reply/:id/:replyId', passport.authenticate('jwt', { session: false }), async (req, res) => {
+// router.delete('/comment/reply/:id/:replyId', auth, async (req, res) => {
 //     try {
 //         let post = await Post.findById(req.params.id);
 //         let comments = post.comments;

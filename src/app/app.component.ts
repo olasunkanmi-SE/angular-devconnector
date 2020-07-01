@@ -1,3 +1,5 @@
+import { AuthService } from "./core/auth/services/auth/auth.service";
+import { StorageService } from "./core/storage/storage.service";
 import { Component, OnInit } from "@angular/core";
 
 @Component({
@@ -5,10 +7,14 @@ import { Component, OnInit } from "@angular/core";
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.css"],
 })
-export class AppComponent {
-  hide: boolean = true;
+export class AppComponent implements OnInit {
+  constructor(
+    private authservice: AuthService,
+    private storage: StorageService
+  ) {}
 
-  constructor() {}
-
-  ngOnInit() {}
+  ngOnInit() {
+    this.authservice.autoAuthenticateUser();
+    this.storage.getItem("handle");
+  }
 }
