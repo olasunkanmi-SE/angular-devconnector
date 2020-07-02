@@ -1,3 +1,4 @@
+import { AvailablePosts } from "./posts.action";
 import { map } from "rxjs/operators";
 import { FormControl } from "@angular/forms";
 import { SinglePost } from "./model/post";
@@ -10,6 +11,11 @@ import { faUserCircle, faFeather } from "@fortawesome/free-solid-svg-icons";
 import { Subscription, Observable } from "rxjs";
 import { Title } from "@angular/platform-browser";
 import { startWith } from "rxjs/operators";
+import { Store } from "@ngrx/store";
+import * as fromRoot from "../../app.reducer";
+import * as UI from "../../shared/store/action/ui.actions";
+import * as AllPosts from "../posts/posts.action";
+import * as fromPosts from "../posts/posts.reducer";
 
 @Component({
   selector: "app-posts",
@@ -27,7 +33,7 @@ export class PostsComponent implements OnInit, OnDestroy {
   newPost;
   isloading: boolean;
   postUpdatedSub: Subscription;
-  posts: SinglePost[];
+  posts$: Observable<SinglePost[]>;
   totalPosts: number;
   postCreated: Date;
   error: boolean;
@@ -46,34 +52,38 @@ export class PostsComponent implements OnInit, OnDestroy {
   filteredOptions: Observable<string[]>;
   userName;
   randomDev;
+  isLoading$: Observable<boolean>;
 
   constructor(
     private authservice: AuthService,
     private storage: StorageService,
     private title: Title,
     private postService: PostService,
-    private authService: AuthService
+    private authService: AuthService,
+    private store: Store<fromRoot.State>
   ) {
     this.getCurrentUser();
-    this.subscribeToNewPost();
-    this.postService.getnewPosts$().subscribe((res) => (this.posts = res));
+    // this.subscribeToNewPost();
+    this.posts$ = this.store.select(fromPosts.getAvailablePosts);
+    this;
     this.getDevelopersByName();
     this.devNames;
   }
 
-  subscribeToNewPost() {
-    this.newPostSub = this.postService.getPost().subscribe((post) => {
-      this.id = post.id;
-      if (!this.posts) {
-        this.getPostsList$();
-      } else {
-        this.posts.unshift(post);
-        return this.getPostsList$();
-      }
-    });
-  }
+  // subscribeToNewPost() {
+  //   this.newPostSub = this.postService.getPost().subscribe((post) => {
+  //     this.id = post.id;
+  //     if (!this.posts$) {
+  //       this.getPostsList$();
+  //     } else {
+  //       this.posts$.unshift(post);
+  //       return this.getPostsList$();
+  //     }
+  //   });
+  // }
 
   ngOnInit() {
+    this.isLoading$ = this.store.select(fromRoot.getIsLoading);
     this.intitialize();
     this.getPostsList$();
     this.filteredOptions = this.myControl.valueChanges.pipe(
@@ -135,16 +145,16 @@ export class PostsComponent implements OnInit, OnDestroy {
   }
 
   private getPostsList$() {
-    this.isloading = true;
     this.postUpdatedSub = this.postService.getPosts$().subscribe(
       (res) => {
-        this.posts = res.posts;
         this.totalPosts = +res.count;
-        this.isloading = false;
+        this.store.dispatch(new UI.StopLoading());
+        this.store.dispatch(new AllPosts.AvailablePosts(res.posts));
       },
       (err) => {
         console.error(err);
-        this.isloading = false;
+        this.store.dispatch(new UI.StopLoading());
+        this.store.dispatch(new AllPosts.LoadPostsError(err));
         this.error = true;
       }
     );

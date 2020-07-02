@@ -1,0 +1,42 @@
+import { postsActionTypes, PostsActions } from "./posts.action";
+import { Action, createFeatureSelector, createSelector } from "@ngrx/store";
+import { SinglePost } from "./model/post";
+import * as fromRoot from "../../../app/app.reducer";
+import { InitialState } from "@ngrx/store/src/models";
+
+export interface postsState {
+  posts: SinglePost[];
+  error: any;
+}
+export interface State extends fromRoot.State {
+  posts: postsState;
+}
+
+const initialPosts: postsState = {
+  posts: [],
+  error: null,
+};
+
+export function postsReducer(
+  state = initialPosts,
+  action: PostsActions
+): postsState {
+  switch (action.type) {
+    case postsActionTypes.setAvailablePosts:
+      return {
+        ...state,
+        posts: action.payload,
+      };
+    case postsActionTypes.loadPostsFailure:
+      return {
+        ...state,
+        error: action.payload,
+      };
+  }
+}
+
+export const getPostsState = createFeatureSelector("posts");
+export const getAvailablePosts = createSelector(
+  getPostsState,
+  (state: postsState): SinglePost[] => state.posts
+);
