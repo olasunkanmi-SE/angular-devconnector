@@ -12,7 +12,7 @@ export interface State extends fromRoot.State {
   posts: postsState;
 }
 
-const initialPosts: postsState = {
+export const initialPosts: postsState = {
   posts: [],
   error: null,
 };
@@ -32,6 +32,8 @@ export function postsReducer(
         ...state,
         error: action.payload,
       };
+    default:
+      return state;
   }
 }
 

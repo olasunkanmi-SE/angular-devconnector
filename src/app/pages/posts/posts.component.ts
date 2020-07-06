@@ -1,5 +1,5 @@
 import { AvailablePosts } from "./posts.action";
-import { map } from "rxjs/operators";
+import { map, take } from "rxjs/operators";
 import { FormControl } from "@angular/forms";
 import { SinglePost } from "./model/post";
 import { PostService } from "./shared/post.service";
@@ -13,6 +13,7 @@ import { Title } from "@angular/platform-browser";
 import { startWith } from "rxjs/operators";
 import { Store } from "@ngrx/store";
 import * as fromRoot from "../../app.reducer";
+import * as fromCreatePost from "../../pages/posts/create-post/create-post.reducer";
 import * as UI from "../../shared/store/action/ui.actions";
 import * as AllPosts from "../posts/posts.action";
 import * as fromPosts from "../posts/posts.reducer";
@@ -42,7 +43,7 @@ export class PostsComponent implements OnInit, OnDestroy {
   newCommentSub: Subscription;
   id: any;
   comment;
-  post: SinglePost;
+  post$: Observable<SinglePost>;
   postsListSub: Subscription;
   getUsersSub: Subscription;
   developers: [] = [];
@@ -60,23 +61,28 @@ export class PostsComponent implements OnInit, OnDestroy {
     private title: Title,
     private postService: PostService,
     private authService: AuthService,
-    private store: Store<fromRoot.State>
+    private store: Store<fromCreatePost.State>
   ) {
     this.getCurrentUser();
-    // this.subscribeToNewPost();
-    this.posts$ = this.store.select(fromPosts.getAvailablePosts);
+    this.subscribeToNewPost();
+
     this;
     this.getDevelopersByName();
     this.devNames;
   }
 
-  // subscribeToNewPost() {
+  subscribeToNewPost() {
+    this.posts$ = this.store.select(fromPosts.getAvailablePosts);
+    // this.store.select(fromCreatePost.getAPost)
+    // .pipe(take(1)).subscribe((res)=> this.posts$)
+  }
+
   //   this.newPostSub = this.postService.getPost().subscribe((post) => {
   //     this.id = post.id;
   //     if (!this.posts$) {
   //       this.getPostsList$();
   //     } else {
-  //       this.posts$.unshift(post);
+  //       this.posts$.unshift(this.post$);
   //       return this.getPostsList$();
   //     }
   //   });
@@ -86,6 +92,7 @@ export class PostsComponent implements OnInit, OnDestroy {
     this.isLoading$ = this.store.select(fromRoot.getIsLoading);
     this.intitialize();
     this.getPostsList$();
+    this.posts$ = this.store.select(fromPosts.getAvailablePosts);
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(""),
       map((value) => this._filter(value))
