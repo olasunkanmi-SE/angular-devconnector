@@ -10,7 +10,6 @@ export interface Post {
 
 export interface SinglePost {
   _id?: string;
-  id?: string;
   avatar?: string;
   comments?: Comment[];
   date?: Date;

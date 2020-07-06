@@ -87,9 +87,9 @@ export class PostService implements OnDestroy {
     return filteredPost;
   }
 
-  createPost$(post): Observable<SinglePost> {
+  createPost$(post): Observable<SinglePost[]> {
     return this.http
-      .post<SinglePost>(`${this.backendURL}/posts`, post)
+      .post<SinglePost[]>(`${this.backendURL}/posts`, post)
       .pipe(takeUntil(this.destroy$));
   }
 

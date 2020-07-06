@@ -69,3 +69,9 @@ Error: error
 2020-06-16T06:58:39.985Z debug: Can't save() the same doc multiple times in parallel. Document: 5ee83f5e1c563b1ed47f4f4b
 2020-06-16T07:29:42.862Z debug: No document found for query "{ _id: 5ee86e2dd12b2d4d5c1eb70d }" on model "post"
 2020-06-29T21:49:10.051Z debug: Can't save() the same doc multiple times in parallel. Document: 5ef6950c8f759a31c054ca5b
+2020-07-06T08:15:37.792Z debug: Can't save() the same doc multiple times in parallel. Document: 5eee0dc4ff1b8427a045150f
+2020-07-06T08:16:07.820Z debug: Can't save() the same doc multiple times in parallel. Document: 5eee0dc4ff1b8427a045150f
+2020-07-06T08:16:07.822Z debug: post validation failed: comments.1.replies.0.text: Path `text` is required.
+2020-07-06T08:16:14.828Z debug: Can't save() the same doc multiple times in parallel. Document: 5eee0dc4ff1b8427a045150f
+2020-07-06T08:21:14.930Z debug: Can't save() the same doc multiple times in parallel. Document: 5ee87ac43745d547f4df0680
+2020-07-06T08:26:01.105Z debug: Can't save() the same doc multiple times in parallel. Document: 5ee87ac43745d547f4df0680

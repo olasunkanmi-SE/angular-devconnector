@@ -45,7 +45,7 @@ export class CreatePostComponent implements OnInit {
 
   createPost() {
     this.postService.createPost$(this.postForm.value).subscribe(
-      (res: any) => {
+      (res) => {
         this.store.dispatch(new postAction.CreatePost(res[0]));
         this.store.dispatch(new AllPosts.AvailablePosts(res));
       },
