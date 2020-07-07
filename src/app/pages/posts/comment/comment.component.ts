@@ -66,7 +66,7 @@ export class CommentComponent implements OnInit {
 
   replyComment() {
     this.replySub = this.postService
-      .replyComment$(this.post.id, this.comment._id, this.replyForm.value)
+      .replyComment$(this.post._id, this.comment._id, this.replyForm.value)
       .subscribe((res) => {
         this.comment = res;
         this.replies = this.comment.replies;
@@ -80,7 +80,7 @@ export class CommentComponent implements OnInit {
 
   likeDislikeComment() {
     this.likeSub = this.postService
-      .likeDisLikeComment$(this.post.id, this.comment._id, this.user)
+      .likeDisLikeComment$(this.post._id, this.comment._id, this.user)
       .subscribe((res) => {
         setTimeout(() => {
           this.comment.likes = res.likes;

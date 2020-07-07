@@ -19,7 +19,6 @@ export class MainMenuComponent implements OnInit, OnDestroy {
   isAuth: Boolean;
   hasHandle: Boolean;
   hasProfileHandle: Subscription;
-  MenuSub: Subscription;
   token;
   faUser = faHome;
   isHandset$: Observable<boolean> = this.breakpointObserver
@@ -71,6 +70,5 @@ export class MainMenuComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.authListenerSubscription.unsubscribe();
-    this.MenuSub.unsubscribe();
   }
 }

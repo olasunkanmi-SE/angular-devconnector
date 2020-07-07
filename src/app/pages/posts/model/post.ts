@@ -1,23 +1,12 @@
-export interface Post {
-  text: string;
-  id: string;
-  creator: string;
-  avatar?: string;
-  likes: [];
-  comments: [];
-  date: Date;
-}
-
 export interface SinglePost {
-  _id?: string;
-  id?: string;
-  avatar?: string;
-  comments?: [];
-  date?: Date;
-  likes?: [];
-  firstname?: string;
+  _id: string;
+  avatar: string;
+  comments: Comment[];
+  date: Date;
+  likes: [];
+  firstname: string;
   text: string;
-  user?: string;
+  user: string;
 }
 
 export interface Comment {
@@ -27,7 +16,7 @@ export interface Comment {
   text?: string;
   firstname?: string;
   avatar?: string;
-  replies?: [];
+  replies?: Reply[];
   likes?: [];
   date?: Date;
 }

@@ -11,7 +11,7 @@ const routes: Routes = [
   },
   {
     path: "pages",
-    canActivate: [AuthGuardGuard],
+    canLoad: [AuthGuardGuard],
     loadChildren: () =>
       import("./pages/pages.module").then((m) => m.PagesModule),
   },
@@ -21,7 +21,7 @@ const routes: Routes = [
   },
   {
     path: "onboarding",
-    canActivate: [AuthGuardGuard],
+    canLoad: [AuthGuardGuard],
     loadChildren: () =>
       import("./onboarding/onboarding.module").then((m) => m.OnboardingModule),
   },

@@ -11,6 +11,8 @@ import { CommonModule } from "@angular/common";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { PostsRoutingModule } from "./posts-routing.module";
 import { PostsComponent } from "./posts.component";
+import { StoreModule } from "@ngrx/store";
+import { postsReducer } from "../posts/posts.reducer";
 
 @NgModule({
   declarations: [PostsComponent],
@@ -26,6 +28,7 @@ import { PostsComponent } from "./posts.component";
     CommentModule,
     ReactiveFormsModule,
     FormsModule,
+    StoreModule.forFeature("posts", postsReducer),
   ],
 })
 export class PostsModule {}

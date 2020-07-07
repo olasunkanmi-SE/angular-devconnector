@@ -8,6 +8,7 @@ import { CommonModule } from "@angular/common";
 
 import { CommentRoutingModule } from "./comment-routing.module";
 import { CommentComponent } from "./comment.component";
+import { StoreModule } from "@ngrx/store";
 
 @NgModule({
   declarations: [CommentComponent],
@@ -20,6 +21,7 @@ import { CommentComponent } from "./comment.component";
     ReactiveFormsModule,
     FormsModule,
     ReplyModule,
+    // StoreModule.forFeature("posts", commentsReducer),
   ],
 })
 export class CommentModule {}

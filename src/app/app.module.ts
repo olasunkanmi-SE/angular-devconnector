@@ -1,3 +1,4 @@
+import { environment } from "./../environments/environment.prod";
 import { OnboardingModule } from "./onboarding/onboarding.module";
 import { PostsModule } from "./pages/posts/posts.module";
 import { LoggingInterceptor } from "./core/auth/interceptors/logging-interceptor";
@@ -28,7 +29,11 @@ import { storageReducer } from "./shared/store/storage.metareducer";
     PostsModule,
     HomeModule,
     OnboardingModule,
-    StoreModule.forRoot(reducers, { metaReducers }),
+    StoreModule.forRoot(reducers, { metaReducers: [storageReducer] }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25, // Retains last 25 states
+      logOnly: environment.production, // Restrict extension to log-only mode
+    }),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

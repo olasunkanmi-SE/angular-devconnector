@@ -14,31 +14,22 @@ const initialState: State = {
   hasHandle: false,
 };
 
-export function menuReducer(state = initialState, action: MenuActions) {
+export function menuReducer(state = initialState, action: MenuActions): State {
   switch (action.type) {
     case LOGGED_OUT:
-      return {
-        isAuth: false,
-        hasHandle: false,
-      };
+      return { ...state, isAuth: false, hasHandle: false };
     case ONBOARDING:
-      return {
-        isAuth: true,
-        hasHandle: false,
-      };
+      return { ...state, isAuth: true, hasHandle: false };
     case LOGGED_IN:
-      return {
-        isAuth: true,
-        hasHandle: true,
-      };
+      return { ...state, isAuth: true, hasHandle: true };
     default:
       return state;
   }
 }
 
-export const getMenu = (state: State) => {
+export const getMenu = (menuState: State): State => {
   return {
-    isAuth: state.isAuth,
-    hasHandle: state.hasHandle,
+    isAuth: menuState.isAuth,
+    hasHandle: menuState.hasHandle,
   };
 };
