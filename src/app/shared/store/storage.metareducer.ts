@@ -18,6 +18,7 @@ const stateKeys = ["menu.hasHandle", "menu.isAuth"];
 const localStorageKey = "menuState";
 
 //Define the Meta Reducer like so
+
 export function storageReducer<State, A extends Action = Action>(
   reducer: ActionReducer<State, A>
 ) {
@@ -28,6 +29,7 @@ export function storageReducer<State, A extends Action = Action>(
       onInit = false;
       const savedState = getSavedState(localStorageKey);
       // return { ...savedState, nextState };
+
       return merge(nextState, savedState);
     }
     const stateToSave = pick(nextState, stateKeys);
