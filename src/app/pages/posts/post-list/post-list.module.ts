@@ -8,6 +8,7 @@ import { PostListComponent } from "./post-list.component";
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { PostListRoutingModule } from "./post-list-routing.module";
+import { StoreModule } from "@ngrx/store";
 
 @NgModule({
   declarations: [PostListComponent],
@@ -21,6 +22,7 @@ import { PostListRoutingModule } from "./post-list-routing.module";
     FormsModule,
     CommentModule,
     PostModule,
+    // StoreModule.forFeature('postlist', )
   ],
 })
 export class PostListModule {}

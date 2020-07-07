@@ -93,7 +93,7 @@ module.exports.deletePost = async (req, res, next) => {
             return res.send(401).json({ msg: 'you cannot delete post' })
         }
     } catch (ex) {
-        console.log(ex);
+        next(ex);
     }
 
 }
