@@ -31,3 +31,14 @@ body {
     text-decoration: none !important;
     color: #fff;
   } */
+
+h5.card-title {
+  font-size: 2rem !important;
+  line-height: 1.33333 !important;
+  font-weight: 350 !important;
+}
+p.card-text {
+  font-size: 1.5rem;
+  line-height: 1.33333;
+  font-weight: 300;
+}

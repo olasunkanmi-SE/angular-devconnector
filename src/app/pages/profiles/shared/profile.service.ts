@@ -22,7 +22,7 @@ export class ProfileService {
       .pipe(takeUntil(this.destroy$));
   }
 
-  getCurrentUserProfile$() {
+  getCurrentUserProfile$(): Observable<Profile> {
     return this.http
       .get<Profile>(`${this.backendURL}/profiles/users/profile`)
       .pipe(takeUntil(this.destroy$));

@@ -204,8 +204,8 @@ export class InfoService {
   ];
 
   status = [
-    { value: "employed" },
-    { value: "actively looking" },
-    { value: "not looking" },
+    { value: "Employed" },
+    { value: "Actively looking" },
+    { value: "Not looking" },
   ];
 }

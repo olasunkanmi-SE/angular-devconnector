@@ -1,5 +1,11 @@
 export interface Profile {
-  user: string;
+  _id: string;
+  user: {
+    _id: string;
+    avatar: string;
+    firstname: string;
+    lastname: string;
+  };
   handle: string;
   company?: string;
   status: string;

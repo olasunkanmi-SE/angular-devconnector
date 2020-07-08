@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
-  <body>
+  <body *ngIf="userProfile">
     <section>
       <div class="container">
         <div class="row">
@@ -17,14 +17,17 @@
               </div>
               <div class="card-body">
                 <h5 class="card-title">
-                  Oyinlola Olasunkanmi Raymond
+                  {{ userProfile.user.firstname }}
+                  {{ userProfile.user.lastname }}
                   <span class="float-right">
                     <a href=""><i class="fas fa-pen"></i></a>
                   </span>
                 </h5>
-                <p class="card-text">Kosemani1</p>
-                <p class="card-text">Software Engineer at ViewQwest</p>
-                <p class="card-text">Kuala Lumpur, Kuala Lumpur, Malaysia</p>
+                <p class="card-text">{{ userProfile.handle }}</p>
+                <p class="card-text">{{ userProfile.status }}</p>
+                <h5 class="card-title">
+                  {{ userProfile.company }}
+                </h5>
                 <ul class="list-inline">
                   <li class="list-inline-item">
                     <i class="fab fa-facebook-f"></i>
@@ -51,7 +54,7 @@
                     <a href=""><i class="fas fa-pen"></i></a>
                   </span>
                 </p>
-                <p class="card-text">PHP, Javascript, Node Js</p>
+                <p class="card-text">{{ userProfile.skills }}</p>
               </div>
             </div>
 
@@ -63,7 +66,7 @@
                     <a href=""><i class="fas fa-pen"></i></a>
                   </span>
                 </p>
-                <p class="card-text">PHP, Javascript, Node Js</p>
+                <p class="card-text">{{ userProfile.githubusername }}</p>
               </div>
             </div>
 
@@ -76,9 +79,7 @@
                   </span>
                 </p>
                 <p class="card-text">
-                  Build robust, secure and expressive APIs with Node and Express
-                  Js. Integrate backend APIs with frontend with Angular JS
-                  framework
+                  {{ userProfile.bio }}
                 </p>
               </div>
             </div>
