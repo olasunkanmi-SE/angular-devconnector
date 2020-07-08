@@ -17,7 +17,6 @@ module.exports.createPost = async (req, res, next) => {
 
         post = await post.save();
         return res.status(201).json(post);
-
     } catch (ex) {
         next(ex);
     }
@@ -93,6 +92,7 @@ module.exports.deletePost = async (req, res, next) => {
         }
     } catch (ex) {
         console.log(ex);
+
     }
 
 }

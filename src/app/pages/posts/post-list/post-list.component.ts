@@ -30,6 +30,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   postSub: Subscription;
   postsListSub: Subscription;
   @Input() post: any;
+
   posts: SinglePost[];
   comments: Comment[];
   id: string;

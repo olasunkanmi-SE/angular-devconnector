@@ -1,3 +1,4 @@
+
 import { SinglePost } from "./../model/post";
 import { Subscription } from "rxjs";
 import { PostService } from "./../shared/post.service";
@@ -5,6 +6,8 @@ import { Validators } from "@angular/forms";
 import { FormBuilder } from "@angular/forms";
 import { Component, OnInit } from "@angular/core";
 import { faFeather } from "@fortawesome/free-solid-svg-icons";
+
+
 
 @Component({
   selector: "app-create-post",
@@ -51,4 +54,5 @@ export class CreatePostComponent implements OnInit {
   OnDestroy() {
     this.postSubs.unsubscribe();
   }
+
 }

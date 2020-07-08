@@ -1,3 +1,4 @@
+
 export interface Post {
   text: string;
   id: string;
