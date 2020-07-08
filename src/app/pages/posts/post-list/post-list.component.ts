@@ -29,7 +29,8 @@ export class PostListComponent implements OnInit, OnDestroy {
   faFeather = faFeather;
   postSub: Subscription;
   postsListSub: Subscription;
-  @Input() post: SinglePost;
+  @Input() post: any;
+
   posts: SinglePost[];
   comments: Comment[];
   id: string;
@@ -65,18 +66,18 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.postService.handlePost(this.post);
   }
 
-  // getPost() {
-  //   this.getExactPost();
-  //   this.postSub = this.postService
-  //     .getPostById$(this.post.id)
-  //     .subscribe((res) => {
-  //       this.id = res.id;
-  //     });
-  // }
+  getPost() {
+    this.getExactPost();
+    this.postSub = this.postService
+      .getPostById$(this.post.id)
+      .subscribe((res) => {
+        this.id = res.id;
+      });
+  }
 
   createComment() {
     this.commentSub = this.postService
-      .createComment$(this.post._id, this.commentForm.value)
+      .createComment$(this.post.id, this.commentForm.value)
       .subscribe((res: SinglePost) => {
         this.post.comments = res.comments;
         this.comments = this.post.comments;
@@ -89,7 +90,7 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   likeDisLikeComment() {
     this.likeSub = this.postService
-      .likeDislikePost$(this.post._id, this.user)
+      .likeDislikePost$(this.post.id, this.user)
       .subscribe((res) => {
         this.post.likes = res.likes;
       });
@@ -102,9 +103,8 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   deletePost() {
     this.deleteSub = this.postService
-      .deletePost$(this.post._id)
+      .deletePost$(this.post.id)
       .subscribe((res) => {
-        console.log(res);
         this.posts = res;
         this.postService.sendPosts(res);
       });

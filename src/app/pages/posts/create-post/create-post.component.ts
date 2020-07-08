@@ -1,15 +1,13 @@
-import { Store } from "@ngrx/store";
+
 import { SinglePost } from "./../model/post";
-import { Subscription, Observable } from "rxjs";
+import { Subscription } from "rxjs";
 import { PostService } from "./../shared/post.service";
 import { Validators } from "@angular/forms";
 import { FormBuilder } from "@angular/forms";
 import { Component, OnInit } from "@angular/core";
 import { faFeather } from "@fortawesome/free-solid-svg-icons";
-import * as fromPost from "../create-post/create-post.reducer";
-import * as postAction from "../create-post/create-post.action";
-import * as AllPosts from "../../posts/posts.action";
-import * as fromPosts from "../../posts/posts.reducer";
+
+
 
 @Component({
   selector: "app-create-post",
@@ -19,18 +17,16 @@ import * as fromPosts from "../../posts/posts.reducer";
 export class CreatePostComponent implements OnInit {
   faFeather = faFeather;
   postForm;
-  post$: Observable<SinglePost>;
-  posts$;
+  post;
+  postSubs: Subscription;
 
   constructor(
     private formbuilder: FormBuilder,
-    private postService: PostService,
-    private store: Store<fromPost.State>
+    private postService: PostService
   ) {}
 
   ngOnInit() {
     this.initializeForm();
-    this.post$ = this.store.select(fromPost.getAPost);
   }
 
   initializeForm() {
@@ -44,15 +40,19 @@ export class CreatePostComponent implements OnInit {
   }
 
   createPost() {
-    this.postService.createPost$(this.postForm.value).subscribe(
+    this.postSubs = this.postService.createPost$(this.postForm.value).subscribe(
       (res) => {
-        this.store.dispatch(new postAction.CreatePost(res[0]));
-        this.store.dispatch(new AllPosts.AvailablePosts(res));
+        this.post = res;
+        this.postService.sendPost(this.post);
       },
       (err) => {
         console.log(err);
-        this.store.dispatch(new postAction.PostError(err));
       }
     );
   }
+
+  OnDestroy() {
+    this.postSubs.unsubscribe();
+  }
+
 }

@@ -13,9 +13,10 @@ import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { HomeModule } from "./pages/home/home.module";
-import { reducers, metaReducers } from "./app.reducer";
+import { reducers } from "./app.reducer";
 import { StoreModule } from "@ngrx/store";
 import { storageReducer } from "./shared/store/storage.metareducer";
+import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 
 @NgModule({
   declarations: [AppComponent],
