@@ -1,6 +1,6 @@
 import { User } from "./../model/user";
 import { Subject, Observable } from "rxjs";
-import { SinglePost, Comment, Reply } from "./../model/post";
+import { Post, SinglePost, Comment, Reply } from "./../model/post";
 import { environment } from "./../../../../environments/environment";
 import { HttpClient } from "@angular/common/http";
 import { Injectable, OnDestroy, Output, EventEmitter } from "@angular/core";
@@ -27,7 +27,7 @@ export class PostService implements OnDestroy {
     return this.postSubject.asObservable();
   }
 
-  sendPosts(posts: SinglePost[]) {
+  sendPosts(posts: Post[]) {
     this.postsSubject.next(posts);
   }
 
@@ -56,13 +56,12 @@ export class PostService implements OnDestroy {
             posts: postData.posts.map((post) => {
               return {
                 text: post.text,
-                _id: post._id,
-                firstname: post.firstname,
+                id: post._id,
+                creator: post.firstname,
                 avatar: post.avatar,
                 likes: post.likes,
                 comments: post.comments,
                 date: post.date,
-                user: post.user,
               };
             }),
             count: postData.count,
@@ -93,9 +92,9 @@ export class PostService implements OnDestroy {
       map((post) => {
         return {
           text: post.text,
-          _id: post._id,
+          id: post._id,
           user: post.user,
-          firstname: post.firstname,
+          creator: post.firstname,
           avatar: post.avatar,
           likes: post.likes,
           comments: post.comments,
@@ -144,9 +143,9 @@ export class PostService implements OnDestroy {
       .pipe(takeUntil(this.destroy$));
   }
 
-  deletePost$(id: string): Observable<SinglePost[]> {
+  deletePost$(id: string): Observable<Post[]> {
     return this.http
-      .delete<SinglePost[]>(`${this.backendURL}/posts/${id}`)
+      .delete<Post[]>(`${this.backendURL}/posts/${id}`)
       .pipe(takeUntil(this.destroy$));
   }
 
