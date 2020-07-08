@@ -69,9 +69,9 @@ export class PostListComponent implements OnInit, OnDestroy {
   getPost() {
     this.getExactPost();
     this.postSub = this.postService
-      .getPostById$(this.post.id)
+      .getPostById$(this.post._id)
       .subscribe((res) => {
-        this.id = res.id;
+        this.id = res._id;
       });
   }
 

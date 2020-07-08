@@ -10,11 +10,10 @@ import { takeUntil, map, take, concatMap } from "rxjs/operators";
   providedIn: "root",
 })
 export class PostService implements OnDestroy {
-  posts: Post[] = [];
   backendURL = environment.backendAPI;
   destroy$: Subject<boolean> = new Subject<boolean>();
   private postSubject = new Subject<any>();
-  private postsSubject = new Subject<Post[]>();
+  private postsSubject = new Subject<SinglePost[]>();
   constructor(private http: HttpClient) {}
   @Output() post = new EventEmitter<SinglePost>();
   @Output() comment = new EventEmitter<Comment>();
