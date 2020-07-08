@@ -14,6 +14,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Subscription, Observable, Subject } from "rxjs";
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
+import { Store } from "@ngrx/store";
+import * as fromPost from "../post-list/post-list.reducer";
+import * as postActions from "../post-list/post-list.action";
 
 @Component({
   selector: "app-post-list",
@@ -29,7 +32,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   faFeather = faFeather;
   postSub: Subscription;
   postsListSub: Subscription;
-  @Input() post: SinglePost;
+  @Input() post;
   posts: SinglePost[];
   comments: Comment[];
   id: string;
@@ -40,12 +43,14 @@ export class PostListComponent implements OnInit, OnDestroy {
   likeSub: Subscription;
   replySub;
   deleteSub;
+  pPost$: Observable<SinglePost>;
 
   constructor(
     private postService: PostService,
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private store: Store<fromPost.State>
   ) {
     this.posts;
   }
@@ -53,6 +58,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.validateOnInit();
     this.comments = this.getComments();
+    this.store.select(fromPost.getAPost).subscribe((res) => console.log(res));
   }
 
   validateOnInit() {
@@ -78,6 +84,7 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.commentSub = this.postService
       .createComment$(this.post._id, this.commentForm.value)
       .subscribe((res: SinglePost) => {
+        this.store.dispatch(new postActions.specificPost(res._id));
         this.post.comments = res.comments;
         this.comments = this.post.comments;
       });

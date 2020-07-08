@@ -44,7 +44,6 @@ export class PostsComponent implements OnInit, OnDestroy {
   id: any;
   comment;
   post$: Observable<SinglePost>;
-  postsListSub: Subscription;
   getUsersSub: Subscription;
   developers: [] = [];
   devNames: string[] = [];
@@ -152,7 +151,7 @@ export class PostsComponent implements OnInit, OnDestroy {
   }
 
   private getPostsList$() {
-    this.postUpdatedSub = this.postService.getPosts$().subscribe(
+    this.postService.getPosts$().subscribe(
       (res) => {
         this.totalPosts = +res.count;
         this.store.dispatch(new UI.StopLoading());
@@ -170,7 +169,6 @@ export class PostsComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.authListenerSubscription.unsubscribe();
     this.userSubs.unsubscribe();
-    this.postUpdatedSub.unsubscribe();
     this.newPostSub.unsubscribe();
     this.getUsersSub.unsubscribe();
   }

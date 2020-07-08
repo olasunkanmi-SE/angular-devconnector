@@ -5,7 +5,7 @@ import * as fromRoot from "../../../app/app.reducer";
 
 export interface postsState {
   posts: SinglePost[];
-  error: any;
+  error?: any;
 }
 export interface State extends fromRoot.State {
   posts: postsState;

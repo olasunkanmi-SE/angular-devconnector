@@ -1,3 +1,4 @@
+import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { environment } from "./../environments/environment.prod";
 import { OnboardingModule } from "./onboarding/onboarding.module";
 import { PostsModule } from "./pages/posts/posts.module";
@@ -13,7 +14,7 @@ import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { HomeModule } from "./pages/home/home.module";
-import { reducers, metaReducers } from "./app.reducer";
+import { reducers } from "./app.reducer";
 import { StoreModule } from "@ngrx/store";
 import { storageReducer } from "./shared/store/storage.metareducer";
 
