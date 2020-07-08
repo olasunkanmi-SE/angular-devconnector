@@ -1,6 +1,6 @@
 import { User } from "./../model/user";
 import { Subject, Observable } from "rxjs";
-import { Post, SinglePost, Comment, Reply } from "./../model/post";
+import { SinglePost, Comment, Reply } from "./../model/post";
 import { environment } from "./../../../../environments/environment";
 import { HttpClient } from "@angular/common/http";
 import { Injectable, OnDestroy, Output, EventEmitter } from "@angular/core";
@@ -10,11 +10,10 @@ import { takeUntil, map, take, concatMap } from "rxjs/operators";
   providedIn: "root",
 })
 export class PostService implements OnDestroy {
-  posts: Post[] = [];
   backendURL = environment.backendAPI;
   destroy$: Subject<boolean> = new Subject<boolean>();
   private postSubject = new Subject<any>();
-  private postsSubject = new Subject<Post[]>();
+  private postsSubject = new Subject<SinglePost[]>();
   constructor(private http: HttpClient) {}
   @Output() post = new EventEmitter<SinglePost>();
   @Output() comment = new EventEmitter<Comment>();
@@ -28,7 +27,7 @@ export class PostService implements OnDestroy {
     return this.postSubject.asObservable();
   }
 
-  sendPosts(posts: Post[]) {
+  sendPosts(posts: SinglePost[]) {
     this.postsSubject.next(posts);
   }
 
@@ -57,12 +56,13 @@ export class PostService implements OnDestroy {
             posts: postData.posts.map((post) => {
               return {
                 text: post.text,
-                id: post._id,
-                creator: post.firstname,
+                _id: post._id,
+                firstname: post.firstname,
                 avatar: post.avatar,
                 likes: post.likes,
                 comments: post.comments,
                 date: post.date,
+                user: post.user,
               };
             }),
             count: postData.count,
@@ -93,9 +93,9 @@ export class PostService implements OnDestroy {
       map((post) => {
         return {
           text: post.text,
-          id: post._id,
+          _id: post._id,
           user: post.user,
-          creator: post.firstname,
+          firstname: post.firstname,
           avatar: post.avatar,
           likes: post.likes,
           comments: post.comments,
@@ -144,9 +144,9 @@ export class PostService implements OnDestroy {
       .pipe(takeUntil(this.destroy$));
   }
 
-  deletePost$(id: string): Observable<Post[]> {
+  deletePost$(id: string): Observable<SinglePost[]> {
     return this.http
-      .delete<Post[]>(`${this.backendURL}/posts/${id}`)
+      .delete<SinglePost[]>(`${this.backendURL}/posts/${id}`)
       .pipe(takeUntil(this.destroy$));
   }
 

@@ -69,15 +69,15 @@ export class PostListComponent implements OnInit, OnDestroy {
   getPost() {
     this.getExactPost();
     this.postSub = this.postService
-      .getPostById$(this.post.id)
+      .getPostById$(this.post._id)
       .subscribe((res) => {
-        this.id = res.id;
+        this.id = res._id;
       });
   }
 
   createComment() {
     this.commentSub = this.postService
-      .createComment$(this.post.id, this.commentForm.value)
+      .createComment$(this.post._id, this.commentForm.value)
       .subscribe((res: SinglePost) => {
         this.post.comments = res.comments;
         this.comments = this.post.comments;
@@ -90,7 +90,7 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   likeDisLikeComment() {
     this.likeSub = this.postService
-      .likeDislikePost$(this.post.id, this.user)
+      .likeDislikePost$(this.post._id, this.user)
       .subscribe((res) => {
         this.post.likes = res.likes;
       });
@@ -103,7 +103,7 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   deletePost() {
     this.deleteSub = this.postService
-      .deletePost$(this.post.id)
+      .deletePost$(this.post._id)
       .subscribe((res) => {
         this.posts = res;
         this.postService.sendPosts(res);
