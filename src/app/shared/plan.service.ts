@@ -2,7 +2,7 @@ import { Plan } from "./plan";
 import { Injectable, EventEmitter, Output } from "@angular/core";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class PlanService {
   private plans: Plan[] = [
@@ -16,8 +16,8 @@ export class PlanService {
         first:
           "Unlimited talk, text & data in the US, Mexico & Canada AT&T may slow data speeds when the network is busy. Roaming may be at 2G speed.",
         second: "Spam and fraud alerts",
-        third: "Unlimited text from the US to 120+ countries"
-      }
+        third: "Unlimited text from the US to 120+ countries",
+      },
     },
     {
       id: 2,
@@ -27,8 +27,8 @@ export class PlanService {
       charge_per_line: 40,
       plan_details: {
         first:
-          "Unlimited talk, text & data in the US, Mexico & Canada AT&T may slow data speeds when the network is busy. Roaming may be at 2G speed."
-      }
+          "Unlimited talk, text & data in the US, Mexico & Canada AT&T may slow data speeds when the network is busy. Roaming may be at 2G speed.",
+      },
     },
     {
       id: 3,
@@ -41,9 +41,9 @@ export class PlanService {
         second:
           "Unlimited talk, text & data in the US, Mexico & Canada AT&T may slow data speeds when the network is busy. Roaming may be at 2G speed.",
         third:
-          "HBO® included - at no extra charge Video may be ltd to SD. Requires compatible device & activating HBO at www.att.com/myatt. Content, programming and channels subject to change."
-      }
-    }
+          "HBO® included - at no extra charge Video may be ltd to SD. Requires compatible device & activating HBO at www.att.com/myatt. Content, programming and channels subject to change.",
+      },
+    },
   ];
   @Output() plan = new EventEmitter<Plan>();
 
@@ -57,8 +57,8 @@ export class PlanService {
   }
 
   getPlan(id: number) {
-    const plan = this.plans.find(plan => {
-      plan.id === id;
+    const plan = this.plans.find((plan) => {
+      plan.id = id;
     });
     return plan;
   }
@@ -68,8 +68,8 @@ export class PlanService {
   }
 
   updatePlanById(id: number, updatedPlan: Plan) {
-    const plan = this.plans.find(plan => {
-      plan.id === id;
+    const plan = this.plans.find((plan) => {
+      plan.id = id;
     });
     if (plan) {
       plan.plan_name = updatedPlan.plan_name;
