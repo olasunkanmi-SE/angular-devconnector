@@ -1,3 +1,4 @@
+import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { environment } from "./../environments/environment.prod";
 import { OnboardingModule } from "./onboarding/onboarding.module";
 import { PostsModule } from "./pages/posts/posts.module";

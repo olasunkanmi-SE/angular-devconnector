@@ -5,16 +5,20 @@ import { environment } from "./../../../../environments/environment";
 import { HttpClient } from "@angular/common/http";
 import { Injectable, OnDestroy, Output, EventEmitter } from "@angular/core";
 import { takeUntil, map, take, concatMap } from "rxjs/operators";
+import * as fromRoot from "../../../app.reducer";
+import * as UI from "../../../shared/store/action/ui.actions";
+import { Store } from "@ngrx/store";
 
 @Injectable({
   providedIn: "root",
 })
 export class PostService implements OnDestroy {
+  posts: SinglePost[] = [];
   backendURL = environment.backendAPI;
   destroy$: Subject<boolean> = new Subject<boolean>();
   private postSubject = new Subject<any>();
   private postsSubject = new Subject<SinglePost[]>();
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private store: Store<fromRoot.State>) {}
   @Output() post = new EventEmitter<SinglePost>();
   @Output() comment = new EventEmitter<Comment>();
   @Output() reply = new EventEmitter<Reply>();
@@ -48,12 +52,13 @@ export class PostService implements OnDestroy {
   }
 
   getPosts$(): Observable<{ count: string; posts: SinglePost[] }> {
+    this.store.dispatch(new UI.StartLoading());
     return this.http
       .get<{ count: string; posts: SinglePost[] }>(`${this.backendURL}/posts`)
       .pipe(
         map((postData) => {
           return {
-            posts: postData.posts.map((post) => {
+            posts: postData.posts.map((post: SinglePost) => {
               return {
                 text: post.text,
                 _id: post._id,
@@ -82,9 +87,9 @@ export class PostService implements OnDestroy {
     return filteredPost;
   }
 
-  createPost$(post): Observable<SinglePost> {
+  createPost$(post): Observable<SinglePost[]> {
     return this.http
-      .post<SinglePost>(`${this.backendURL}/posts`, post)
+      .post<SinglePost[]>(`${this.backendURL}/posts`, post)
       .pipe(takeUntil(this.destroy$));
   }
 

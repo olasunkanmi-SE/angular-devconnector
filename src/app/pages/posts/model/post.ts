@@ -1,4 +1,3 @@
-
 export interface SinglePost {
   _id: string;
   avatar: string;
