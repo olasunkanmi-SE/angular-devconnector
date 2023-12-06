@@ -17,6 +17,7 @@ import { HomeModule } from "./pages/home/home.module";
 import { reducers } from "./app.reducer";
 import { StoreModule } from "@ngrx/store";
 import { storageReducer } from "./shared/store/storage.metareducer";
+import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 
 @NgModule({
   declarations: [AppComponent],

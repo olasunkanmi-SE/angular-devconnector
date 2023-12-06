@@ -18,7 +18,6 @@ module.exports.createPost = async (req, res, next) => {
         post = await post.save();
         const posts = await Post.find().sort({ date: -1 });
         return res.status(201).json(posts);
-
     } catch (ex) {
         next(ex);
     }

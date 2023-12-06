@@ -11,6 +11,8 @@ import * as postAction from "../create-post/create-post.action";
 import * as AllPosts from "../../posts/posts.action";
 import * as fromPosts from "../../posts/posts.reducer";
 
+
+
 @Component({
   selector: "app-create-post",
   templateUrl: "./create-post.component.html",
